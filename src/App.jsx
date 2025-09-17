@@ -19,12 +19,22 @@ const FluidlineWebsite = () => {
   ]);
   const [chatInput, setChatInput] = useState('');
   const [isScrolled, setIsScrolled] = useState(false);
+  const [currentTheme, setCurrentTheme] = useState('classic');
+  const [showThemeSelector, setShowThemeSelector] = useState(false);
 
   // Handle scroll effect for header
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
-    };
+    const currentThemeConfig = themes[currentTheme];
+
+  // Auto-advance slides
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % heroSlides.length);
+    }, 6000);
+    return () => clearInterval(timer);
+  }, [heroSlides.length]);
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
@@ -195,7 +205,7 @@ const FluidlineWebsite = () => {
                 <div className="flex flex-wrap gap-4 pt-4">
                   <button 
                     onClick={() => setActiveSection('contact')}
-                    className="bg-gradient-to-r from-blue-600 to-red-600 hover:from-blue-700 hover:to-red-700 text-white px-6 py-3 rounded-full font-semibold transition-all duration-300 flex items-center space-x-2 shadow-xl hover:shadow-2xl transform hover:scale-105"
+                    className={`bg-gradient-to-r ${currentThemeConfig.primaryGradient} hover:${currentThemeConfig.primaryHover} text-white px-6 py-3 rounded-full font-semibold transition-all duration-300 flex items-center space-x-2 shadow-xl hover:shadow-2xl transform hover:scale-105`}
                   >
                     <span>Contact Us</span>
                     <ArrowRight size={18} />
@@ -245,7 +255,29 @@ const FluidlineWebsite = () => {
           </div>
         )}
       </section>
-    );
+    const handleChatSubmit = () => {
+    if (chatInput.trim()) {
+      setChatMessages(prev => [...prev, { type: 'user', message: chatInput }]);
+      
+      setTimeout(() => {
+        let botResponse = '';
+        if (chatInput.toLowerCase().includes('service')) {
+          botResponse = 'We offer comprehensive engineering solutions including Process Piping (ASME B 31.3), Fire Protection Systems (Class A licensed), Structural Fabrication, Equipment Erection, Balance of Boiler, and Equipment Fabrication. Which service interests you most?';
+        } else if (chatInput.toLowerCase().includes('contact') || chatInput.toLowerCase().includes('office')) {
+          botResponse = 'You can reach us at our Head Office in Kanpur (+91-512 2225138) or projects@fluidlinegroup.com. We also have offices in Mumbai, Noida, and Bengaluru. Which location would you like to contact?';
+        } else if (chatInput.toLowerCase().includes('experience') || chatInput.toLowerCase().includes('project')) {
+          botResponse = 'Fluidline has 33+ years of engineering excellence with 1000+ successful projects, 3000+ skilled workforce, and 100M+ safe man hours. We serve Fortune 500 companies across India. Would you like to know about specific projects?';
+        } else if (chatInput.toLowerCase().includes('certificate') || chatInput.toLowerCase().includes('license')) {
+          botResponse = 'We hold Class A Fire License in Maharashtra and follow ASME B 31.3 standards for process piping. We also comply with IBR regulations for boiler services. Would you like to see our certifications?';
+        } else {
+          botResponse = 'Thank you for your interest in Fluidline Engineers & Fabricators! Our engineering experts will get back to you shortly. For immediate assistance, call our Head Office at +91-512 2225138.';
+        }
+        setChatMessages(prev => [...prev, { type: 'bot', message: botResponse }]);
+      }, 1000);
+      
+      setChatInput('');
+    }
+  };
   };
 
   const navigation = [
@@ -416,7 +448,7 @@ const FluidlineWebsite = () => {
               <div className="flex flex-wrap gap-4 pt-4">
                 <button 
                   onClick={() => setActiveSection('services')}
-                  className="bg-gradient-to-r from-blue-600 to-red-600 hover:from-blue-700 hover:to-red-700 text-white px-8 py-4 rounded-full font-semibold transition-all duration-300 flex items-center space-x-2 shadow-xl hover:shadow-2xl transform hover:scale-105"
+                  className={`bg-gradient-to-r ${currentThemeConfig.primaryGradient} hover:${currentThemeConfig.primaryHover} text-white px-8 py-4 rounded-full font-semibold transition-all duration-300 flex items-center space-x-2 shadow-xl hover:shadow-2xl transform hover:scale-105`}
                 >
                   <span>{heroSlides[currentSlide].cta}</span>
                   <ArrowRight size={20} />
@@ -829,7 +861,7 @@ const FluidlineWebsite = () => {
               ></textarea>
               <button 
                 onClick={() => alert('Message sent! We will get back to you soon.')}
-                className="w-full bg-gradient-to-r from-blue-600 to-red-600 hover:from-blue-700 hover:to-red-700 text-white py-4 rounded-lg font-semibold transition-all duration-300"
+                className={`w-full bg-gradient-to-r ${currentThemeConfig.primaryGradient} hover:${currentThemeConfig.primaryHover} text-white py-4 rounded-lg font-semibold transition-all duration-300`}
               >
                 Send Message
               </button>
@@ -853,24 +885,63 @@ const FluidlineWebsite = () => {
             Let's discuss how we can bring your industrial vision to life.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
-            <button
-              onClick={() => setActiveSection('contact')}
-              className="bg-white text-blue-600 hover:bg-gray-100 px-8 py-4 rounded-full font-semibold transition-all duration-300 flex items-center space-x-2 shadow-lg hover:shadow-xl transform hover:scale-105"
-            >
-              <span>Contact Our Experts</span>
-              <ArrowRight size={20} />
-            </button>
-            <button className="border-2 border-white/30 text-white hover:bg-white/10 px-8 py-4 rounded-full font-semibold transition-all duration-300 flex items-center space-x-2">
-              <Download size={20} />
-              <span>Download Brochure</span>
-            </button>
+              <button
+                onClick={() => setActiveSection('contact')}
+                className="bg-white text-blue-600 hover:bg-gray-100 px-8 py-4 rounded-full font-semibold transition-all duration-300 flex items-center space-x-2 shadow-lg hover:shadow-xl transform hover:scale-105"
+              >
+                <span>Contact Our Experts</span>
+                <ArrowRight size={20} />
+              </button>
+              <button className="border-2 border-white/30 text-white hover:bg-white/10 px-8 py-4 rounded-full font-semibold transition-all duration-300 flex items-center space-x-2">
+                <Download size={20} />
+                <span>Download Brochure</span>
+              </button>
           </div>
         </div>
       </div>
     </section>
   );
 
-  const handleChatSubmit = () => {
+  // Theme Switcher Component
+  const ThemeSwitcher = () => (
+    <div className="mb-4">
+      <button
+        onClick={() => setShowThemeSelector(!showThemeSelector)}
+        className={`w-full bg-gradient-to-r ${currentThemeConfig.primaryGradient} hover:${currentThemeConfig.primaryHover} text-white p-3 rounded-full shadow-xl transition-all duration-300 transform hover:scale-105 flex items-center justify-center space-x-2`}
+      >
+        <div className="w-6 h-6 rounded-full bg-white/20 flex items-center justify-center">
+          <div className={`w-3 h-3 rounded-full ${currentThemeConfig.preview}`}></div>
+        </div>
+        <span className="font-semibold">Theme Selector</span>
+        <ChevronDown className={`transition-transform duration-300 ${showThemeSelector ? 'rotate-180' : ''}`} size={16} />
+      </button>
+
+      {showThemeSelector && (
+        <div className="mt-3 bg-white rounded-2xl shadow-2xl border border-gray-200 p-4 max-h-80 overflow-y-auto">
+          <h4 className="font-bold text-gray-800 mb-3 text-center">Choose Your Theme</h4>
+          <div className="grid grid-cols-2 gap-2">
+            {Object.entries(themes).map(([key, theme]) => (
+              <button
+                key={key}
+                onClick={() => {
+                  setCurrentTheme(key);
+                  setShowThemeSelector(false);
+                }}
+                className={`p-3 rounded-lg transition-all duration-300 border-2 ${
+                  currentTheme === key 
+                    ? 'border-blue-500 bg-blue-50 shadow-md transform scale-105' 
+                    : 'border-gray-200 hover:border-gray-300 hover:bg-gray-50'
+                }`}
+              >
+                <div className={`w-full h-8 rounded ${theme.preview} mb-2 shadow-sm`}></div>
+                <p className="text-xs font-medium text-gray-700 text-center">{theme.name}</p>
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
+  );
     if (chatInput.trim()) {
       setChatMessages(prev => [...prev, { type: 'user', message: chatInput }]);
       
@@ -1139,7 +1210,7 @@ const FluidlineWebsite = () => {
                     onClick={() => setActiveSection(item.id)}
                     className={`flex items-center space-x-2 px-3 py-2 rounded-lg font-medium transition-all duration-300 text-sm ${
                       activeSection === item.id
-                        ? 'bg-gradient-to-r from-blue-600 to-red-600 text-white shadow-lg transform scale-105'
+                        ? `bg-gradient-to-r ${currentThemeConfig.navActive} text-white shadow-lg transform scale-105`
                         : isScrolled
                         ? 'text-gray-700 hover:text-blue-600 hover:bg-blue-50'
                         : 'text-white hover:text-blue-300 hover:bg-white/10'
@@ -1177,7 +1248,7 @@ const FluidlineWebsite = () => {
                       }}
                       className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg font-medium transition-all duration-300 ${
                         activeSection === item.id
-                          ? 'bg-gradient-to-r from-blue-600 to-red-600 text-white'
+                          ? `bg-gradient-to-r ${currentThemeConfig.navActive} text-white`
                           : 'text-gray-700 hover:bg-blue-50 hover:text-blue-600'
                       }`}
                     >
@@ -1271,18 +1342,24 @@ const FluidlineWebsite = () => {
         </div>
       </footer>
 
-      {/* AI Chatbot */}
-      <div className="fixed bottom-6 right-6 z-50">
+      {/* AI Chatbot with Theme Switcher */}
+      <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end space-y-3">
+        {/* Theme Switcher */}
+        {!showChatbot && (
+          <ThemeSwitcher />
+        )}
+
+        {/* Chatbot */}
         {!showChatbot ? (
           <button
             onClick={() => setShowChatbot(true)}
-            className="bg-gradient-to-r from-blue-600 to-red-600 hover:from-blue-700 hover:to-red-700 text-white p-4 rounded-full shadow-2xl transition-all duration-300 transform hover:scale-110"
+            className={`bg-gradient-to-r ${currentThemeConfig.chatGradient} hover:${currentThemeConfig.primaryHover} text-white p-4 rounded-full shadow-2xl transition-all duration-300 transform hover:scale-110`}
           >
             <MessageCircle size={24} />
           </button>
         ) : (
           <div className="bg-white rounded-2xl shadow-2xl w-80 h-96 flex flex-col border border-gray-200">
-            <div className="bg-gradient-to-r from-blue-600 to-red-600 text-white p-4 rounded-t-2xl flex justify-between items-center">
+            <div className={`bg-gradient-to-r ${currentThemeConfig.chatGradient} text-white p-4 rounded-t-2xl flex justify-between items-center`}>
               <div>
                 <h4 className="font-bold">Fluidline AI Assistant</h4>
                 <p className="text-sm opacity-90">Engineering Solutions Expert</p>
@@ -1300,7 +1377,7 @@ const FluidlineWebsite = () => {
                 <div key={index} className={`flex ${msg.type === 'user' ? 'justify-end' : 'justify-start'}`}>
                   <div className={`max-w-xs p-3 rounded-2xl ${
                     msg.type === 'user' 
-                      ? 'bg-gradient-to-r from-blue-600 to-red-600 text-white' 
+                      ? `bg-gradient-to-r ${currentThemeConfig.chatGradient} text-white` 
                       : 'bg-gray-100 text-gray-800'
                   }`}>
                     <p className="text-sm">{msg.message}</p>
@@ -1321,7 +1398,7 @@ const FluidlineWebsite = () => {
                 />
                 <button
                   onClick={handleChatSubmit}
-                  className="bg-gradient-to-r from-blue-600 to-red-600 hover:from-blue-700 hover:to-red-700 text-white p-3 rounded-full transition-colors duration-300"
+                  className={`bg-gradient-to-r ${currentThemeConfig.chatGradient} hover:${currentThemeConfig.primaryHover} text-white p-3 rounded-full transition-colors duration-300`}
                 >
                   <Send size={18} />
                 </button>
