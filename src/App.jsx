@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { 
   Menu, X, Phone, Mail, MapPin, Download, Users, Building, 
   Shield, Award, ChevronRight, Star, MessageCircle, Send, 
-  Minimize2, Sun, Moon, Home, Info, Wrench, FileText, 
-  Briefcase, Contact, Medal, Clock, ChevronLeft, Upload
+  Minimize2, Home, Info, Wrench, FileText, 
+  Briefcase, Contact, Medal, Clock, ChevronLeft, ChevronDown
 } from 'lucide-react';
 
 const FluidlineWebsite = () => {
@@ -11,7 +11,7 @@ const FluidlineWebsite = () => {
   const [activeSection, setActiveSection] = useState('home');
   const [theme, setTheme] = useState('original');
   const [showChatbot, setShowChatbot] = useState(false);
-  const [customLogo, setCustomLogo] = useState('');
+  const [showThemeDropdown, setShowThemeDropdown] = useState(false);
   const [currentSlide, setCurrentSlide] = useState(0);
   const [chatMessages, setChatMessages] = useState([
     { type: 'bot', message: 'Hello! How can I help you with Fluidline services today?' }
@@ -224,104 +224,27 @@ const FluidlineWebsite = () => {
     }
   ];
 
-  // Logo component with custom image support
+  // Logo component - Space for adding your own logo
   const FluidlineLogo = ({ size = 'normal', className = '' }) => {
     const logoSize = size === 'large' ? 'w-16 h-16' : 'w-10 h-10';
     
-    if (customLogo) {
-      return (
-        <div className={`${logoSize} relative ${className}`}>
-          <img 
-            src={customLogo} 
-            alt="Fluidline Logo" 
-            className="w-full h-full object-contain"
-            onError={() => setCustomLogo('')}
-          />
-        </div>
-      );
-    }
+    // Replace this with your own logo image
+    // Example: <img src="/src/assets/your-logo.png" alt="Fluidline Logo" className="w-full h-full object-contain" />
     
     return (
-      <div className={`${logoSize} relative ${className}`}>
-        <svg viewBox="0 0 60 60" className="w-full h-full">
-          <g transform="translate(30,30)">
-            <path 
-              d="M-25,-20 Q-15,-25 -5,-20 T15,-15"
-              stroke="#1e40af" 
-              strokeWidth="2" 
-              fill="none"
-            />
-            <path 
-              d="M-25,-10 Q-15,-15 -5,-10 T15,-5"
-              stroke="#1e40af" 
-              strokeWidth="2" 
-              fill="none"
-            />
-            <path 
-              d="M-25,0 Q-15,-5 -5,0 T15,5"
-              stroke="#1e40af" 
-              strokeWidth="2" 
-              fill="none"
-            />
-            <path 
-              d="M-25,10 Q-15,5 -5,10 T15,15"
-              stroke="#1e40af" 
-              strokeWidth="2" 
-              fill="none"
-            />
-            <path 
-              d="M-25,20 Q-15,15 -5,20 T15,25"
-              stroke="#1e40af" 
-              strokeWidth="2" 
-              fill="none"
-            />
-            
-            <path 
-              d="M25,-20 Q15,-25 5,-20 T-15,-15"
-              stroke="#dc2626" 
-              strokeWidth="2" 
-              fill="none"
-            />
-            <path 
-              d="M25,-10 Q15,-15 5,-10 T-15,-5"
-              stroke="#dc2626" 
-              strokeWidth="2" 
-              fill="none"
-            />
-            <path 
-              d="M25,0 Q15,-5 5,0 T-15,5"
-              stroke="#dc2626" 
-              strokeWidth="2" 
-              fill="none"
-            />
-            <path 
-              d="M25,10 Q15,5 5,10 T-15,15"
-              stroke="#dc2626" 
-              strokeWidth="2" 
-              fill="none"
-            />
-            <path 
-              d="M25,20 Q15,15 5,20 T-15,25"
-              stroke="#dc2626" 
-              strokeWidth="2" 
-              fill="none"
-            />
-          </g>
-          
-          <circle 
-            cx="30" 
-            cy="30" 
-            r="6" 
-            fill="white" 
-            stroke="#374151" 
-            strokeWidth="1"
-          />
-        </svg>
+      <div className={`${logoSize} relative ${className} flex items-center justify-center bg-gray-100 border-2 border-dashed border-gray-300 rounded-lg`}>
+        
+        <img 
+          src="/src/assets/logo1.png" 
+          alt="Fluidline Logo" 
+          className="w-full h-full object-contain"
+        />
+        
       </div>
     );
   };
 
-  // Hero Image Slider Component
+  // Hero Image Slider Component (Upload functionality removed)
   const HeroSlider = () => {
     const nextSlide = () => {
       setCurrentSlide((prev) => (prev + 1) % heroImages.length);
@@ -388,33 +311,43 @@ const FluidlineWebsite = () => {
             />
           ))}
         </div>
-
-        <button 
-          onClick={() => {
-            const input = document.createElement('input');
-            input.type = 'file';
-            input.accept = 'image/*';
-            input.onchange = (e) => {
-              const file = e.target.files[0];
-              if (file) {
-                const reader = new FileReader();
-                reader.onload = (e) => {
-                  console.log('Would upload image:', e.target.result);
-                  alert('Image upload functionality ready! In production, this would upload to your server.');
-                };
-                reader.readAsDataURL(file);
-              }
-            };
-            input.click();
-          }}
-          className="absolute top-4 right-4 bg-blue-600 hover:bg-blue-700 text-white p-2 rounded-lg transition duration-300 flex items-center space-x-2"
-        >
-          <Upload size={16} />
-          <span className="text-sm">Add Image</span>
-        </button>
       </div>
     );
   };
+
+  // Theme Dropdown Component
+  const ThemeDropdown = () => (
+    <div className="relative">
+      <button
+        onClick={() => setShowThemeDropdown(!showThemeDropdown)}
+        className="flex items-center px-3 py-2 bg-gray-200 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-300 transition duration-300"
+      >
+        <span>{themes[theme].name}</span>
+        <ChevronDown size={16} className={`ml-1 transition-transform ${showThemeDropdown ? 'rotate-180' : ''}`} />
+      </button>
+
+      {showThemeDropdown && (
+        <div className="absolute right-0 mt-1 w-32 bg-white rounded-lg shadow-lg border z-50">
+          {Object.entries(themes).map(([key, themeData]) => (
+            <button
+              key={key}
+              onClick={() => {
+                setTheme(key);
+                setShowThemeDropdown(false);
+              }}
+              className={`w-full text-left px-3 py-2 text-sm rounded-lg transition duration-300 ${
+                theme === key 
+                  ? 'bg-blue-100 text-blue-700 font-medium' 
+                  : 'text-gray-700 hover:bg-gray-100'
+              }`}
+            >
+              {themeData.name}
+            </button>
+          ))}
+        </div>
+      )}
+    </div>
+  );
 
   const handleChatSubmit = (e) => {
     e.preventDefault();
@@ -736,6 +669,20 @@ const FluidlineWebsite = () => {
     }
   };
 
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = () => {
+      if (showThemeDropdown) {
+        setShowThemeDropdown(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [showThemeDropdown]);
+
   return (
     <div className="min-h-screen bg-gray-100">
       <header className="bg-white shadow-lg sticky top-0 z-40">
@@ -747,29 +694,6 @@ const FluidlineWebsite = () => {
                 <h1 className="text-xl font-bold text-gray-800">FLUIDLINE</h1>
                 <p className="text-xs text-gray-600">Engineers & Fabricators</p>
               </div>
-              
-              <button 
-                onClick={() => {
-                  const input = document.createElement('input');
-                  input.type = 'file';
-                  input.accept = 'image/*';
-                  input.onchange = (e) => {
-                    const file = e.target.files[0];
-                    if (file) {
-                      const reader = new FileReader();
-                      reader.onload = (e) => {
-                        setCustomLogo(e.target.result);
-                      };
-                      reader.readAsDataURL(file);
-                    }
-                  };
-                  input.click();
-                }}
-                className="ml-2 text-gray-500 hover:text-gray-700 p-1 rounded transition duration-300"
-                title="Upload custom logo"
-              >
-                <Upload size={16} />
-              </button>
             </div>
 
             <nav className="hidden lg:flex space-x-8">
@@ -790,25 +714,7 @@ const FluidlineWebsite = () => {
             </nav>
 
             <div className="flex items-center space-x-4">
-              <div className="flex bg-gray-200 rounded-lg p-1 overflow-x-auto">
-                {Object.entries(themes).map(([key, themeData]) => (
-                  <button
-                    key={key}
-                    onClick={() => setTheme(key)}
-                    className={`px-3 py-1 rounded-lg transition duration-300 text-xs whitespace-nowrap ${
-                      theme === key 
-                        ? key === 'original' ? 'bg-blue-700 text-white' :
-                          key === 'corporate' ? 'bg-blue-600 text-white' :
-                          key === 'dynamic' ? 'bg-red-600 text-white' :
-                          key === 'modern' ? 'bg-gradient-to-r from-blue-600 to-red-600 text-white' :
-                          'bg-blue-700 text-white'
-                        : 'text-gray-700 hover:bg-gray-300'
-                    }`}
-                  >
-                    {themeData.name}
-                  </button>
-                ))}
-              </div>
+              <ThemeDropdown />
 
               <button
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -840,6 +746,11 @@ const FluidlineWebsite = () => {
                   </button>
                 ))}
               </nav>
+              
+              {/* Mobile Theme Dropdown */}
+              <div className="mt-4 pt-4 border-t border-gray-200">
+                <ThemeDropdown />
+              </div>
             </div>
           )}
         </div>
