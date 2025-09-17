@@ -1,211 +1,354 @@
 import React, { useState, useEffect } from 'react';
 import { 
-  Menu, X, Phone, Mail, MapPin, Download, Users, Building, 
+  Menu, X, Phone, Mail, MapPin, Download, Users, Building2, 
   Shield, Award, ChevronRight, Star, MessageCircle, Send, 
   Minimize2, Home, Info, Wrench, FileText, 
-  Briefcase, Contact, Medal, Clock, ChevronLeft, ChevronDown
+  Briefcase, Contact, Medal, Clock, ChevronLeft, ChevronDown,
+  Factory, Zap, Cog, Flame, ArrowRight, Play, Calendar,
+  Globe, Target, TrendingUp, CheckCircle, Eye, Heart,
+  Settings, Layers, Cpu, Database, Network
 } from 'lucide-react';
 
 const FluidlineWebsite = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
-  const [theme, setTheme] = useState('original');
   const [showChatbot, setShowChatbot] = useState(false);
-  const [showThemeDropdown, setShowThemeDropdown] = useState(false);
   const [currentSlide, setCurrentSlide] = useState(0);
   const [chatMessages, setChatMessages] = useState([
-    { type: 'bot', message: 'Hello! How can I help you with Fluidline services today?' }
+    { type: 'bot', message: 'Hello! Welcome to Fluidline Engineers & Fabricators. How can I help you with our engineering solutions today?' }
   ]);
   const [chatInput, setChatInput] = useState('');
+  const [isScrolled, setIsScrolled] = useState(false);
 
-  // Hero slider images
-  const heroImages = [
+  // Handle scroll effect for header
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  // Hero slides with industrial engineering imagery
+  const heroSlides = [
     {
-      url: 'https://images.unsplash.com/photo-1581092921461-eab62e97a780?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80',
-      title: 'RELIABLE QUALITY CHECK',
-      subtitle: 'Ensuring Excellence in Every Project',
-      buttonText: 'CLICK HERE'
+      image: 'https://images.unsplash.com/photo-1565514020179-026b92b84bb6?q=80&w=2070&auto=format&fit=crop',
+      title: 'Engineering Excellence Since 1988',
+      subtitle: 'Leading Multi-Dimensional Engineering Solutions',
+      description: 'Committed to Quality and Customer Delight for Fortune 500 Companies',
+      cta: 'Explore Our Services',
+      overlay: 'bg-gradient-to-r from-blue-900/80 via-red-900/60 to-transparent'
     },
     {
-      url: 'https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80',
-      title: 'PROCESS PIPING EXCELLENCE',
-      subtitle: '33+ Years of Engineering Leadership',
-      buttonText: 'LEARN MORE'
+      image: 'https://images.unsplash.com/photo-1581092921461-eab62e97a780?q=80&w=2070&auto=format&fit=crop',
+      title: 'Fire Protection & Detection Systems',
+      subtitle: 'Class-A Licensed Safety Solutions',
+      description: 'Complete fire protection systems with Maharashtra Class A license',
+      cta: 'Safety Solutions',
+      overlay: 'bg-gradient-to-r from-red-900/80 via-blue-900/60 to-transparent'
     },
     {
-      url: 'https://images.unsplash.com/photo-1513828583688-c52646db42da?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80',
-      title: 'FIRE PROTECTION SYSTEMS',
-      subtitle: 'Class A Licensed Safety Solutions',
-      buttonText: 'DISCOVER'
+      image: 'https://images.unsplash.com/photo-1513828583688-c52646db42da?q=80&w=2070&auto=format&fit=crop',
+      title: 'Process & Utility Piping',
+      subtitle: 'ASME B 31.3 Compliant Solutions',
+      description: 'State-of-the-art process piping for various industrial applications',
+      cta: 'Piping Solutions',
+      overlay: 'bg-gradient-to-r from-blue-900/80 via-red-900/60 to-transparent'
     },
     {
-      url: 'https://images.unsplash.com/photo-1587293852726-70cdb56c2866?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80',
-      title: 'STRUCTURAL FABRICATION',
-      subtitle: 'Precision Engineering & Manufacturing',
-      buttonText: 'EXPLORE'
+      image: 'https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?q=80&w=2070&auto=format&fit=crop',
+      title: 'Equipment Fabrication',
+      subtitle: 'MS & SS Fabrication Excellence',
+      description: 'Tanks, Silos, Structures up to 900KL capacity with precision',
+      cta: 'Fabrication Services',
+      overlay: 'bg-gradient-to-r from-red-900/80 via-blue-900/60 to-transparent'
     }
   ];
 
-  // Auto-advance slides
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % heroImages.length);
-    }, 5000);
-    return () => clearInterval(timer);
-  }, [heroImages.length]);
-
-  const themes = {
-    original: {
-      name: 'Original',
-      primary: 'bg-blue-700',
-      primaryHover: 'hover:bg-blue-800',
-      secondary: 'bg-blue-50',
-      accent: 'text-blue-700',
-      accentRed: 'text-red-600',
-      gradient: 'bg-gradient-to-r from-blue-700 to-red-600',
-      gradientAlt: 'bg-gradient-to-br from-blue-600 via-blue-700 to-red-600',
-      border: 'border-blue-200',
-      cardBg: 'bg-white',
-      redPrimary: 'bg-red-600',
-      redHover: 'hover:bg-red-700',
-      headerBg: 'bg-white',
-      navActive: 'bg-blue-700 text-white',
-      navHover: 'hover:bg-blue-50'
-    },
-    corporate: {
-      name: 'Corporate',
-      primary: 'bg-blue-600',
-      primaryHover: 'hover:bg-blue-700',
-      secondary: 'bg-blue-50',
-      accent: 'text-blue-600',
-      accentRed: 'text-red-600',
-      gradient: 'bg-gradient-to-r from-blue-600 to-red-600',
-      gradientAlt: 'bg-gradient-to-br from-blue-500 via-purple-600 to-red-500',
-      border: 'border-blue-200',
-      cardBg: 'bg-white',
-      redPrimary: 'bg-red-600',
-      redHover: 'hover:bg-red-700',
-      headerBg: 'bg-white',
-      navActive: 'bg-blue-600 text-white',
-      navHover: 'hover:bg-blue-50'
-    },
-    dynamic: {
-      name: 'Dynamic',
-      primary: 'bg-red-600',
-      primaryHover: 'hover:bg-red-700',
-      secondary: 'bg-red-50',
-      accent: 'text-red-600',
-      accentRed: 'text-blue-600',
-      gradient: 'bg-gradient-to-r from-red-600 to-blue-600',
-      gradientAlt: 'bg-gradient-to-bl from-red-500 via-pink-600 to-blue-500',
-      border: 'border-red-200',
-      cardBg: 'bg-white',
-      redPrimary: 'bg-blue-600',
-      redHover: 'hover:bg-blue-700',
-      headerBg: 'bg-white',
-      navActive: 'bg-red-600 text-white',
-      navHover: 'hover:bg-red-50'
-    },
-    modern: {
-      name: 'Modern',
-      primary: 'bg-gradient-to-r from-blue-600 to-red-600',
-      primaryHover: 'hover:from-blue-700 hover:to-red-700',
-      secondary: 'bg-gradient-to-r from-blue-50 to-red-50',
-      accent: 'text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-red-600',
-      accentRed: 'text-transparent bg-clip-text bg-gradient-to-r from-red-600 to-blue-600',
-      gradient: 'bg-gradient-to-r from-blue-600 via-purple-600 to-red-600',
-      gradientAlt: 'bg-gradient-to-tr from-blue-400 via-purple-500 to-red-400',
-      border: 'border-gradient-to-r from-blue-200 to-red-200',
-      cardBg: 'bg-gradient-to-br from-white to-blue-50',
-      redPrimary: 'bg-gradient-to-r from-red-600 to-blue-600',
-      redHover: 'hover:from-red-700 hover:to-blue-700',
-      headerBg: 'bg-white',
-      navActive: 'bg-gradient-to-r from-blue-600 to-red-600 text-white',
-      navHover: 'hover:bg-gradient-to-r hover:from-blue-50 hover:to-red-50'
-    },
-    contrast: {
-      name: 'Contrast',
-      primary: 'bg-blue-800',
-      primaryHover: 'hover:bg-blue-900',
-      secondary: 'bg-red-50',
-      accent: 'text-blue-800',
-      accentRed: 'text-red-700',
-      gradient: 'bg-gradient-to-r from-blue-800 to-red-700',
-      gradientAlt: 'bg-gradient-to-r from-red-700 to-blue-800',
-      border: 'border-blue-300',
-      cardBg: 'bg-white',
-      redPrimary: 'bg-red-700',
-      redHover: 'hover:bg-red-800',
-      headerBg: 'bg-white',
-      navActive: 'bg-blue-800 text-white',
-      navHover: 'hover:bg-blue-50'
-    }
+  // Page-specific hero slides
+  const pageHeroSlides = {
+    about: [
+      {
+        image: 'https://images.unsplash.com/photo-1581092921461-eab62e97a780?q=80&w=2070&auto=format&fit=crop',
+        title: 'About Fluidline',
+        subtitle: '33+ Years of Engineering Excellence',
+        description: 'Multi-dimensional company committed to Quality and Customer Delight',
+        overlay: 'bg-gradient-to-r from-blue-900/80 via-red-900/60 to-transparent'
+      },
+      {
+        image: 'https://images.unsplash.com/photo-1565514020179-026b92b84bb6?q=80&w=2070&auto=format&fit=crop',
+        title: 'Our Legacy',
+        subtitle: 'Established in 1988',
+        description: 'Guided by founding members, driven by young dynamic leadership',
+        overlay: 'bg-gradient-to-r from-red-900/80 via-blue-900/60 to-transparent'
+      }
+    ],
+    'vision-mission': [
+      {
+        image: 'https://images.unsplash.com/photo-1513828583688-c52646db42da?q=80&w=2070&auto=format&fit=crop',
+        title: 'Our Vision',
+        subtitle: 'Exploring New Horizons',
+        description: 'Multi-dimensional expertise with constant client liaison',
+        overlay: 'bg-gradient-to-r from-blue-900/80 via-red-900/60 to-transparent'
+      },
+      {
+        image: 'https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?q=80&w=2070&auto=format&fit=crop',
+        title: 'Our Mission',
+        subtitle: 'Integrity & Commitment',
+        description: 'Standards of perfection in every engineering solution',
+        overlay: 'bg-gradient-to-r from-red-900/80 via-blue-900/60 to-transparent'
+      }
+    ],
+    services: [
+      {
+        image: 'https://images.unsplash.com/photo-1518709474137-4b906b9e922c?q=80&w=2070&auto=format&fit=crop',
+        title: 'Process & Utility Piping',
+        subtitle: 'ASME B 31.3 Compliant Solutions',
+        description: 'State-of-the-art process piping for various industrial applications',
+        overlay: 'bg-gradient-to-r from-blue-900/80 via-red-900/60 to-transparent'
+      },
+      {
+        image: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?q=80&w=2070&auto=format&fit=crop',
+        title: 'Fire Protection Systems',
+        subtitle: 'Class A Licensed Safety',
+        description: 'Complete fire protection and detection systems',
+        overlay: 'bg-gradient-to-r from-red-900/80 via-blue-900/60 to-transparent'
+      },
+      {
+        image: 'https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?q=80&w=2070&auto=format&fit=crop',
+        title: 'Structural Fabrication',
+        subtitle: 'Heavy Engineering Solutions',
+        description: 'Platforms, pipe racks & support structures',
+        overlay: 'bg-gradient-to-r from-blue-900/80 via-red-900/60 to-transparent'
+      }
+    ],
+    certificates: [
+      {
+        image: 'https://images.unsplash.com/photo-1559308881-7a7d4b7f4c4a?q=80&w=2070&auto=format&fit=crop',
+        title: 'Our Certifications',
+        subtitle: 'Quality Assurance Standards',
+        description: 'Class A Fire License and international compliance',
+        overlay: 'bg-gradient-to-r from-blue-900/80 via-red-900/60 to-transparent'
+      }
+    ],
+    clients: [
+      {
+        image: 'https://images.unsplash.com/photo-1581092921461-eab62e97a780?q=80&w=2070&auto=format&fit=crop',
+        title: 'Our Clients & Consultants',
+        subtitle: 'Fortune 500 Partnerships',
+        description: 'Trusted by leading corporates and MNCs across India',
+        overlay: 'bg-gradient-to-r from-blue-900/80 via-red-900/60 to-transparent'
+      },
+      {
+        image: 'https://images.unsplash.com/photo-1565514020179-026b92b84bb6?q=80&w=2070&auto=format&fit=crop',
+        title: 'Global Standards',
+        subtitle: 'World-Class Solutions',
+        description: '1000+ successful projects with zero compromise on quality',
+        overlay: 'bg-gradient-to-r from-red-900/80 via-blue-900/60 to-transparent'
+      }
+    ],
+    career: [
+      {
+        image: 'https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?q=80&w=2070&auto=format&fit=crop',
+        title: 'Join Our Team',
+        subtitle: 'Career Opportunities',
+        description: 'Be part of 3000+ skilled workforce delivering excellence',
+        overlay: 'bg-gradient-to-r from-blue-900/80 via-red-900/60 to-transparent'
+      }
+    ],
+    contact: [
+      {
+        image: 'https://images.unsplash.com/photo-1513828583688-c52646db42da?q=80&w=2070&auto=format&fit=crop',
+        title: 'Contact Us',
+        subtitle: 'Get In Touch',
+        description: 'Kanpur • Mumbai • Noida • Bengaluru',
+        overlay: 'bg-gradient-to-r from-blue-900/80 via-red-900/60 to-transparent'
+      }
+    ]
   };
 
-  const currentTheme = themes[theme];
+  // Generic Page Hero Section
+  const PageHeroSection = ({ pageKey, currentSlide = 0 }) => {
+    const slides = pageHeroSlides[pageKey] || [];
+    if (slides.length === 0) return null;
+
+    return (
+      <section className="relative h-96 md:h-[500px] overflow-hidden">
+        <div className="absolute inset-0 z-10 flex items-center">
+          <div className="container mx-auto px-6 lg:px-12">
+            <div className="max-w-4xl">
+              <div className="space-y-6 text-white">
+                <div className="space-y-2">
+                  <p className="text-sm uppercase tracking-widest font-semibold text-blue-300 opacity-90">
+                    Fluidline Engineers & Fabricators
+                  </p>
+                  <h1 className="text-4xl md:text-6xl font-bold leading-tight">
+                    {slides[currentSlide % slides.length].title}
+                  </h1>
+                  <h2 className="text-xl md:text-2xl font-light text-gray-200">
+                    {slides[currentSlide % slides.length].subtitle}
+                  </h2>
+                </div>
+                <p className="text-lg text-gray-300 max-w-2xl leading-relaxed">
+                  {slides[currentSlide % slides.length].description}
+                </p>
+                <div className="flex flex-wrap gap-4 pt-4">
+                  <button 
+                    onClick={() => setActiveSection('contact')}
+                    className="bg-gradient-to-r from-blue-600 to-red-600 hover:from-blue-700 hover:to-red-700 text-white px-6 py-3 rounded-full font-semibold transition-all duration-300 flex items-center space-x-2 shadow-xl hover:shadow-2xl transform hover:scale-105"
+                  >
+                    <span>Contact Us</span>
+                    <ArrowRight size={18} />
+                  </button>
+                  <button className="border-2 border-white/30 text-white hover:bg-white/10 px-6 py-3 rounded-full font-semibold transition-all duration-300 flex items-center space-x-2 backdrop-blur-sm">
+                    <Download size={18} />
+                    <span>Download Brochure</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Background Images */}
+        <div className="absolute inset-0">
+          {slides.map((slide, index) => (
+            <div
+              key={index}
+              className={`absolute inset-0 transition-opacity duration-1000 ${
+                index === (currentSlide % slides.length) ? 'opacity-100' : 'opacity-0'
+              }`}
+            >
+              <img
+                src={slide.image}
+                alt={slide.title}
+                className="w-full h-full object-cover"
+              />
+              <div className={`absolute inset-0 ${slide.overlay}`} />
+            </div>
+          ))}
+        </div>
+
+        {/* Navigation Dots */}
+        {slides.length > 1 && (
+          <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 z-20">
+            <div className="flex space-x-2">
+              {slides.map((_, index) => (
+                <div
+                  key={index}
+                  className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                    index === (currentSlide % slides.length) ? 'bg-white scale-125' : 'bg-white/50'
+                  }`}
+                />
+              ))}
+            </div>
+          </div>
+        )}
+      </section>
+    );
+  };
 
   const navigation = [
     { id: 'home', name: 'Home', icon: Home },
     { id: 'about', name: 'About Us', icon: Info },
+    { id: 'vision-mission', name: 'Vision & Mission', icon: Target },
     { id: 'services', name: 'Services', icon: Wrench },
     { id: 'certificates', name: 'Certificates', icon: Medal },
-    { id: 'clients', name: 'Clients', icon: Building },
+    { id: 'clients', name: 'Clients & Consultants', icon: Building2 },
     { id: 'career', name: 'Career', icon: Briefcase },
-    { id: 'contact', name: 'Contact', icon: Contact }
+    { id: 'contact', name: 'Contact Us', icon: Contact }
   ];
 
   const services = [
     {
       title: 'Process & Utility Piping',
-      description: 'State-of-the-art Process Piping tailormade for various applications following ASME B 31.3 standards.',
-      icon: '🔧'
+      description: 'State-of-the-art Process Piping tailormade for various applications following ASME B 31.3 standards with precision engineering and quality assurance.',
+      icon: Factory,
+      image: 'https://images.unsplash.com/photo-1518709474137-4b906b9e922c?q=80&w=600&auto=format&fit=crop',
+      features: ['ASME B 31.3 Compliance', 'Custom Design Solutions', 'Quality Testing'],
+      color: 'from-blue-500 to-blue-700'
     },
     {
       title: 'Fire Protection & Detection Systems',
-      description: 'Complete fire protection solutions with Class A Fire License in Maharashtra.',
-      icon: '🔥'
+      description: 'Complete fire protection solutions with Class A Fire License in Maharashtra. Design, supply, installation, testing and commissioning.',
+      icon: Flame,
+      image: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?q=80&w=600&auto=format&fit=crop',
+      features: ['Class A Licensed', 'Detection Systems', 'Emergency Response'],
+      color: 'from-red-500 to-red-700'
     },
     {
       title: 'Structural Work',
-      description: 'Supply, fabrication, erection for platforms, pipe racks & support structures.',
-      icon: '🏗️'
+      description: 'Supply, fabrication and erection for platforms, pipe racks & support structures with precision welding and quality control.',
+      icon: Building2,
+      image: 'https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?q=80&w=600&auto=format&fit=crop',
+      features: ['Heavy Fabrication', 'Precision Welding', 'Quality Control'],
+      color: 'from-blue-600 to-red-600'
     },
     {
       title: 'Equipment Fabrication',
-      description: 'MS and SS equipment fabrication including tanks, chimneys, air receivers up to 900KL capacity.',
-      icon: '⚙️'
+      description: 'MS and SS equipment fabrication including tanks, chimneys, air receivers up to 900KL capacity with precision manufacturing.',
+      icon: Cog,
+      image: 'https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?q=80&w=600&auto=format&fit=crop',
+      features: ['Large Capacity', 'Material Excellence', 'Custom Solutions'],
+      color: 'from-red-500 to-blue-600'
     },
     {
       title: 'Equipment Erection',
-      description: 'Installation of process machinery, pumps, boilers, cooling towers from 1MT to 120MT.',
-      icon: '🏭'
+      description: 'Installation of process machinery, pumps, boilers, cooling towers from 1MT to 120MT with safety protocols and precision.',
+      icon: Settings,
+      image: 'https://images.unsplash.com/photo-1565514020179-026b92b84bb6?q=80&w=600&auto=format&fit=crop',
+      features: ['Heavy Machinery', 'Precision Installation', 'Safety Protocols'],
+      color: 'from-blue-500 to-red-500'
     },
     {
       title: 'Balance of Boiler',
-      description: 'Complete boiler services from procurement to commissioning following IBR regulations.',
-      icon: '💨'
+      description: 'Complete boiler services from procurement to commissioning following IBR regulations with expert commissioning.',
+      icon: Zap,
+      image: 'https://images.unsplash.com/photo-1613323593608-abc90fec84ff?q=80&w=600&auto=format&fit=crop',
+      features: ['IBR Compliance', 'Complete Solutions', 'Expert Commissioning'],
+      color: 'from-red-600 to-blue-500'
     }
   ];
 
   const stats = [
-    { number: '1000+', label: 'Successful Projects' },
-    { number: '3000+', label: 'Workforce' },
-    { number: '100M+', label: 'Safe Man Hours' },
-    { number: '33+', label: 'Years Experience' }
+    { number: '1000+', label: 'Successful Projects', icon: Target, color: 'text-blue-500' },
+    { number: '3000+', label: 'Skilled Workforce', icon: Users, color: 'text-red-500' },
+    { number: '100M+', label: 'Safe Man Hours Achieved', icon: Shield, color: 'text-blue-600' },
+    { number: '33+', label: 'Years of Experience', icon: Award, color: 'text-red-600' }
+  ];
+
+  const clients = [
+    { name: 'L&T', sector: 'Infrastructure & Engineering', logo: 'LT' },
+    { name: 'Reliance Industries', sector: 'Oil & Gas', logo: 'RI' },
+    { name: 'TATA Group', sector: 'Steel & Power', logo: 'TT' },
+    { name: 'Godrej', sector: 'Chemical & Consumer', logo: 'GJ' },
+    { name: 'Hindustan Unilever', sector: 'FMCG Manufacturing', logo: 'HU' },
+    { name: 'ITC Limited', sector: 'Manufacturing', logo: 'IT' },
+    { name: 'Bajaj Group', sector: 'Automotive', logo: 'BJ' },
+    { name: 'JSW Steel', sector: 'Steel Industry', logo: 'JS' }
   ];
 
   const testimonials = [
     {
       company: 'Serum Institute of India Pvt. Ltd.',
-      message: 'Fluidline was awarded the turnkey project for Supply, Inspection, Testing, Erection and Commissioning of complete OSBL and ISBL...'
+      message: 'Fluidline was awarded the turnkey project for Supply, Inspection, Testing, Erection and Commissioning of complete OSBL and ISBL with exceptional quality and timely delivery.',
+      rating: 5,
+      author: 'Project Director',
+      logo: 'SI'
     },
     {
       company: 'Jubilant Life Sciences',
-      message: 'We are pleased to be associated with Fluidline as our strategic sourcing partner in our continuous journey on the path progress.'
+      message: 'We are pleased to be associated with Fluidline as our strategic sourcing partner in our continuous journey on the path of progress and innovation.',
+      rating: 5,
+      author: 'VP Engineering',
+      logo: 'JL'
     },
     {
       company: 'Cargill India Ltd.',
-      message: 'Fluidline was awarded turnkey projects for Supply, Fabrication & Erection of Structure, SS Pipeline, Equipment Erection, Fire Fighting...'
+      message: 'Fluidline was awarded turnkey projects for Supply, Fabrication & Erection of Structure, SS Pipeline, Equipment Erection, Fire Fighting with no safety incidents.',
+      rating: 5,
+      author: 'Plant Manager',
+      logo: 'CI'
     }
   ];
 
@@ -234,150 +377,515 @@ const FluidlineWebsite = () => {
     }
   ];
 
-  // Logo component - Larger size
-  const FluidlineLogo = ({ size = 'normal', className = '' }) => {
-    const logoSize = size === 'large' ? 'w-20 h-20' : 'w-14 h-14';
-    
+  // Logo component with blue and red theme
+  const FluidlineLogo = ({ className = '', size = 'md' }) => {
+    const sizeClasses = {
+      sm: 'w-8 h-8 text-xs',
+      md: 'w-12 h-12 text-sm',
+      lg: 'w-16 h-16 text-base'
+    };
+
     return (
-      <div className={`${logoSize} relative ${className} flex items-center justify-center bg-gray-100 border-2 border-dashed border-gray-300 rounded-lg`}>
-        <img 
-          src="/src/assets/logo1.png" 
-          alt="Fluidline Logo" 
-          className="w-full h-full object-contain"
-          onError={(e) => {
-            e.target.style.display = 'none';
-            e.target.nextSibling.style.display = 'block';
-          }}
-        />
-        <div className="text-xs text-gray-500 hidden">LOGO</div>
+      <div className={`${sizeClasses[size]} ${className} bg-gradient-to-br from-blue-600 to-red-600 rounded-lg flex items-center justify-center shadow-lg`}>
+        <span className="text-white font-bold">FL</span>
       </div>
     );
   };
 
-  // Hero Image Slider Component
-  const HeroSlider = () => {
-    const nextSlide = () => {
-      setCurrentSlide((prev) => (prev + 1) % heroImages.length);
-    };
-
-    const prevSlide = () => {
-      setCurrentSlide((prev) => (prev - 1 + heroImages.length) % heroImages.length);
-    };
-
-    const goToSlide = (index) => {
-      setCurrentSlide(index);
-    };
-
-    return (
-      <div className="relative h-96 md:h-[500px] lg:h-[600px] overflow-hidden">
-        <div 
-          className="flex transition-transform duration-500 ease-in-out h-full"
-          style={{ transform: `translateX(-${currentSlide * 100}%)` }}
-        >
-          {heroImages.map((image, index) => (
-            <div key={index} className="w-full flex-shrink-0 relative">
-              <img 
-                src={image.url} 
-                alt={image.title}
-                className="w-full h-full object-cover"
-              />
-              <div className="absolute inset-0 bg-black bg-opacity-40"></div>
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="text-center text-white px-4">
-                  <div className={`${currentTheme.primary} inline-block px-8 py-3 mb-4`}>
-                    <h2 className="text-2xl md:text-4xl font-bold">{image.title}</h2>
-                  </div>
-                  <p className="text-lg md:text-xl mb-6">{image.subtitle}</p>
-                  <button className={`${currentTheme.redPrimary} ${currentTheme.redHover} text-white px-8 py-3 rounded font-semibold transition duration-300`}>
-                    {image.buttonText}
-                  </button>
-                </div>
+  // Hero Section
+  const HeroSection = () => (
+    <section className="relative h-screen overflow-hidden">
+      <div className="absolute inset-0 z-10 flex items-center">
+        <div className="container mx-auto px-6 lg:px-12">
+          <div className="max-w-4xl">
+            <div className="space-y-6 text-white">
+              <div className="space-y-2">
+                <p className="text-sm uppercase tracking-widest font-semibold text-blue-300 opacity-90">
+                  Welcome to Fluidline Group
+                </p>
+                <h1 className="text-5xl md:text-7xl font-bold leading-tight">
+                  {heroSlides[currentSlide].title}
+                </h1>
+                <h2 className="text-2xl md:text-3xl font-light text-gray-200">
+                  {heroSlides[currentSlide].subtitle}
+                </h2>
+              </div>
+              <p className="text-xl text-gray-300 max-w-2xl leading-relaxed">
+                {heroSlides[currentSlide].description}
+              </p>
+              <div className="flex flex-wrap gap-4 pt-4">
+                <button 
+                  onClick={() => setActiveSection('services')}
+                  className="bg-gradient-to-r from-blue-600 to-red-600 hover:from-blue-700 hover:to-red-700 text-white px-8 py-4 rounded-full font-semibold transition-all duration-300 flex items-center space-x-2 shadow-xl hover:shadow-2xl transform hover:scale-105"
+                >
+                  <span>{heroSlides[currentSlide].cta}</span>
+                  <ArrowRight size={20} />
+                </button>
+                <button className="border-2 border-white/30 text-white hover:bg-white/10 px-8 py-4 rounded-full font-semibold transition-all duration-300 flex items-center space-x-2 backdrop-blur-sm">
+                  <Download size={20} />
+                  <span>Download Brochure</span>
+                </button>
               </div>
             </div>
-          ))}
+          </div>
         </div>
+      </div>
 
-        <button 
-          onClick={prevSlide}
-          className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full hover:bg-opacity-70 transition duration-300"
-        >
-          <ChevronLeft size={24} />
-        </button>
-        <button 
-          onClick={nextSlide}
-          className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full hover:bg-opacity-70 transition duration-300"
-        >
-          <ChevronRight size={24} />
-        </button>
+      {/* Background Slider */}
+      <div className="absolute inset-0">
+        {heroSlides.map((slide, index) => (
+          <div
+            key={index}
+            className={`absolute inset-0 transition-opacity duration-1000 ${
+              index === currentSlide ? 'opacity-100' : 'opacity-0'
+            }`}
+          >
+            <img
+              src={slide.image}
+              alt={slide.title}
+              className="w-full h-full object-cover"
+            />
+            <div className={`absolute inset-0 ${slide.overlay}`} />
+          </div>
+        ))}
+      </div>
 
-        <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
-          {heroImages.map((_, index) => (
+      {/* Navigation */}
+      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-20">
+        <div className="flex space-x-3">
+          {heroSlides.map((_, index) => (
             <button
               key={index}
-              onClick={() => goToSlide(index)}
-              className={`w-3 h-3 rounded-full transition duration-300 ${
-                index === currentSlide ? 'bg-white' : 'bg-white bg-opacity-50'
+              onClick={() => setCurrentSlide(index)}
+              className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                index === currentSlide ? 'bg-white scale-125' : 'bg-white/50'
               }`}
             />
           ))}
         </div>
       </div>
-    );
-  };
-
-  // Theme Dropdown Component - Fixed
-  const ThemeDropdown = () => (
-    <div className="relative">
-      <button
-        onClick={(e) => {
-          e.stopPropagation();
-          setShowThemeDropdown(!showThemeDropdown);
-        }}
-        className="flex items-center px-4 py-2 bg-gray-200 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-300 transition duration-300 min-w-[120px] justify-between"
-      >
-        <span>{themes[theme].name}</span>
-        <ChevronDown size={16} className={`ml-1 transition-transform ${showThemeDropdown ? 'rotate-180' : ''}`} />
-      </button>
-
-      {showThemeDropdown && (
-        <div className="absolute right-0 mt-1 w-36 bg-white rounded-lg shadow-xl border border-gray-200 z-50 py-1">
-          {Object.entries(themes).map(([key, themeData]) => (
-            <button
-              key={key}
-              onClick={(e) => {
-                e.stopPropagation();
-                setTheme(key);
-                setShowThemeDropdown(false);
-              }}
-              className={`w-full text-left px-4 py-2 text-sm transition duration-300 hover:bg-gray-50 ${
-                theme === key 
-                  ? 'bg-blue-100 text-blue-700 font-medium border-l-2 border-blue-500' 
-                  : 'text-gray-700'
-              }`}
-            >
-              {themeData.name}
-            </button>
-          ))}
-        </div>
-      )}
-    </div>
+    </section>
   );
 
-  const handleChatSubmit = (e) => {
-    e.preventDefault();
+  // Company Introduction Section
+  const IntroSection = () => (
+    <section className="py-20 bg-white">
+      <div className="container mx-auto px-6">
+        <div className="text-center max-w-6xl mx-auto">
+          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-8">
+            <span className="text-blue-600">Fluidline Engineers</span> & <span className="text-red-600">Fabricators</span> Private Limited
+          </h2>
+          <p className="text-xl text-gray-700 mb-6 leading-relaxed">
+            is a multi-dimensional company committed to Quality and Customer Delight. We provide turnkey solutions 
+            for the most reputed Corporates and MNCs in India.
+          </p>
+          <p className="text-lg text-gray-600 mb-12 leading-relaxed max-w-4xl mx-auto">
+            We are a market leader in Mechanical Works like Process Piping, Utility Piping, Fire Protection & Detection Systems, 
+            Equipment Erection, Fabrication of Structures, Tanks, Balance of Boiler Jobs, Tanks, Silos, Insulation, Painting etc.
+          </p>
+          
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div className="bg-gradient-to-br from-blue-50 to-blue-100 p-8 rounded-2xl border-l-4 border-blue-500">
+              <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-blue-600 rounded-full flex items-center justify-center mx-auto mb-6">
+                <Heart className="text-white" size={32} />
+              </div>
+              <h3 className="text-2xl font-bold text-blue-700 mb-4">Inspired by our legacy</h3>
+              <h4 className="text-lg font-semibold text-red-600 mb-4">Driven by our young and dynamic leadership</h4>
+              <p className="text-gray-700 leading-relaxed">
+                Established in 1988, we are still guided by the illustrious management of our founding members. 
+                Today we are led by a young and dynamic team and have grown to become one of the most reputed names 
+                in the Engineering and Fabrication sector.
+              </p>
+            </div>
+
+            <div className="bg-gradient-to-br from-red-50 to-red-100 p-8 rounded-2xl border-l-4 border-red-500">
+              <div className="w-16 h-16 bg-gradient-to-r from-red-500 to-red-600 rounded-full flex items-center justify-center mx-auto mb-6">
+                <TrendingUp className="text-white" size={32} />
+              </div>
+              <h3 className="text-2xl font-bold text-red-700 mb-4">Over 33 years of delivering best-in-class services</h3>
+              <h4 className="text-lg font-semibold text-blue-600 mb-4">And the journey continues!</h4>
+              <p className="text-gray-700 leading-relaxed">
+                We have had an impeccable track record of serving our customers for the last 33 years across the 
+                length and breadth of the country. With every project we undertake, we raise the bar for ourselves 
+                to make our solutions and services even more competent and reliable.
+              </p>
+            </div>
+
+            <div className="bg-gradient-to-br from-purple-50 to-purple-100 p-8 rounded-2xl border-l-4 border-purple-500">
+              <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-red-500 rounded-full flex items-center justify-center mx-auto mb-6">
+                <Shield className="text-white" size={32} />
+              </div>
+              <h3 className="text-2xl font-bold text-purple-700 mb-4">Commitment to earning the trust of our clients</h3>
+              <p className="text-gray-700 leading-relaxed">
+                In our endeavour to become a long-term partner for our valued clients, we ensure that we adhere to all 
+                the Quality and Safety Guidelines. We take all measures required to meet the committed timelines. 
+                We evaluate our engineering services to offer benefits at a reduced cost.
+              </p>
+            </div>
+          </div>
+
+          <div className="bg-gradient-to-r from-blue-600 to-red-600 p-8 rounded-2xl text-white mt-12">
+            <h3 className="text-2xl font-bold mb-4">Strategically located to always stay connected</h3>
+            <p className="text-lg">
+              We operate from our Head Office in <span className="font-semibold">Kanpur</span> and branches in key cities like 
+              <span className="font-semibold"> Mumbai, Noida</span> and <span className="font-semibold">Bengaluru</span>.
+            </p>
+            <p className="mt-4 text-blue-100">
+              We are proud to have two fabrication workshops and two warehouses of our own, that are powered by 
+              state-of-the-art machines and the latest software to support.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+
+  // Stats Section
+  const StatsSection = () => (
+    <section className="bg-gradient-to-r from-gray-900 to-gray-800 py-20">
+      <div className="container mx-auto px-6">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+          {stats.map((stat, index) => {
+            const IconComponent = stat.icon;
+            return (
+              <div key={index} className="text-center group">
+                <div className="mx-auto w-20 h-20 rounded-full bg-white/10 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
+                  <IconComponent className={`${stat.color}`} size={36} />
+                </div>
+                <div className="text-4xl font-bold text-white mb-2">{stat.number}</div>
+                <div className="text-gray-300 font-medium">{stat.label}</div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  );
+
+  // Services Section
+  const ServicesSection = () => (
+    <section className="py-24 bg-gradient-to-b from-white to-gray-50">
+      <div className="container mx-auto px-6">
+        <div className="text-center mb-16">
+          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+            Our <span className="text-blue-600">Engineering</span> Services
+          </h2>
+          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            We have expertise in Design, Supply, Installation, testing and commissioning of comprehensive 
+            engineering solutions with Class A Fire License in Maharashtra.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {services.map((service, index) => {
+            const IconComponent = service.icon;
+            return (
+              <div
+                key={index}
+                className="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden transform hover:-translate-y-2"
+              >
+                <div className="relative h-48 overflow-hidden">
+                  <img
+                    src={service.image}
+                    alt={service.title}
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                  />
+                  <div className={`absolute inset-0 bg-gradient-to-t ${service.color} opacity-60`} />
+                  <div className="absolute top-4 left-4">
+                    <div className="w-12 h-12 bg-white/90 rounded-full flex items-center justify-center backdrop-blur-sm">
+                      <IconComponent className="text-gray-700" size={24} />
+                    </div>
+                  </div>
+                </div>
+
+                <div className="p-6">
+                  <h3 className="text-xl font-bold text-gray-900 mb-3">
+                    {service.title}
+                  </h3>
+                  <p className="text-gray-600 mb-4 leading-relaxed">
+                    {service.description}
+                  </p>
+
+                  <div className="space-y-2 mb-6">
+                    {service.features.map((feature, idx) => (
+                      <div key={idx} className="flex items-center space-x-2">
+                        <CheckCircle className="text-green-500" size={16} />
+                        <span className="text-sm text-gray-600">{feature}</span>
+                      </div>
+                    ))}
+                  </div>
+
+                  <button className={`w-full bg-gradient-to-r ${service.color} text-white py-3 rounded-lg font-semibold transition-all duration-300 transform group-hover:scale-105 flex items-center justify-center space-x-2`}>
+                    <span>Learn More</span>
+                    <ArrowRight size={16} />
+                  </button>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  );
+
+  // About Us Section
+  const AboutUsSection = () => (
+    <section className="py-24 bg-gradient-to-br from-blue-50 to-red-50">
+      <div className="container mx-auto px-6">
+        <div className="text-center mb-16">
+          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+            About <span className="text-blue-600">Fluidline</span> <span className="text-red-600">Group</span>
+          </h2>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center mb-16">
+          <div className="relative">
+            <img
+              src="https://images.unsplash.com/photo-1581092921461-eab62e97a780?q=80&w=800&auto=format&fit=crop"
+              alt="Engineering Excellence"
+              className="rounded-2xl shadow-2xl"
+            />
+            <div className="absolute -top-6 -right-6 w-full h-full bg-gradient-to-br from-blue-200/50 to-red-200/50 rounded-2xl -z-10" />
+          </div>
+
+          <div className="space-y-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+              <div className="bg-white p-6 rounded-xl shadow-lg border-l-4 border-blue-500">
+                <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
+                  <Eye className="text-blue-600" size={24} />
+                </div>
+                <h4 className="font-bold text-gray-900 mb-2">Our Vision</h4>
+                <p className="text-sm text-gray-600">
+                  To explore new horizons and to venture into multi-dimensional aspects of our area of expertise, 
+                  keeping a constant and cordial liaison with our partners and business associates.
+                </p>
+              </div>
+
+              <div className="bg-white p-6 rounded-xl shadow-lg border-l-4 border-red-500">
+                <div className="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center mb-4">
+                  <Target className="text-red-600" size={24} />
+                </div>
+                <h4 className="font-bold text-gray-900 mb-2">Our Mission</h4>
+                <p className="text-sm text-gray-600">
+                  Guided by principles of integrity and commitment to the goal, we will constantly strive to 
+                  implement newer initiatives to achieve our vision.
+                </p>
+              </div>
+            </div>
+
+            <div className="bg-white p-6 rounded-xl shadow-lg">
+              <h4 className="font-bold text-gray-900 mb-4 text-lg">Complete Vision Statement</h4>
+              <p className="text-gray-600 leading-relaxed">
+                To achieve client satisfaction through continued commitment and excellence in safely delivering 
+                quality projects on time. In doing this, we will endeavor to uphold our standards of perfection 
+                and meet the expectations of all our clients. All our long-term strategies and short-term goals 
+                will be motivated by pursuit of excellence in every field.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+
+  // Clients Section
+  const ClientsSection = () => (
+    <section className="py-20 bg-white">
+      <div className="container mx-auto px-6">
+        <div className="text-center mb-16">
+          <h2 className="text-4xl font-bold text-gray-900 mb-4">
+            <span className="text-blue-600">Our</span> <span className="text-red-600">Clients</span> & Consultants
+          </h2>
+          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+            Trusted by Fortune 500 companies and leading Indian corporations across various industries
+          </p>
+        </div>
+
+        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-6 mb-12">
+          {clients.map((client, index) => (
+            <div
+              key={index}
+              className="group bg-gray-50 hover:bg-white rounded-xl p-6 transition-all duration-300 text-center hover:shadow-lg border-2 border-transparent hover:border-blue-200"
+            >
+              <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-r from-blue-500 to-red-500 rounded-lg flex items-center justify-center">
+                <span className="text-white font-bold text-sm">{client.logo}</span>
+              </div>
+              <h4 className="font-semibold text-gray-900 mb-2">{client.name}</h4>
+              <p className="text-xs text-gray-500">{client.sector}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+
+  // Testimonials Section
+  const TestimonialsSection = () => (
+    <section className="py-24 bg-gradient-to-r from-gray-900 to-gray-800">
+      <div className="container mx-auto px-6">
+        <div className="text-center mb-16">
+          <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
+            Client <span className="text-blue-400">Testimonials</span>
+          </h2>
+          <p className="text-xl text-gray-300 max-w-2xl mx-auto">
+            Hear from industry leaders about their experience working with Fluidline
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {testimonials.map((testimonial, index) => (
+            <div
+              key={index}
+              className="bg-white/5 backdrop-blur-sm rounded-2xl p-8 border border-white/10 hover:border-white/20 transition-all duration-300"
+            >
+              <div className="flex items-center mb-6">
+                <div className="flex space-x-1">
+                  {[...Array(testimonial.rating)].map((_, i) => (
+                    <Star key={i} className="text-yellow-400 fill-current" size={20} />
+                  ))}
+                </div>
+              </div>
+
+              <p className="text-gray-300 mb-6 leading-relaxed italic">
+                "{testimonial.message}"
+              </p>
+
+              <div className="flex items-center">
+                <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-red-500 rounded-full mr-4 flex items-center justify-center">
+                  <span className="text-white font-bold text-sm">{testimonial.logo}</span>
+                </div>
+                <div>
+                  <h4 className="font-semibold text-white">{testimonial.company}</h4>
+                  <p className="text-sm text-gray-400">{testimonial.author}</p>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+
+  // Contact Section
+  const ContactSection = () => (
+    <section className="py-24 bg-gradient-to-b from-white to-gray-50">
+      <div className="container mx-auto px-6">
+        <div className="text-center mb-16">
+          <h2 className="text-4xl font-bold text-gray-900 mb-4">
+            <span className="text-blue-600">Contact</span> <span className="text-red-600">Us</span>
+          </h2>
+          <p className="text-lg text-gray-600">Get in touch with our engineering experts</p>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+          <div className="space-y-6">
+            {offices.map((office, index) => (
+              <div key={index} className="bg-white p-6 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300">
+                <h3 className="text-xl font-bold text-gray-900 mb-4 flex items-center">
+                  <MapPin className="text-blue-600 mr-2" size={20} />
+                  {office.city}
+                </h3>
+                <div className="space-y-3">
+                  <p className="text-gray-600">{office.address}</p>
+                  {office.phone && (
+                    <p className="flex items-center text-gray-600">
+                      <Phone className="mr-2 text-red-500" size={16} />
+                      {office.phone}
+                    </p>
+                  )}
+                  <p className="flex items-center text-gray-600">
+                    <Mail className="mr-2 text-blue-500" size={16} />
+                    {office.email}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="bg-white p-8 rounded-2xl shadow-lg">
+            <h3 className="text-2xl font-bold text-gray-900 mb-6">Get In Touch</h3>
+            <div className="space-y-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <input 
+                  type="text" 
+                  placeholder="Your Name" 
+                  className="w-full p-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+                <input 
+                  type="email" 
+                  placeholder="Your Email" 
+                  className="w-full p-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+              </div>
+              <input 
+                type="text" 
+                placeholder="Subject" 
+                className="w-full p-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+              <textarea 
+                placeholder="Your Message" 
+                rows="6"
+                className="w-full p-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              ></textarea>
+              <button 
+                onClick={() => alert('Message sent! We will get back to you soon.')}
+                className="w-full bg-gradient-to-r from-blue-600 to-red-600 hover:from-blue-700 hover:to-red-700 text-white py-4 rounded-lg font-semibold transition-all duration-300"
+              >
+                Send Message
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+
+  // CTA Section
+  const CTASection = () => (
+    <section className="py-20 bg-gradient-to-r from-blue-600 to-red-600">
+      <div className="container mx-auto px-6 text-center">
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
+            Ready to Start Your Engineering Project?
+          </h2>
+          <p className="text-xl text-blue-100 mb-8 leading-relaxed">
+            Partner with Fluidline for world-class engineering solutions. 
+            Let's discuss how we can bring your industrial vision to life.
+          </p>
+          <div className="flex flex-wrap justify-center gap-4">
+            <button
+              onClick={() => setActiveSection('contact')}
+              className="bg-white text-blue-600 hover:bg-gray-100 px-8 py-4 rounded-full font-semibold transition-all duration-300 flex items-center space-x-2 shadow-lg hover:shadow-xl transform hover:scale-105"
+            >
+              <span>Contact Our Experts</span>
+              <ArrowRight size={20} />
+            </button>
+            <button className="border-2 border-white/30 text-white hover:bg-white/10 px-8 py-4 rounded-full font-semibold transition-all duration-300 flex items-center space-x-2">
+              <Download size={20} />
+              <span>Download Brochure</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+
+  const handleChatSubmit = () => {
     if (chatInput.trim()) {
       setChatMessages(prev => [...prev, { type: 'user', message: chatInput }]);
       
       setTimeout(() => {
         let botResponse = '';
         if (chatInput.toLowerCase().includes('service')) {
-          botResponse = 'We offer Process Piping, Fire Protection Systems, Structural Work, Equipment Fabrication, Equipment Erection, and Balance of Boiler services. Which service interests you most?';
-        } else if (chatInput.toLowerCase().includes('contact')) {
-          botResponse = 'You can reach us at projects@fluidlinegroup.com or call our head office at +91-512 2225138. We also have offices in Mumbai, Noida, and Bengaluru.';
-        } else if (chatInput.toLowerCase().includes('experience')) {
-          botResponse = 'Fluidline has 33+ years of experience with 1000+ successful projects and 100M+ safe man hours achieved. We work with Fortune 500 companies and top Indian corporations.';
+          botResponse = 'We offer comprehensive engineering solutions including Process Piping (ASME B 31.3), Fire Protection Systems (Class A licensed), Structural Fabrication, Equipment Erection, Balance of Boiler, and Equipment Fabrication. Which service interests you most?';
+        } else if (chatInput.toLowerCase().includes('contact') || chatInput.toLowerCase().includes('office')) {
+          botResponse = 'You can reach us at our Head Office in Kanpur (+91-512 2225138) or projects@fluidlinegroup.com. We also have offices in Mumbai, Noida, and Bengaluru. Which location would you like to contact?';
+        } else if (chatInput.toLowerCase().includes('experience') || chatInput.toLowerCase().includes('project')) {
+          botResponse = 'Fluidline has 33+ years of engineering excellence with 1000+ successful projects, 3000+ skilled workforce, and 100M+ safe man hours. We serve Fortune 500 companies across India. Would you like to know about specific projects?';
+        } else if (chatInput.toLowerCase().includes('certificate') || chatInput.toLowerCase().includes('license')) {
+          botResponse = 'We hold Class A Fire License in Maharashtra and follow ASME B 31.3 standards for process piping. We also comply with IBR regulations for boiler services. Would you like to see our certifications?';
         } else {
-          botResponse = 'Thank you for your inquiry. Our team will get back to you shortly. You can also call us at +91-512 2225138 for immediate assistance.';
+          botResponse = 'Thank you for your interest in Fluidline Engineers & Fabricators! Our engineering experts will get back to you shortly. For immediate assistance, call our Head Office at +91-512 2225138.';
         }
         setChatMessages(prev => [...prev, { type: 'bot', message: botResponse }]);
       }, 1000);
@@ -390,447 +898,334 @@ const FluidlineWebsite = () => {
     switch(activeSection) {
       case 'home':
         return (
-          <div className="space-y-0">
-            <HeroSlider />
-
-            <section className="py-16 bg-white">
-              <div className="container mx-auto px-4 text-center">
-                <h1 className={`text-4xl md:text-5xl font-bold mb-6 ${currentTheme.accent}`}>
-                  Welcome to Fluidline Group
-                </h1>
-                <div className="max-w-4xl mx-auto">
-                  <p className={`text-xl mb-4 ${currentTheme.accentRed} font-semibold`}>
-                    Fluidline Engineers & Fabricators Private Limited
-                  </p>
-                  <p className="text-lg text-gray-700 mb-8 leading-relaxed">
-                    is a multi-dimensional company committed to Quality and Customer Delight. We provide turnkey solutions for the most reputed Corporates and MNCs in India.
-                  </p>
-                  <p className="text-lg text-gray-700 mb-8 leading-relaxed">
-                    We are a market leader in Mechanical Works like Process Piping, Utility Piping, Fire Protection & Detection Systems, Equipment Erection, Fabrication of Structures, Tanks, Balance of Boiler Jobs, Tanks, Silos, Insulation, Painting etc.
-                  </p>
-                </div>
-
-                <div className="flex flex-wrap justify-center gap-4">
-                  <button className={`${currentTheme.cardBg} ${currentTheme.accent} px-8 py-3 rounded-lg font-semibold hover:shadow-lg transition duration-300 border-2 ${currentTheme.border}`}>
-                    <Download className="inline mr-2" size={20} />
-                    Download Brochure
-                  </button>
-                  <button 
-                    onClick={() => setActiveSection('contact')}
-                    className={`${currentTheme.redPrimary} ${currentTheme.redHover} text-white px-8 py-3 rounded-lg font-semibold transition duration-300`}
-                  >
-                    Contact Us
-                  </button>
-                </div>
-              </div>
-            </section>
-
-            <section className={`py-16 ${currentTheme.secondary}`}>
-              <div className="container mx-auto px-4">
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-                  
-                  <div className="text-center lg:text-left">
-                    <div className="mb-8">
-                      <div className={`w-20 h-20 ${currentTheme.redPrimary} rounded-full flex items-center justify-center mx-auto lg:mx-0 mb-4`}>
-                        <Shield className="text-white" size={40} />
-                      </div>
-                      <h3 className={`text-2xl font-bold ${currentTheme.accent} mb-4`}>
-                        Inspired by our legacy.
-                      </h3>
-                      <h4 className={`text-xl font-semibold ${currentTheme.accentRed} mb-4`}>
-                        Driven by our young and dynamic leadership.
-                      </h4>
-                      <p className="text-gray-700 leading-relaxed">
-                        Established in 1988, we are still guided by the illustrious management of our founding members. Today we are led by a young and dynamic team and have grown to become one of the most reputed names in the Engineering and Fabrication sector.
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="text-center lg:text-left">
-                    <div className="mb-8">
-                      <div className={`w-20 h-20 ${currentTheme.primary} rounded-full flex items-center justify-center mx-auto lg:mx-0 mb-4`}>
-                        <Award className="text-white" size={40} />
-                      </div>
-                      <h3 className={`text-2xl font-bold ${currentTheme.accentRed} mb-4`}>
-                        Over 33 years of delivering best-in-class services.
-                      </h3>
-                      <h4 className={`text-xl font-semibold ${currentTheme.accent} mb-4`}>
-                        And the journey continues!
-                      </h4>
-                      <p className="text-gray-700 leading-relaxed">
-                        We have had an impeccable track record of serving our customers for the last 33 years across the length and breadth of the country. With every project we undertake, we raise the bar for ourselves to make our solutions and services even more competent and reliable.
-                      </p>
-                    </div>
-                  </div>
-                  
-                </div>
-
-                <div className="text-center mt-16">
-                  <div className="max-w-4xl mx-auto">
-                    <h3 className={`text-2xl font-bold ${currentTheme.accent} mb-6`}>
-                      Commitment to earning the trust of our clients.
-                    </h3>
-                    <p className="text-lg text-gray-700 leading-relaxed mb-8">
-                      In our endeavour to become a long-term partner for our valued clients, we ensure that we adhere to all the Quality and Safety Guidelines. We take all measures required to meet the committed timelines. We evaluate our engineering services to offer benefits at a reduced cost.
-                    </p>
-                    <p className={`text-lg ${currentTheme.accentRed} font-semibold mb-8`}>
-                      We are proud to have two fabrication workshops and two warehouses of our own, that are powered by state-of-the-art machines and the latest software to support.
-                    </p>
-                    
-                    <div className={`${currentTheme.cardBg} p-6 rounded-lg shadow-lg border-l-4 ${theme === 'original' ? 'border-blue-700' : theme === 'dynamic' ? 'border-red-600' : 'border-blue-500'} inline-block`}>
-                      <h4 className={`text-xl font-bold ${currentTheme.accent} mb-2`}>
-                        Strategically located to always stay connected.
-                      </h4>
-                      <p className="text-gray-700">
-                        We operate from our Head Office in <span className={`font-semibold ${currentTheme.accentRed}`}>Kanpur</span> and branches in key cities like <span className={`font-semibold ${currentTheme.accentRed}`}>Mumbai, Noida</span> and <span className={`font-semibold ${currentTheme.accentRed}`}>Bengaluru</span>.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </section>
-
-            <section className="py-16">
-              <div className="container mx-auto px-4">
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-                  {stats.map((stat, index) => (
-                    <div key={index} className="text-center">
-                      <div className={`text-4xl font-bold mb-2 ${
-                        index % 2 === 0 ? currentTheme.accent : currentTheme.accentRed
-                      }`}>
-                        {stat.number}
-                      </div>
-                      <div className="text-gray-600">{stat.label}</div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </section>
-
-            <section className="py-16 bg-gray-50">
-              <div className="container mx-auto px-4">
-                <h2 className={`text-3xl font-bold text-center mb-12 ${currentTheme.accent}`}>Our Services</h2>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                  {services.map((service, index) => (
-                    <div key={index} className={`${currentTheme.cardBg} p-6 rounded-lg shadow-lg hover:shadow-xl transition duration-300`}>
-                      <div className="text-4xl mb-4">{service.icon}</div>
-                      <h3 className={`text-xl font-semibold mb-3 ${
-                        index % 2 === 0 ? currentTheme.accent : currentTheme.accentRed
-                      }`}>{service.title}</h3>
-                      <p className="text-gray-600 mb-4">{service.description}</p>
-                      <button className={`${
-                        index % 2 === 0 ? currentTheme.primary : currentTheme.redPrimary
-                      } text-white px-4 py-2 rounded-lg text-sm ${
-                        index % 2 === 0 ? currentTheme.primaryHover : currentTheme.redHover
-                      } transition duration-300`}>
-                        Learn More
-                      </button>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </section>
-
-            <section className="py-16">
-              <div className="container mx-auto px-4">
-                <h2 className={`text-3xl font-bold text-center mb-12 ${currentTheme.accentRed}`}>Client Testimonials</h2>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                  {testimonials.map((testimonial, index) => (
-                    <div key={index} className={`${currentTheme.cardBg} p-6 rounded-lg shadow-lg ${
-                      index % 2 === 0 ? 'border-l-4 border-blue-500' : 'border-l-4 border-red-500'
-                    }`}>
-                      <div className="flex mb-4">
-                        {[...Array(5)].map((_, i) => (
-                          <Star key={i} className={`fill-current ${
-                            i < 3 ? 'text-blue-400' : 'text-red-400'
-                          }`} size={20} />
-                        ))}
-                      </div>
-                      <p className="text-gray-600 mb-4">"{testimonial.message}"</p>
-                      <p className={`font-semibold ${
-                        index % 2 === 0 ? currentTheme.accent : currentTheme.accentRed
-                      }`}>{testimonial.company}</p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </section>
-          </div>
+          <>
+            <HeroSection />
+            <IntroSection />
+            <StatsSection />
+            <ServicesSection />
+            <ClientsSection />
+            <TestimonialsSection />
+            <CTASection />
+          </>
         );
-
+      
       case 'about':
         return (
-          <div className="space-y-16 py-16">
-            <div className="container mx-auto px-4">
-              <h1 className={`text-4xl font-bold mb-8 ${currentTheme.accent}`}>About Fluidline</h1>
-              
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
-                <div className={`${currentTheme.cardBg} p-8 rounded-lg shadow-lg border-l-4 ${theme === 'dynamic' ? 'border-red-500' : 'border-blue-500'}`}>
-                  <h2 className={`text-2xl font-bold mb-4 ${currentTheme.accent}`}>Our Vision</h2>
-                  <p className="text-gray-700 leading-relaxed">
-                    To explore new horizons and to venture into multi-dimensional aspects of our area of expertise, keeping a constant and cordial liaison with our partners and business associates, and to achieve client satisfaction through continued commitment and excellence in safely delivering quality projects on time.
+          <>
+            <PageHeroSection pageKey="about" currentSlide={currentSlide} />
+            <div className="pt-16">
+              <AboutUsSection />
+              <IntroSection />
+            </div>
+          </>
+        );
+      
+      case 'vision-mission':
+        return (
+          <>
+            <PageHeroSection pageKey="vision-mission" currentSlide={currentSlide} />
+            <div className="pt-16">
+              <div className="container mx-auto px-6">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
+                  <div className="bg-gradient-to-br from-blue-50 to-blue-100 p-12 rounded-2xl border-l-4 border-blue-500">
+                    <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-blue-600 rounded-full flex items-center justify-center mx-auto mb-6">
+                      <Eye className="text-white" size={32} />
+                    </div>
+                    <h2 className="text-3xl font-bold text-blue-700 mb-6 text-center">Our Vision</h2>
+                    <p className="text-gray-700 leading-relaxed text-lg">
+                      To explore new horizons and to venture into multi-dimensional aspects of our area of expertise, 
+                      keeping a constant and cordial liaison with our partners and business associates, and to achieve 
+                      client satisfaction through continued commitment and excellence in safely delivering quality 
+                      projects on time.
+                    </p>
+                  </div>
+                  
+                  <div className="bg-gradient-to-br from-red-50 to-red-100 p-12 rounded-2xl border-l-4 border-red-500">
+                    <div className="w-16 h-16 bg-gradient-to-r from-red-500 to-red-600 rounded-full flex items-center justify-center mx-auto mb-6">
+                      <Target className="text-white" size={32} />
+                    </div>
+                    <h2 className="text-3xl font-bold text-red-700 mb-6 text-center">Our Mission</h2>
+                    <p className="text-gray-700 leading-relaxed text-lg">
+                      Guided by principles of integrity and commitment to the goal, we will constantly strive to 
+                      implement newer initiatives to achieve our vision. In doing this, we will endeavor to uphold 
+                      our standards of perfection and meet the expectations of all our clients. All our long-term 
+                      strategies and short-term goals will be motivated by pursuit of excellence in every field.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </>
+        );
+        
+      case 'services':
+        return (
+          <>
+            <PageHeroSection pageKey="services" currentSlide={currentSlide} />
+            <div className="pt-16">
+              <ServicesSection />
+            </div>
+          </>
+        );
+
+      case 'certificates':
+        return (
+          <>
+            <PageHeroSection pageKey="certificates" currentSlide={currentSlide} />
+            <div className="pt-16">
+              <div className="container mx-auto px-6">
+                <div className="text-center mb-16">
+                  <h2 className="text-4xl font-bold text-gray-900 mb-6">
+                    Our <span className="text-blue-600">Certificates</span> & <span className="text-red-600">Policies</span>
+                  </h2>
+                  <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+                    We maintain the highest standards of quality and safety compliance across all our operations.
                   </p>
                 </div>
                 
-                <div className={`${currentTheme.cardBg} p-8 rounded-lg shadow-lg border-l-4 ${theme === 'dynamic' ? 'border-blue-500' : 'border-red-500'}`}>
-                  <h2 className={`text-2xl font-bold mb-4 ${currentTheme.accentRed}`}>Our Mission</h2>
-                  <p className="text-gray-700 leading-relaxed">
-                    Guided by principles of integrity and commitment to the goal, we will constantly strive to implement newer initiatives to achieve our vision. In doing this, we will endeavor to uphold our standards of perfection and meet the expectations of all our clients.
-                  </p>
-                </div>
-              </div>
-
-              <div className={`${currentTheme.secondary} p-8 rounded-lg`}>
-                <h2 className={`text-2xl font-bold mb-6 ${currentTheme.accent}`}>Message from Our Founder & MD</h2>
-                <div className="prose max-w-none">
-                  <p className="text-gray-700 mb-4">
-                    Our company has completed 33+ years of its glorious and eventful existence. Organizations evolve over a period, developing traditions and working ethos in the course of their journey in time.
-                  </p>
-                  <p className="text-gray-700 mb-4">
-                    We have adapted remarkably well to change, yet steadfastly retained our values which make us so unique. Today, we work with a cross-section of multinational and Indian companies who are leaders in their respective domains.
-                  </p>
-                  <p className="text-gray-700 mb-4">
-                    We are fully committed to professional excellence hoping that a better future is awaiting us. Challenges we face each day, each day being a new day, we rise to meet these challenges with commitment and fortitude.
-                  </p>
-                  <p className={`font-semibold ${currentTheme.accentRed}`}>- Mr. Sanjiv Midha, Founder & MD</p>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                  <div className="bg-white p-8 rounded-2xl shadow-lg border-l-4 border-blue-500">
+                    <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                      <Flame className="text-blue-600" size={32} />
+                    </div>
+                    <h3 className="text-xl font-bold text-center mb-4">Class A Fire License</h3>
+                    <p className="text-gray-600 text-center">Maharashtra State Class A Fire Protection License</p>
+                  </div>
+                  
+                  <div className="bg-white p-8 rounded-2xl shadow-lg border-l-4 border-red-500">
+                    <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                      <Factory className="text-red-600" size={32} />
+                    </div>
+                    <h3 className="text-xl font-bold text-center mb-4">ASME B 31.3</h3>
+                    <p className="text-gray-600 text-center">Process Piping Standards Compliance</p>
+                  </div>
+                  
+                  <div className="bg-white p-8 rounded-2xl shadow-lg border-l-4 border-green-500">
+                    <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                      <Shield className="text-green-600" size={32} />
+                    </div>
+                    <h3 className="text-xl font-bold text-center mb-4">IBR Compliance</h3>
+                    <p className="text-gray-600 text-center">Indian Boiler Regulations Certified</p>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
+          </>
+        );
+        
+      case 'clients':
+        return (
+          <>
+            <PageHeroSection pageKey="clients" currentSlide={currentSlide} />
+            <div className="pt-16">
+              <ClientsSection />
+              <TestimonialsSection />
+            </div>
+          </>
         );
 
+      case 'career':
+        return (
+          <>
+            <PageHeroSection pageKey="career" currentSlide={currentSlide} />
+            <div className="pt-16">
+              <div className="container mx-auto px-6">
+                <div className="text-center mb-16">
+                  <h2 className="text-4xl font-bold text-gray-900 mb-6">
+                    <span className="text-blue-600">Career</span> <span className="text-red-600">Opportunities</span>
+                  </h2>
+                  <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+                    Join our team of 3000+ skilled professionals and be part of engineering excellence.
+                  </p>
+                </div>
+                
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                  <div className="bg-white p-8 rounded-2xl shadow-lg text-center">
+                    <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-red-500 rounded-full flex items-center justify-center mx-auto mb-6">
+                      <Users className="text-white" size={32} />
+                    </div>
+                    <h3 className="text-xl font-bold mb-4">Growing Team</h3>
+                    <p className="text-gray-600">Join 3000+ skilled professionals in engineering excellence</p>
+                  </div>
+                  
+                  <div className="bg-white p-8 rounded-2xl shadow-lg text-center">
+                    <div className="w-16 h-16 bg-gradient-to-r from-red-500 to-blue-500 rounded-full flex items-center justify-center mx-auto mb-6">
+                      <Target className="text-white" size={32} />
+                    </div>
+                    <h3 className="text-xl font-bold mb-4">Career Growth</h3>
+                    <p className="text-gray-600">33+ years of experience in nurturing talent and leadership</p>
+                  </div>
+                  
+                  <div className="bg-white p-8 rounded-2xl shadow-lg text-center">
+                    <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-red-500 rounded-full flex items-center justify-center mx-auto mb-6">
+                      <Award className="text-white" size={32} />
+                    </div>
+                    <h3 className="text-xl font-bold mb-4">Excellence Culture</h3>
+                    <p className="text-gray-600">Work on Fortune 500 projects with industry-leading standards</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </>
+        );
+        
       case 'contact':
         return (
-          <div className="space-y-16 py-16">
-            <div className="container mx-auto px-4">
-              <h1 className={`text-4xl font-bold mb-8 ${currentTheme.accent}`}>Contact Us</h1>
-              
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-                <div>
-                  <h2 className={`text-2xl font-bold mb-6 ${currentTheme.accentRed}`}>Get in Touch</h2>
-                  <div className="space-y-6">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <input 
-                        type="text" 
-                        placeholder="Your Name" 
-                        className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                      />
-                      <input 
-                        type="email" 
-                        placeholder="Your Email" 
-                        className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                      />
-                    </div>
-                    <input 
-                      type="text" 
-                      placeholder="Subject" 
-                      className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    />
-                    <textarea 
-                      placeholder="Your Message" 
-                      rows="6"
-                      className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    ></textarea>
-                    <button 
-                      onClick={() => alert('Message sent! We will get back to you soon.')}
-                      className={`${currentTheme.primary} text-white px-8 py-3 rounded-lg ${currentTheme.primaryHover} transition duration-300`}
-                    >
-                      Send Message
-                    </button>
-                  </div>
-                </div>
-
-                <div>
-                  <h2 className={`text-2xl font-bold mb-6 ${currentTheme.accent}`}>Our Offices</h2>
-                  <div className="space-y-6">
-                    {offices.map((office, index) => (
-                      <div key={index} className={`${currentTheme.cardBg} p-6 rounded-lg shadow-lg`}>
-                        <h3 className={`text-lg font-bold ${currentTheme.accent} mb-3`}>{office.city}</h3>
-                        <div className="space-y-2">
-                          <p className="flex items-start">
-                            <MapPin className="mr-2 mt-1 text-gray-500 flex-shrink-0" size={16} />
-                            <span className="text-gray-600">{office.address}</span>
-                          </p>
-                          {office.phone && (
-                            <p className="flex items-center">
-                              <Phone className="mr-2 text-gray-500" size={16} />
-                              <span className="text-gray-600">{office.phone}</span>
-                            </p>
-                          )}
-                          <p className="flex items-center">
-                            <Mail className="mr-2 text-gray-500" size={16} />
-                            <span className="text-gray-600">{office.email}</span>
-                          </p>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
+          <>
+            <PageHeroSection pageKey="contact" currentSlide={currentSlide} />
+            <div className="pt-16">
+              <ContactSection />
             </div>
-          </div>
+          </>
         );
-
-      case 'services':
-        return (
-          <div className="py-16">
-            <div className="container mx-auto px-4">
-              <h1 className={`text-4xl font-bold mb-8 ${currentTheme.accent}`}>Our Services</h1>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {services.map((service, index) => (
-                  <div key={index} className={`${currentTheme.cardBg} p-6 rounded-lg shadow-lg hover:shadow-xl transition duration-300`}>
-                    <div className="text-6xl mb-4 text-center">{service.icon}</div>
-                    <h3 className={`text-xl font-semibold mb-3 text-center ${
-                      index % 2 === 0 ? currentTheme.accent : currentTheme.accentRed
-                    }`}>{service.title}</h3>
-                    <p className="text-gray-600 mb-4 text-center">{service.description}</p>
-                    <div className="text-center">
-                      <button className={`${
-                        index % 2 === 0 ? currentTheme.primary : currentTheme.redPrimary
-                      } text-white px-6 py-2 rounded-lg ${
-                        index % 2 === 0 ? currentTheme.primaryHover : currentTheme.redHover
-                      } transition duration-300`}>
-                        Learn More
-                      </button>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        );
-
+        
       default:
         return (
-          <div className="py-16">
-            <div className="container mx-auto px-4 text-center">
-              <h1 className={`text-4xl font-bold mb-8 ${currentTheme.accent}`}>Section Under Development</h1>
-              <p className="text-xl text-gray-600">This section is being updated with new content.</p>
+          <>
+            <PageHeroSection pageKey="about" currentSlide={currentSlide} />
+            <div className="pt-24 py-16">
+              <div className="container mx-auto px-6 text-center">
+                <h1 className="text-4xl font-bold text-gray-900 mb-8">
+                  {navigation.find(item => item.id === activeSection)?.name || 'Page'}
+                </h1>
+                <p className="text-xl text-gray-600 mb-8">
+                  This section is being developed with comprehensive content and features.
+                </p>
+                <button
+                  onClick={() => setActiveSection('home')}
+                  className="bg-gradient-to-r from-blue-600 to-red-600 hover:from-blue-700 hover:to-red-700 text-white px-8 py-3 rounded-full font-semibold transition-all duration-300"
+                >
+                  Return to Home
+                </button>
+              </div>
             </div>
-          </div>
+          </>
         );
     }
   };
 
-  // Close dropdown when clicking outside
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (showThemeDropdown && !event.target.closest('.theme-dropdown')) {
-        setShowThemeDropdown(false);
-      }
-    };
-
-    document.addEventListener('click', handleClickOutside);
-    return () => {
-      document.removeEventListener('click', handleClickOutside);
-    };
-  }, [showThemeDropdown]);
-
   return (
-    <div className="min-h-screen bg-gray-100">
-      <header className={`${currentTheme.headerBg} shadow-lg sticky top-0 z-40`}>
-        <div className="container mx-auto px-4">
+    <div className="min-h-screen bg-white">
+      {/* Header */}
+      <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        isScrolled 
+          ? 'bg-white/95 backdrop-blur-lg shadow-lg' 
+          : 'bg-transparent'
+      }`}>
+        <div className="container mx-auto px-6">
           <div className="flex justify-between items-center py-4">
-            <div className="flex items-center">
-              <FluidlineLogo />
-              <div className="ml-3">
-                <h1 className={`text-xl font-bold ${currentTheme.accent}`}>FLUIDLINE</h1>
-                <p className="text-xs text-gray-600">Engineers & Fabricators</p>
-              </div>
-            </div>
-
-            <nav className="hidden lg:flex space-x-2">
-              {navigation.map((item) => (
-                <button
-                  key={item.id}
-                  onClick={() => setActiveSection(item.id)}
-                  className={`flex items-center px-3 py-2 rounded-lg transition duration-300 ${
-                    activeSection === item.id 
-                      ? currentTheme.navActive
-                      : `text-gray-700 ${currentTheme.navHover}`
-                  }`}
-                >
-                  <item.icon className="mr-2" size={16} />
-                  {item.name}
-                </button>
-              ))}
-            </nav>
-
             <div className="flex items-center space-x-4">
-              <div className="theme-dropdown">
-                <ThemeDropdown />
+              <FluidlineLogo />
+              <div>
+                <h1 className={`text-xl font-bold transition-colors duration-300 ${
+                  isScrolled ? 'text-gray-900' : 'text-white'
+                }`}>
+                  FLUIDLINE
+                </h1>
+                <p className={`text-sm transition-colors duration-300 ${
+                  isScrolled ? 'text-gray-600' : 'text-gray-300'
+                }`}>
+                  Engineers & Fabricators
+                </p>
               </div>
-
-              <button
-                onClick={() => setIsMenuOpen(!isMenuOpen)}
-                className="lg:hidden p-2 text-gray-700"
-              >
-                {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
-              </button>
             </div>
-          </div>
 
-          {isMenuOpen && (
-            <div className="lg:hidden border-t border-gray-200 py-4">
-              <nav className="space-y-2">
-                {navigation.map((item) => (
+            <nav className="hidden lg:flex items-center space-x-1">
+              {navigation.map((item) => {
+                const IconComponent = item.icon;
+                return (
                   <button
                     key={item.id}
-                    onClick={() => {
-                      setActiveSection(item.id);
-                      setIsMenuOpen(false);
-                    }}
-                    className={`w-full flex items-center px-3 py-2 rounded-lg transition duration-300 ${
-                      activeSection === item.id 
-                        ? currentTheme.navActive
-                        : `text-gray-700 ${currentTheme.navHover}`
+                    onClick={() => setActiveSection(item.id)}
+                    className={`flex items-center space-x-2 px-3 py-2 rounded-lg font-medium transition-all duration-300 text-sm ${
+                      activeSection === item.id
+                        ? 'bg-gradient-to-r from-blue-600 to-red-600 text-white shadow-lg transform scale-105'
+                        : isScrolled
+                        ? 'text-gray-700 hover:text-blue-600 hover:bg-blue-50'
+                        : 'text-white hover:text-blue-300 hover:bg-white/10'
                     }`}
                   >
-                    <item.icon className="mr-2" size={16} />
-                    {item.name}
+                    <IconComponent size={14} />
+                    <span>{item.name}</span>
                   </button>
-                ))}
+                );
+              })}
+            </nav>
+
+            <button
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              className={`lg:hidden p-2 rounded-lg transition-colors duration-300 ${
+                isScrolled ? 'text-gray-900' : 'text-white'
+              }`}
+            >
+              {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+            </button>
+          </div>
+
+          {/* Mobile Menu */}
+          {isMenuOpen && (
+            <div className="lg:hidden bg-white/95 backdrop-blur-lg rounded-xl mt-2 p-4 shadow-xl">
+              <nav className="space-y-2">
+                {navigation.map((item) => {
+                  const IconComponent = item.icon;
+                  return (
+                    <button
+                      key={item.id}
+                      onClick={() => {
+                        setActiveSection(item.id);
+                        setIsMenuOpen(false);
+                      }}
+                      className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg font-medium transition-all duration-300 ${
+                        activeSection === item.id
+                          ? 'bg-gradient-to-r from-blue-600 to-red-600 text-white'
+                          : 'text-gray-700 hover:bg-blue-50 hover:text-blue-600'
+                      }`}
+                    >
+                      <IconComponent size={20} />
+                      <span>{item.name}</span>
+                    </button>
+                  );
+                })}
               </nav>
             </div>
           )}
         </div>
       </header>
 
-      {theme === 'original' && (
-        <div className={`${currentTheme.primary} py-4`}>
-          <div className="container mx-auto px-4 flex justify-center items-center space-x-6">
-            <span className="text-white font-semibold text-lg">DOWNLOAD BROCHURE</span>
-            <button className={`${currentTheme.redPrimary} ${currentTheme.redHover} text-white px-6 py-2 rounded font-semibold transition duration-300`}>
-              CLICK HERE
-            </button>
-          </div>
-        </div>
-      )}
-
+      {/* Main Content */}
       <main>
         {renderSection()}
       </main>
 
-      <footer className="bg-gray-900 text-white py-12">
-        <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-            <div>
-              <h3 className="text-xl font-bold mb-4">Fluidline Group</h3>
-              <p className="text-gray-400">
-                33+ years of excellence in engineering and fabrication services.
+      {/* Footer */}
+      <footer className="bg-gradient-to-r from-gray-900 to-black text-white py-16">
+        <div className="container mx-auto px-6">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+            <div className="space-y-4">
+              <div className="flex items-center space-x-4">
+                <FluidlineLogo size="lg" />
+                <div>
+                  <h3 className="text-xl font-bold">FLUIDLINE</h3>
+                  <p className="text-gray-400 text-sm">Engineers & Fabricators</p>
+                </div>
+              </div>
+              <p className="text-gray-400 leading-relaxed">
+                33+ years of delivering world-class engineering and fabrication solutions 
+                to Fortune 500 companies and leading Indian corporations.
               </p>
             </div>
             
             <div>
-              <h4 className="font-bold mb-4">Quick Links</h4>
-              <ul className="space-y-2">
+              <h4 className="font-bold text-lg mb-4">Quick Links</h4>
+              <ul className="space-y-3">
                 {navigation.slice(0, 4).map((item) => (
                   <li key={item.id}>
                     <button 
                       onClick={() => setActiveSection(item.id)}
-                      className="text-gray-400 hover:text-white transition duration-300"
+                      className="text-gray-400 hover:text-white transition-colors duration-300 flex items-center space-x-2"
                     >
-                      {item.name}
+                      <ChevronRight size={16} />
+                      <span>{item.name}</span>
                     </button>
                   </li>
                 ))}
@@ -838,71 +1233,75 @@ const FluidlineWebsite = () => {
             </div>
             
             <div>
-              <h4 className="font-bold mb-4">Services</h4>
-              <ul className="space-y-2 text-gray-400">
+              <h4 className="font-bold text-lg mb-4">Services</h4>
+              <ul className="space-y-3 text-gray-400">
                 <li>Process & Utility Piping</li>
                 <li>Fire Protection Systems</li>
-                <li>Structural Work</li>
+                <li>Structural Fabrication</li>
+                <li>Equipment Erection</li>
+                <li>Balance of Boiler</li>
                 <li>Equipment Fabrication</li>
               </ul>
             </div>
             
             <div>
-              <h4 className="font-bold mb-4">Contact Info</h4>
-              <div className="space-y-2 text-gray-400">
-                <p className="flex items-center">
-                  <Phone className="mr-2" size={16} />
-                  +91-512 2225138
+              <h4 className="font-bold text-lg mb-4">Contact</h4>
+              <div className="space-y-3 text-gray-400">
+                <p className="flex items-center space-x-2">
+                  <Phone size={16} />
+                  <span>+91-512 2225138</span>
                 </p>
-                <p className="flex items-center">
-                  <Mail className="mr-2" size={16} />
-                  projects@fluidlinegroup.com
+                <p className="flex items-center space-x-2">
+                  <Mail size={16} />
+                  <span>projects@fluidlinegroup.com</span>
                 </p>
-                <p className="flex items-start">
-                  <MapPin className="mr-2 mt-1" size={16} />
-                  Kanpur, Mumbai, Noida, Bengaluru
+                <p className="flex items-start space-x-2">
+                  <MapPin size={16} className="mt-1" />
+                  <span>Kanpur • Mumbai • Noida • Bengaluru</span>
                 </p>
               </div>
             </div>
           </div>
           
-          <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
-            <p>&copy; 2025 Fluidline Engineers & Fabricators Pvt. Ltd. All rights reserved.</p>
+          <div className="border-t border-gray-800 pt-8 text-center">
+            <p className="text-gray-400">
+              &copy; 2025 Fluidline Engineers & Fabricators Pvt. Ltd. All rights reserved.
+            </p>
           </div>
         </div>
       </footer>
 
-      {/* Chatbot */}
-      <div className="fixed bottom-4 right-4 z-50">
+      {/* AI Chatbot */}
+      <div className="fixed bottom-6 right-6 z-50">
         {!showChatbot ? (
           <button
             onClick={() => setShowChatbot(true)}
-            className={`${currentTheme.primary} text-white p-4 rounded-full shadow-lg ${currentTheme.primaryHover} transition duration-300`}
+            className="bg-gradient-to-r from-blue-600 to-red-600 hover:from-blue-700 hover:to-red-700 text-white p-4 rounded-full shadow-2xl transition-all duration-300 transform hover:scale-110"
           >
             <MessageCircle size={24} />
           </button>
         ) : (
-          <div className="bg-white rounded-lg shadow-xl w-80 h-96 flex flex-col">
-            <div className={`${currentTheme.primary} text-white p-4 rounded-t-lg flex justify-between items-center`}>
+          <div className="bg-white rounded-2xl shadow-2xl w-80 h-96 flex flex-col border border-gray-200">
+            <div className="bg-gradient-to-r from-blue-600 to-red-600 text-white p-4 rounded-t-2xl flex justify-between items-center">
               <div>
-                <h4 className="font-bold">Fluidline Support</h4>
-                <p className="text-sm opacity-90">How can we help you?</p>
+                <h4 className="font-bold">Fluidline AI Assistant</h4>
+                <p className="text-sm opacity-90">Engineering Solutions Expert</p>
               </div>
               <button
                 onClick={() => setShowChatbot(false)}
-                className="text-white hover:bg-black hover:bg-opacity-20 p-1 rounded"
+                className="text-white/70 hover:text-white transition-colors duration-300"
               >
-                <Minimize2 size={16} />
+                <Minimize2 size={20} />
               </button>
             </div>
 
             <div className="flex-1 overflow-y-auto p-4 space-y-4">
               {chatMessages.map((msg, index) => (
                 <div key={index} className={`flex ${msg.type === 'user' ? 'justify-end' : 'justify-start'}`}>
-                  <div className={`max-w-xs p-3 rounded-lg ${
+                  <div className={`max-w-xs p-3 rounded-2xl ${
                     msg.type === 'user' 
-                      ? `${currentTheme.primary} text-white` 
-                      : 'bg-gray-200 text-gray-800'
+                      ? 'bg-gradient-to-r from-blue-600 to-red-600 text-white' 
+                      : 'bg-gray-100 text-gray-800'
                   }`}>
                     <p className="text-sm">{msg.message}</p>
                   </div>
@@ -910,23 +1309,24 @@ const FluidlineWebsite = () => {
               ))}
             </div>
 
-            <form onSubmit={handleChatSubmit} className="p-4 border-t">
+            <div className="p-4 border-t">
               <div className="flex space-x-2">
                 <input
                   type="text"
                   value={chatInput}
                   onChange={(e) => setChatInput(e.target.value)}
-                  placeholder="Type your message..."
-                  className="flex-1 p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  onKeyPress={(e) => e.key === 'Enter' && handleChatSubmit()}
+                  placeholder="Ask about our engineering services..."
+                  className="flex-1 p-3 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
                 <button
-                  type="submit"
-                  className={`${currentTheme.primary} text-white p-2 rounded-lg ${currentTheme.primaryHover} transition duration-300`}
+                  onClick={handleChatSubmit}
+                  className="bg-gradient-to-r from-blue-600 to-red-600 hover:from-blue-700 hover:to-red-700 text-white p-3 rounded-full transition-colors duration-300"
                 >
-                  <Send size={16} />
+                  <Send size={18} />
                 </button>
               </div>
-            </form>
+            </div>
           </div>
         )}
       </div>
