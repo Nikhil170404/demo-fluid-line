@@ -68,7 +68,9 @@ const FluidlineWebsite = () => {
       cardBg: 'bg-white',
       redPrimary: 'bg-red-600',
       redHover: 'hover:bg-red-700',
-      headerBg: 'bg-white'
+      headerBg: 'bg-white',
+      navActive: 'bg-blue-700 text-white',
+      navHover: 'hover:bg-blue-50'
     },
     corporate: {
       name: 'Corporate',
@@ -83,7 +85,9 @@ const FluidlineWebsite = () => {
       cardBg: 'bg-white',
       redPrimary: 'bg-red-600',
       redHover: 'hover:bg-red-700',
-      headerBg: 'bg-white'
+      headerBg: 'bg-white',
+      navActive: 'bg-blue-600 text-white',
+      navHover: 'hover:bg-blue-50'
     },
     dynamic: {
       name: 'Dynamic',
@@ -98,7 +102,9 @@ const FluidlineWebsite = () => {
       cardBg: 'bg-white',
       redPrimary: 'bg-blue-600',
       redHover: 'hover:bg-blue-700',
-      headerBg: 'bg-white'
+      headerBg: 'bg-white',
+      navActive: 'bg-red-600 text-white',
+      navHover: 'hover:bg-red-50'
     },
     modern: {
       name: 'Modern',
@@ -113,14 +119,16 @@ const FluidlineWebsite = () => {
       cardBg: 'bg-gradient-to-br from-white to-blue-50',
       redPrimary: 'bg-gradient-to-r from-red-600 to-blue-600',
       redHover: 'hover:from-red-700 hover:to-blue-700',
-      headerBg: 'bg-white'
+      headerBg: 'bg-white',
+      navActive: 'bg-gradient-to-r from-blue-600 to-red-600 text-white',
+      navHover: 'hover:bg-gradient-to-r hover:from-blue-50 hover:to-red-50'
     },
     contrast: {
       name: 'Contrast',
-      primary: 'bg-blue-700',
-      primaryHover: 'hover:bg-blue-800',
+      primary: 'bg-blue-800',
+      primaryHover: 'hover:bg-blue-900',
       secondary: 'bg-red-50',
-      accent: 'text-blue-700',
+      accent: 'text-blue-800',
       accentRed: 'text-red-700',
       gradient: 'bg-gradient-to-r from-blue-800 to-red-700',
       gradientAlt: 'bg-gradient-to-r from-red-700 to-blue-800',
@@ -128,7 +136,9 @@ const FluidlineWebsite = () => {
       cardBg: 'bg-white',
       redPrimary: 'bg-red-700',
       redHover: 'hover:bg-red-800',
-      headerBg: 'bg-white'
+      headerBg: 'bg-white',
+      navActive: 'bg-blue-800 text-white',
+      navHover: 'hover:bg-blue-50'
     }
   };
 
@@ -224,27 +234,27 @@ const FluidlineWebsite = () => {
     }
   ];
 
-  // Logo component - Space for adding your own logo
+  // Logo component - Larger size
   const FluidlineLogo = ({ size = 'normal', className = '' }) => {
-    const logoSize = size === 'large' ? 'w-16 h-16' : 'w-10 h-10';
-    
-    // Replace this with your own logo image
-    // Example: <img src="/src/assets/your-logo.png" alt="Fluidline Logo" className="w-full h-full object-contain" />
+    const logoSize = size === 'large' ? 'w-20 h-20' : 'w-14 h-14';
     
     return (
       <div className={`${logoSize} relative ${className} flex items-center justify-center bg-gray-100 border-2 border-dashed border-gray-300 rounded-lg`}>
-        
         <img 
           src="/src/assets/logo1.png" 
           alt="Fluidline Logo" 
           className="w-full h-full object-contain"
+          onError={(e) => {
+            e.target.style.display = 'none';
+            e.target.nextSibling.style.display = 'block';
+          }}
         />
-        
+        <div className="text-xs text-gray-500 hidden">LOGO</div>
       </div>
     );
   };
 
-  // Hero Image Slider Component (Upload functionality removed)
+  // Hero Image Slider Component
   const HeroSlider = () => {
     const nextSlide = () => {
       setCurrentSlide((prev) => (prev + 1) % heroImages.length);
@@ -315,30 +325,34 @@ const FluidlineWebsite = () => {
     );
   };
 
-  // Theme Dropdown Component
+  // Theme Dropdown Component - Fixed
   const ThemeDropdown = () => (
     <div className="relative">
       <button
-        onClick={() => setShowThemeDropdown(!showThemeDropdown)}
-        className="flex items-center px-3 py-2 bg-gray-200 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-300 transition duration-300"
+        onClick={(e) => {
+          e.stopPropagation();
+          setShowThemeDropdown(!showThemeDropdown);
+        }}
+        className="flex items-center px-4 py-2 bg-gray-200 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-300 transition duration-300 min-w-[120px] justify-between"
       >
         <span>{themes[theme].name}</span>
         <ChevronDown size={16} className={`ml-1 transition-transform ${showThemeDropdown ? 'rotate-180' : ''}`} />
       </button>
 
       {showThemeDropdown && (
-        <div className="absolute right-0 mt-1 w-32 bg-white rounded-lg shadow-lg border z-50">
+        <div className="absolute right-0 mt-1 w-36 bg-white rounded-lg shadow-xl border border-gray-200 z-50 py-1">
           {Object.entries(themes).map(([key, themeData]) => (
             <button
               key={key}
-              onClick={() => {
+              onClick={(e) => {
+                e.stopPropagation();
                 setTheme(key);
                 setShowThemeDropdown(false);
               }}
-              className={`w-full text-left px-3 py-2 text-sm rounded-lg transition duration-300 ${
+              className={`w-full text-left px-4 py-2 text-sm transition duration-300 hover:bg-gray-50 ${
                 theme === key 
-                  ? 'bg-blue-100 text-blue-700 font-medium' 
-                  : 'text-gray-700 hover:bg-gray-100'
+                  ? 'bg-blue-100 text-blue-700 font-medium border-l-2 border-blue-500' 
+                  : 'text-gray-700'
               }`}
             >
               {themeData.name}
@@ -417,7 +431,7 @@ const FluidlineWebsite = () => {
                   
                   <div className="text-center lg:text-left">
                     <div className="mb-8">
-                      <div className="w-20 h-20 bg-red-600 rounded-full flex items-center justify-center mx-auto lg:mx-0 mb-4">
+                      <div className={`w-20 h-20 ${currentTheme.redPrimary} rounded-full flex items-center justify-center mx-auto lg:mx-0 mb-4`}>
                         <Shield className="text-white" size={40} />
                       </div>
                       <h3 className={`text-2xl font-bold ${currentTheme.accent} mb-4`}>
@@ -434,7 +448,7 @@ const FluidlineWebsite = () => {
 
                   <div className="text-center lg:text-left">
                     <div className="mb-8">
-                      <div className="w-20 h-20 bg-red-600 rounded-full flex items-center justify-center mx-auto lg:mx-0 mb-4">
+                      <div className={`w-20 h-20 ${currentTheme.primary} rounded-full flex items-center justify-center mx-auto lg:mx-0 mb-4`}>
                         <Award className="text-white" size={40} />
                       </div>
                       <h3 className={`text-2xl font-bold ${currentTheme.accentRed} mb-4`}>
@@ -463,7 +477,7 @@ const FluidlineWebsite = () => {
                       We are proud to have two fabrication workshops and two warehouses of our own, that are powered by state-of-the-art machines and the latest software to support.
                     </p>
                     
-                    <div className={`${currentTheme.cardBg} p-6 rounded-lg shadow-lg border-l-4 ${theme === 'original' ? 'border-blue-700' : 'border-blue-500'} inline-block`}>
+                    <div className={`${currentTheme.cardBg} p-6 rounded-lg shadow-lg border-l-4 ${theme === 'original' ? 'border-blue-700' : theme === 'dynamic' ? 'border-red-600' : 'border-blue-500'} inline-block`}>
                       <h4 className={`text-xl font-bold ${currentTheme.accent} mb-2`}>
                         Strategically located to always stay connected.
                       </h4>
@@ -548,17 +562,17 @@ const FluidlineWebsite = () => {
         return (
           <div className="space-y-16 py-16">
             <div className="container mx-auto px-4">
-              <h1 className="text-4xl font-bold mb-8">About Fluidline</h1>
+              <h1 className={`text-4xl font-bold mb-8 ${currentTheme.accent}`}>About Fluidline</h1>
               
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
-                <div className={`${currentTheme.cardBg} p-8 rounded-lg shadow-lg border-l-4 border-blue-500`}>
+                <div className={`${currentTheme.cardBg} p-8 rounded-lg shadow-lg border-l-4 ${theme === 'dynamic' ? 'border-red-500' : 'border-blue-500'}`}>
                   <h2 className={`text-2xl font-bold mb-4 ${currentTheme.accent}`}>Our Vision</h2>
                   <p className="text-gray-700 leading-relaxed">
                     To explore new horizons and to venture into multi-dimensional aspects of our area of expertise, keeping a constant and cordial liaison with our partners and business associates, and to achieve client satisfaction through continued commitment and excellence in safely delivering quality projects on time.
                   </p>
                 </div>
                 
-                <div className={`${currentTheme.cardBg} p-8 rounded-lg shadow-lg border-l-4 border-red-500`}>
+                <div className={`${currentTheme.cardBg} p-8 rounded-lg shadow-lg border-l-4 ${theme === 'dynamic' ? 'border-blue-500' : 'border-red-500'}`}>
                   <h2 className={`text-2xl font-bold mb-4 ${currentTheme.accentRed}`}>Our Mission</h2>
                   <p className="text-gray-700 leading-relaxed">
                     Guided by principles of integrity and commitment to the goal, we will constantly strive to implement newer initiatives to achieve our vision. In doing this, we will endeavor to uphold our standards of perfection and meet the expectations of all our clients.
@@ -566,8 +580,8 @@ const FluidlineWebsite = () => {
                 </div>
               </div>
 
-              <div className="bg-gray-50 p-8 rounded-lg">
-                <h2 className="text-2xl font-bold mb-6">Message from Our Founder & MD</h2>
+              <div className={`${currentTheme.secondary} p-8 rounded-lg`}>
+                <h2 className={`text-2xl font-bold mb-6 ${currentTheme.accent}`}>Message from Our Founder & MD</h2>
                 <div className="prose max-w-none">
                   <p className="text-gray-700 mb-4">
                     Our company has completed 33+ years of its glorious and eventful existence. Organizations evolve over a period, developing traditions and working ethos in the course of their journey in time.
@@ -578,7 +592,7 @@ const FluidlineWebsite = () => {
                   <p className="text-gray-700 mb-4">
                     We are fully committed to professional excellence hoping that a better future is awaiting us. Challenges we face each day, each day being a new day, we rise to meet these challenges with commitment and fortitude.
                   </p>
-                  <p className="font-semibold text-gray-800">- Mr. Sanjiv Midha, Founder & MD</p>
+                  <p className={`font-semibold ${currentTheme.accentRed}`}>- Mr. Sanjiv Midha, Founder & MD</p>
                 </div>
               </div>
             </div>
@@ -589,11 +603,11 @@ const FluidlineWebsite = () => {
         return (
           <div className="space-y-16 py-16">
             <div className="container mx-auto px-4">
-              <h1 className="text-4xl font-bold mb-8">Contact Us</h1>
+              <h1 className={`text-4xl font-bold mb-8 ${currentTheme.accent}`}>Contact Us</h1>
               
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
                 <div>
-                  <h2 className="text-2xl font-bold mb-6">Get in Touch</h2>
+                  <h2 className={`text-2xl font-bold mb-6 ${currentTheme.accentRed}`}>Get in Touch</h2>
                   <div className="space-y-6">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <input 
@@ -627,10 +641,10 @@ const FluidlineWebsite = () => {
                 </div>
 
                 <div>
-                  <h2 className="text-2xl font-bold mb-6">Our Offices</h2>
+                  <h2 className={`text-2xl font-bold mb-6 ${currentTheme.accent}`}>Our Offices</h2>
                   <div className="space-y-6">
                     {offices.map((office, index) => (
-                      <div key={index} className="bg-white p-6 rounded-lg shadow-lg">
+                      <div key={index} className={`${currentTheme.cardBg} p-6 rounded-lg shadow-lg`}>
                         <h3 className={`text-lg font-bold ${currentTheme.accent} mb-3`}>{office.city}</h3>
                         <div className="space-y-2">
                           <p className="flex items-start">
@@ -657,11 +671,40 @@ const FluidlineWebsite = () => {
           </div>
         );
 
+      case 'services':
+        return (
+          <div className="py-16">
+            <div className="container mx-auto px-4">
+              <h1 className={`text-4xl font-bold mb-8 ${currentTheme.accent}`}>Our Services</h1>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {services.map((service, index) => (
+                  <div key={index} className={`${currentTheme.cardBg} p-6 rounded-lg shadow-lg hover:shadow-xl transition duration-300`}>
+                    <div className="text-6xl mb-4 text-center">{service.icon}</div>
+                    <h3 className={`text-xl font-semibold mb-3 text-center ${
+                      index % 2 === 0 ? currentTheme.accent : currentTheme.accentRed
+                    }`}>{service.title}</h3>
+                    <p className="text-gray-600 mb-4 text-center">{service.description}</p>
+                    <div className="text-center">
+                      <button className={`${
+                        index % 2 === 0 ? currentTheme.primary : currentTheme.redPrimary
+                      } text-white px-6 py-2 rounded-lg ${
+                        index % 2 === 0 ? currentTheme.primaryHover : currentTheme.redHover
+                      } transition duration-300`}>
+                        Learn More
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        );
+
       default:
         return (
           <div className="py-16">
             <div className="container mx-auto px-4 text-center">
-              <h1 className="text-4xl font-bold mb-8">Section Under Development</h1>
+              <h1 className={`text-4xl font-bold mb-8 ${currentTheme.accent}`}>Section Under Development</h1>
               <p className="text-xl text-gray-600">This section is being updated with new content.</p>
             </div>
           </div>
@@ -671,40 +714,40 @@ const FluidlineWebsite = () => {
 
   // Close dropdown when clicking outside
   useEffect(() => {
-    const handleClickOutside = () => {
-      if (showThemeDropdown) {
+    const handleClickOutside = (event) => {
+      if (showThemeDropdown && !event.target.closest('.theme-dropdown')) {
         setShowThemeDropdown(false);
       }
     };
 
-    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener('click', handleClickOutside);
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('click', handleClickOutside);
     };
   }, [showThemeDropdown]);
 
   return (
     <div className="min-h-screen bg-gray-100">
-      <header className="bg-white shadow-lg sticky top-0 z-40">
+      <header className={`${currentTheme.headerBg} shadow-lg sticky top-0 z-40`}>
         <div className="container mx-auto px-4">
           <div className="flex justify-between items-center py-4">
             <div className="flex items-center">
               <FluidlineLogo />
               <div className="ml-3">
-                <h1 className="text-xl font-bold text-gray-800">FLUIDLINE</h1>
+                <h1 className={`text-xl font-bold ${currentTheme.accent}`}>FLUIDLINE</h1>
                 <p className="text-xs text-gray-600">Engineers & Fabricators</p>
               </div>
             </div>
 
-            <nav className="hidden lg:flex space-x-8">
+            <nav className="hidden lg:flex space-x-2">
               {navigation.map((item) => (
                 <button
                   key={item.id}
                   onClick={() => setActiveSection(item.id)}
                   className={`flex items-center px-3 py-2 rounded-lg transition duration-300 ${
                     activeSection === item.id 
-                      ? `${currentTheme.primary} text-white` 
-                      : `text-gray-700 hover:${currentTheme.secondary}`
+                      ? currentTheme.navActive
+                      : `text-gray-700 ${currentTheme.navHover}`
                   }`}
                 >
                   <item.icon className="mr-2" size={16} />
@@ -714,11 +757,13 @@ const FluidlineWebsite = () => {
             </nav>
 
             <div className="flex items-center space-x-4">
-              <ThemeDropdown />
+              <div className="theme-dropdown">
+                <ThemeDropdown />
+              </div>
 
               <button
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
-                className="lg:hidden p-2"
+                className="lg:hidden p-2 text-gray-700"
               >
                 {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
               </button>
@@ -737,8 +782,8 @@ const FluidlineWebsite = () => {
                     }}
                     className={`w-full flex items-center px-3 py-2 rounded-lg transition duration-300 ${
                       activeSection === item.id 
-                        ? `${currentTheme.primary} text-white` 
-                        : `text-gray-700 hover:${currentTheme.secondary}`
+                        ? currentTheme.navActive
+                        : `text-gray-700 ${currentTheme.navHover}`
                     }`}
                   >
                     <item.icon className="mr-2" size={16} />
@@ -746,21 +791,16 @@ const FluidlineWebsite = () => {
                   </button>
                 ))}
               </nav>
-              
-              {/* Mobile Theme Dropdown */}
-              <div className="mt-4 pt-4 border-t border-gray-200">
-                <ThemeDropdown />
-              </div>
             </div>
           )}
         </div>
       </header>
 
       {theme === 'original' && (
-        <div className="bg-blue-700 py-4">
+        <div className={`${currentTheme.primary} py-4`}>
           <div className="container mx-auto px-4 flex justify-center items-center space-x-6">
             <span className="text-white font-semibold text-lg">DOWNLOAD BROCHURE</span>
-            <button className="bg-red-600 hover:bg-red-700 text-white px-6 py-2 rounded font-semibold transition duration-300">
+            <button className={`${currentTheme.redPrimary} ${currentTheme.redHover} text-white px-6 py-2 rounded font-semibold transition duration-300`}>
               CLICK HERE
             </button>
           </div>
@@ -832,6 +872,7 @@ const FluidlineWebsite = () => {
         </div>
       </footer>
 
+      {/* Chatbot */}
       <div className="fixed bottom-4 right-4 z-50">
         {!showChatbot ? (
           <button
@@ -869,7 +910,7 @@ const FluidlineWebsite = () => {
               ))}
             </div>
 
-            <div className="p-4 border-t">
+            <form onSubmit={handleChatSubmit} className="p-4 border-t">
               <div className="flex space-x-2">
                 <input
                   type="text"
@@ -877,16 +918,15 @@ const FluidlineWebsite = () => {
                   onChange={(e) => setChatInput(e.target.value)}
                   placeholder="Type your message..."
                   className="flex-1 p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  onKeyPress={(e) => e.key === 'Enter' && handleChatSubmit(e)}
                 />
                 <button
-                  onClick={handleChatSubmit}
+                  type="submit"
                   className={`${currentTheme.primary} text-white p-2 rounded-lg ${currentTheme.primaryHover} transition duration-300`}
                 >
                   <Send size={16} />
                 </button>
               </div>
-            </div>
+            </form>
           </div>
         )}
       </div>
