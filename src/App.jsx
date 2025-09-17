@@ -22,19 +22,198 @@ const FluidlineWebsite = () => {
   const [currentTheme, setCurrentTheme] = useState('classic');
   const [showThemeSelector, setShowThemeSelector] = useState(false);
 
+  // Comprehensive Theme configurations with 10 red and blue variations
+  const themes = {
+    classic: {
+      name: 'Classic Blue & Red',
+      primary: 'blue-600',
+      secondary: 'red-600',
+      primaryLight: 'blue-100',
+      secondaryLight: 'red-100',
+      primaryDark: 'blue-800',
+      secondaryDark: 'red-800',
+      primaryGradient: 'from-blue-600 to-red-600',
+      primaryHover: 'from-blue-700 to-red-700',
+      navActive: 'from-blue-600 to-red-600',
+      chatGradient: 'from-blue-600 to-red-600',
+      cardGradient: 'from-blue-50 to-red-50',
+      heroOverlay: 'from-blue-900/80 via-red-900/60 to-transparent',
+      statsGradient: 'from-blue-900 to-red-800',
+      footerGradient: 'from-blue-900 to-red-900',
+      preview: 'bg-gradient-to-r from-blue-600 to-red-600'
+    },
+    royal: {
+      name: 'Royal Navy & Crimson',
+      primary: 'blue-900',
+      secondary: 'red-700',
+      primaryLight: 'blue-50',
+      secondaryLight: 'red-50',
+      primaryDark: 'blue-950',
+      secondaryDark: 'red-900',
+      primaryGradient: 'from-blue-900 to-red-700',
+      primaryHover: 'from-blue-950 to-red-800',
+      navActive: 'from-blue-900 to-red-700',
+      chatGradient: 'from-blue-900 to-red-700',
+      cardGradient: 'from-blue-50 to-red-50',
+      heroOverlay: 'from-blue-950/80 via-red-900/60 to-transparent',
+      statsGradient: 'from-blue-950 to-red-900',
+      footerGradient: 'from-blue-950 to-red-950',
+      preview: 'bg-gradient-to-r from-blue-900 to-red-700'
+    },
+    ocean: {
+      name: 'Ocean Blue & Ruby',
+      primary: 'blue-700',
+      secondary: 'red-500',
+      primaryLight: 'blue-100',
+      secondaryLight: 'red-100',
+      primaryDark: 'blue-900',
+      secondaryDark: 'red-700',
+      primaryGradient: 'from-blue-700 to-red-500',
+      primaryHover: 'from-blue-800 to-red-600',
+      navActive: 'from-blue-700 to-red-500',
+      chatGradient: 'from-blue-700 to-red-500',
+      cardGradient: 'from-blue-50 to-red-50',
+      heroOverlay: 'from-blue-900/80 via-red-700/60 to-transparent',
+      statsGradient: 'from-blue-900 to-red-700',
+      footerGradient: 'from-blue-900 to-red-800',
+      preview: 'bg-gradient-to-r from-blue-700 to-red-500'
+    },
+    midnight: {
+      name: 'Midnight Blue & Cherry',
+      primary: 'blue-800',
+      secondary: 'red-600',
+      primaryLight: 'blue-50',
+      secondaryLight: 'red-50',
+      primaryDark: 'blue-950',
+      secondaryDark: 'red-800',
+      primaryGradient: 'from-blue-800 to-red-600',
+      primaryHover: 'from-blue-900 to-red-700',
+      navActive: 'from-blue-800 to-red-600',
+      chatGradient: 'from-blue-800 to-red-600',
+      cardGradient: 'from-blue-50 to-red-50',
+      heroOverlay: 'from-blue-950/80 via-red-800/60 to-transparent',
+      statsGradient: 'from-blue-950 to-red-800',
+      footerGradient: 'from-blue-950 to-red-900',
+      preview: 'bg-gradient-to-r from-blue-800 to-red-600'
+    },
+    steel: {
+      name: 'Steel Blue & Cardinal',
+      primary: 'blue-500',
+      secondary: 'red-700',
+      primaryLight: 'blue-100',
+      secondaryLight: 'red-100',
+      primaryDark: 'blue-700',
+      secondaryDark: 'red-900',
+      primaryGradient: 'from-blue-500 to-red-700',
+      primaryHover: 'from-blue-600 to-red-800',
+      navActive: 'from-blue-500 to-red-700',
+      chatGradient: 'from-blue-500 to-red-700',
+      cardGradient: 'from-blue-50 to-red-50',
+      heroOverlay: 'from-blue-700/80 via-red-900/60 to-transparent',
+      statsGradient: 'from-blue-700 to-red-900',
+      footerGradient: 'from-blue-700 to-red-900',
+      preview: 'bg-gradient-to-r from-blue-500 to-red-700'
+    },
+    electric: {
+      name: 'Electric Blue & Scarlet',
+      primary: 'blue-400',
+      secondary: 'red-500',
+      primaryLight: 'blue-50',
+      secondaryLight: 'red-50',
+      primaryDark: 'blue-600',
+      secondaryDark: 'red-700',
+      primaryGradient: 'from-blue-400 to-red-500',
+      primaryHover: 'from-blue-500 to-red-600',
+      navActive: 'from-blue-400 to-red-500',
+      chatGradient: 'from-blue-400 to-red-500',
+      cardGradient: 'from-blue-50 to-red-50',
+      heroOverlay: 'from-blue-600/80 via-red-700/60 to-transparent',
+      statsGradient: 'from-blue-600 to-red-700',
+      footerGradient: 'from-blue-600 to-red-700',
+      preview: 'bg-gradient-to-r from-blue-400 to-red-500'
+    },
+    cobalt: {
+      name: 'Cobalt & Burgundy',
+      primary: 'blue-600',
+      secondary: 'red-800',
+      primaryLight: 'blue-100',
+      secondaryLight: 'red-100',
+      primaryDark: 'blue-800',
+      secondaryDark: 'red-950',
+      primaryGradient: 'from-blue-600 to-red-800',
+      primaryHover: 'from-blue-700 to-red-900',
+      navActive: 'from-blue-600 to-red-800',
+      chatGradient: 'from-blue-600 to-red-800',
+      cardGradient: 'from-blue-50 to-red-50',
+      heroOverlay: 'from-blue-800/80 via-red-950/60 to-transparent',
+      statsGradient: 'from-blue-800 to-red-950',
+      footerGradient: 'from-blue-800 to-red-950',
+      preview: 'bg-gradient-to-r from-blue-600 to-red-800'
+    },
+    sapphire: {
+      name: 'Sapphire & Rose',
+      primary: 'blue-700',
+      secondary: 'red-400',
+      primaryLight: 'blue-100',
+      secondaryLight: 'red-100',
+      primaryDark: 'blue-900',
+      secondaryDark: 'red-600',
+      primaryGradient: 'from-blue-700 to-red-400',
+      primaryHover: 'from-blue-800 to-red-500',
+      navActive: 'from-blue-700 to-red-400',
+      chatGradient: 'from-blue-700 to-red-400',
+      cardGradient: 'from-blue-50 to-red-50',
+      heroOverlay: 'from-blue-900/80 via-red-600/60 to-transparent',
+      statsGradient: 'from-blue-900 to-red-600',
+      footerGradient: 'from-blue-900 to-red-700',
+      preview: 'bg-gradient-to-r from-blue-700 to-red-400'
+    },
+    arctic: {
+      name: 'Arctic Blue & Fire',
+      primary: 'blue-300',
+      secondary: 'red-600',
+      primaryLight: 'blue-50',
+      secondaryLight: 'red-50',
+      primaryDark: 'blue-500',
+      secondaryDark: 'red-800',
+      primaryGradient: 'from-blue-300 to-red-600',
+      primaryHover: 'from-blue-400 to-red-700',
+      navActive: 'from-blue-300 to-red-600',
+      chatGradient: 'from-blue-300 to-red-600',
+      cardGradient: 'from-blue-50 to-red-50',
+      heroOverlay: 'from-blue-500/80 via-red-800/60 to-transparent',
+      statsGradient: 'from-blue-500 to-red-800',
+      footerGradient: 'from-blue-500 to-red-800',
+      preview: 'bg-gradient-to-r from-blue-300 to-red-600'
+    },
+    titanium: {
+      name: 'Titanium Blue & Magenta',
+      primary: 'blue-800',
+      secondary: 'red-400',
+      primaryLight: 'blue-100',
+      secondaryLight: 'red-100',
+      primaryDark: 'blue-950',
+      secondaryDark: 'red-600',
+      primaryGradient: 'from-blue-800 to-red-400',
+      primaryHover: 'from-blue-900 to-red-500',
+      navActive: 'from-blue-800 to-red-400',
+      chatGradient: 'from-blue-800 to-red-400',
+      cardGradient: 'from-blue-50 to-red-50',
+      heroOverlay: 'from-blue-950/80 via-red-600/60 to-transparent',
+      statsGradient: 'from-blue-950 to-red-600',
+      footerGradient: 'from-blue-950 to-red-700',
+      preview: 'bg-gradient-to-r from-blue-800 to-red-400'
+    }
+  };
+
+  const currentThemeConfig = themes[currentTheme];
+
   // Handle scroll effect for header
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
-    const currentThemeConfig = themes[currentTheme];
+    };
 
-  // Auto-advance slides
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % heroSlides.length);
-    }, 6000);
-    return () => clearInterval(timer);
-  }, [heroSlides.length]);
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
@@ -47,7 +226,7 @@ const FluidlineWebsite = () => {
       subtitle: 'Leading Multi-Dimensional Engineering Solutions',
       description: 'Committed to Quality and Customer Delight for Fortune 500 Companies',
       cta: 'Explore Our Services',
-      overlay: 'bg-gradient-to-r from-blue-900/80 via-red-900/60 to-transparent'
+      overlay: currentThemeConfig.heroOverlay
     },
     {
       image: 'https://images.unsplash.com/photo-1581092921461-eab62e97a780?q=80&w=2070&auto=format&fit=crop',
@@ -55,7 +234,7 @@ const FluidlineWebsite = () => {
       subtitle: 'Class-A Licensed Safety Solutions',
       description: 'Complete fire protection systems with Maharashtra Class A license',
       cta: 'Safety Solutions',
-      overlay: 'bg-gradient-to-r from-red-900/80 via-blue-900/60 to-transparent'
+      overlay: currentThemeConfig.heroOverlay
     },
     {
       image: 'https://images.unsplash.com/photo-1513828583688-c52646db42da?q=80&w=2070&auto=format&fit=crop',
@@ -63,7 +242,7 @@ const FluidlineWebsite = () => {
       subtitle: 'ASME B 31.3 Compliant Solutions',
       description: 'State-of-the-art process piping for various industrial applications',
       cta: 'Piping Solutions',
-      overlay: 'bg-gradient-to-r from-blue-900/80 via-red-900/60 to-transparent'
+      overlay: currentThemeConfig.heroOverlay
     },
     {
       image: 'https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?q=80&w=2070&auto=format&fit=crop',
@@ -71,9 +250,17 @@ const FluidlineWebsite = () => {
       subtitle: 'MS & SS Fabrication Excellence',
       description: 'Tanks, Silos, Structures up to 900KL capacity with precision',
       cta: 'Fabrication Services',
-      overlay: 'bg-gradient-to-r from-red-900/80 via-blue-900/60 to-transparent'
+      overlay: currentThemeConfig.heroOverlay
     }
   ];
+
+  // Auto-advance slides
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % heroSlides.length);
+    }, 6000);
+    return () => clearInterval(timer);
+  }, [heroSlides.length]);
 
   // Page-specific hero slides
   const pageHeroSlides = {
@@ -83,14 +270,14 @@ const FluidlineWebsite = () => {
         title: 'About Fluidline',
         subtitle: '33+ Years of Engineering Excellence',
         description: 'Multi-dimensional company committed to Quality and Customer Delight',
-        overlay: 'bg-gradient-to-r from-blue-900/80 via-red-900/60 to-transparent'
+        overlay: currentThemeConfig.heroOverlay
       },
       {
         image: 'https://images.unsplash.com/photo-1565514020179-026b92b84bb6?q=80&w=2070&auto=format&fit=crop',
         title: 'Our Legacy',
         subtitle: 'Established in 1988',
         description: 'Guided by founding members, driven by young dynamic leadership',
-        overlay: 'bg-gradient-to-r from-red-900/80 via-blue-900/60 to-transparent'
+        overlay: currentThemeConfig.heroOverlay
       }
     ],
     'vision-mission': [
@@ -99,14 +286,14 @@ const FluidlineWebsite = () => {
         title: 'Our Vision',
         subtitle: 'Exploring New Horizons',
         description: 'Multi-dimensional expertise with constant client liaison',
-        overlay: 'bg-gradient-to-r from-blue-900/80 via-red-900/60 to-transparent'
+        overlay: currentThemeConfig.heroOverlay
       },
       {
         image: 'https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?q=80&w=2070&auto=format&fit=crop',
         title: 'Our Mission',
         subtitle: 'Integrity & Commitment',
         description: 'Standards of perfection in every engineering solution',
-        overlay: 'bg-gradient-to-r from-red-900/80 via-blue-900/60 to-transparent'
+        overlay: currentThemeConfig.heroOverlay
       }
     ],
     services: [
@@ -115,21 +302,21 @@ const FluidlineWebsite = () => {
         title: 'Process & Utility Piping',
         subtitle: 'ASME B 31.3 Compliant Solutions',
         description: 'State-of-the-art process piping for various industrial applications',
-        overlay: 'bg-gradient-to-r from-blue-900/80 via-red-900/60 to-transparent'
+        overlay: currentThemeConfig.heroOverlay
       },
       {
         image: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?q=80&w=2070&auto=format&fit=crop',
         title: 'Fire Protection Systems',
         subtitle: 'Class A Licensed Safety',
         description: 'Complete fire protection and detection systems',
-        overlay: 'bg-gradient-to-r from-red-900/80 via-blue-900/60 to-transparent'
+        overlay: currentThemeConfig.heroOverlay
       },
       {
         image: 'https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?q=80&w=2070&auto=format&fit=crop',
         title: 'Structural Fabrication',
         subtitle: 'Heavy Engineering Solutions',
         description: 'Platforms, pipe racks & support structures',
-        overlay: 'bg-gradient-to-r from-blue-900/80 via-red-900/60 to-transparent'
+        overlay: currentThemeConfig.heroOverlay
       }
     ],
     certificates: [
@@ -138,7 +325,7 @@ const FluidlineWebsite = () => {
         title: 'Our Certifications',
         subtitle: 'Quality Assurance Standards',
         description: 'Class A Fire License and international compliance',
-        overlay: 'bg-gradient-to-r from-blue-900/80 via-red-900/60 to-transparent'
+        overlay: currentThemeConfig.heroOverlay
       }
     ],
     clients: [
@@ -147,14 +334,14 @@ const FluidlineWebsite = () => {
         title: 'Our Clients & Consultants',
         subtitle: 'Fortune 500 Partnerships',
         description: 'Trusted by leading corporates and MNCs across India',
-        overlay: 'bg-gradient-to-r from-blue-900/80 via-red-900/60 to-transparent'
+        overlay: currentThemeConfig.heroOverlay
       },
       {
         image: 'https://images.unsplash.com/photo-1565514020179-026b92b84bb6?q=80&w=2070&auto=format&fit=crop',
         title: 'Global Standards',
         subtitle: 'World-Class Solutions',
         description: '1000+ successful projects with zero compromise on quality',
-        overlay: 'bg-gradient-to-r from-red-900/80 via-blue-900/60 to-transparent'
+        overlay: currentThemeConfig.heroOverlay
       }
     ],
     career: [
@@ -163,7 +350,7 @@ const FluidlineWebsite = () => {
         title: 'Join Our Team',
         subtitle: 'Career Opportunities',
         description: 'Be part of 3000+ skilled workforce delivering excellence',
-        overlay: 'bg-gradient-to-r from-blue-900/80 via-red-900/60 to-transparent'
+        overlay: currentThemeConfig.heroOverlay
       }
     ],
     contact: [
@@ -172,90 +359,13 @@ const FluidlineWebsite = () => {
         title: 'Contact Us',
         subtitle: 'Get In Touch',
         description: 'Kanpur • Mumbai • Noida • Bengaluru',
-        overlay: 'bg-gradient-to-r from-blue-900/80 via-red-900/60 to-transparent'
+        overlay: currentThemeConfig.heroOverlay
       }
     ]
   };
 
-  // Generic Page Hero Section
-  const PageHeroSection = ({ pageKey, currentSlide = 0 }) => {
-    const slides = pageHeroSlides[pageKey] || [];
-    if (slides.length === 0) return null;
-
-    return (
-      <section className="relative h-96 md:h-[500px] overflow-hidden">
-        <div className="absolute inset-0 z-10 flex items-center">
-          <div className="container mx-auto px-6 lg:px-12">
-            <div className="max-w-4xl">
-              <div className="space-y-6 text-white">
-                <div className="space-y-2">
-                  <p className="text-sm uppercase tracking-widest font-semibold text-blue-300 opacity-90">
-                    Fluidline Engineers & Fabricators
-                  </p>
-                  <h1 className="text-4xl md:text-6xl font-bold leading-tight">
-                    {slides[currentSlide % slides.length].title}
-                  </h1>
-                  <h2 className="text-xl md:text-2xl font-light text-gray-200">
-                    {slides[currentSlide % slides.length].subtitle}
-                  </h2>
-                </div>
-                <p className="text-lg text-gray-300 max-w-2xl leading-relaxed">
-                  {slides[currentSlide % slides.length].description}
-                </p>
-                <div className="flex flex-wrap gap-4 pt-4">
-                  <button 
-                    onClick={() => setActiveSection('contact')}
-                    className={`bg-gradient-to-r ${currentThemeConfig.primaryGradient} hover:${currentThemeConfig.primaryHover} text-white px-6 py-3 rounded-full font-semibold transition-all duration-300 flex items-center space-x-2 shadow-xl hover:shadow-2xl transform hover:scale-105`}
-                  >
-                    <span>Contact Us</span>
-                    <ArrowRight size={18} />
-                  </button>
-                  <button className="border-2 border-white/30 text-white hover:bg-white/10 px-6 py-3 rounded-full font-semibold transition-all duration-300 flex items-center space-x-2 backdrop-blur-sm">
-                    <Download size={18} />
-                    <span>Download Brochure</span>
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Background Images */}
-        <div className="absolute inset-0">
-          {slides.map((slide, index) => (
-            <div
-              key={index}
-              className={`absolute inset-0 transition-opacity duration-1000 ${
-                index === (currentSlide % slides.length) ? 'opacity-100' : 'opacity-0'
-              }`}
-            >
-              <img
-                src={slide.image}
-                alt={slide.title}
-                className="w-full h-full object-cover"
-              />
-              <div className={`absolute inset-0 ${slide.overlay}`} />
-            </div>
-          ))}
-        </div>
-
-        {/* Navigation Dots */}
-        {slides.length > 1 && (
-          <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 z-20">
-            <div className="flex space-x-2">
-              {slides.map((_, index) => (
-                <div
-                  key={index}
-                  className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                    index === (currentSlide % slides.length) ? 'bg-white scale-125' : 'bg-white/50'
-                  }`}
-                />
-              ))}
-            </div>
-          </div>
-        )}
-      </section>
-    const handleChatSubmit = () => {
+  // Handle chat submit
+  const handleChatSubmit = () => {
     if (chatInput.trim()) {
       setChatMessages(prev => [...prev, { type: 'user', message: chatInput }]);
       
@@ -278,7 +388,6 @@ const FluidlineWebsite = () => {
       setChatInput('');
     }
   };
-  };
 
   const navigation = [
     { id: 'home', name: 'Home', icon: Home },
@@ -297,56 +406,50 @@ const FluidlineWebsite = () => {
       description: 'State-of-the-art Process Piping tailormade for various applications following ASME B 31.3 standards with precision engineering and quality assurance.',
       icon: Factory,
       image: 'https://images.unsplash.com/photo-1518709474137-4b906b9e922c?q=80&w=600&auto=format&fit=crop',
-      features: ['ASME B 31.3 Compliance', 'Custom Design Solutions', 'Quality Testing'],
-      color: 'from-blue-500 to-blue-700'
+      features: ['ASME B 31.3 Compliance', 'Custom Design Solutions', 'Quality Testing']
     },
     {
       title: 'Fire Protection & Detection Systems',
       description: 'Complete fire protection solutions with Class A Fire License in Maharashtra. Design, supply, installation, testing and commissioning.',
       icon: Flame,
       image: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?q=80&w=600&auto=format&fit=crop',
-      features: ['Class A Licensed', 'Detection Systems', 'Emergency Response'],
-      color: 'from-red-500 to-red-700'
+      features: ['Class A Licensed', 'Detection Systems', 'Emergency Response']
     },
     {
       title: 'Structural Work',
       description: 'Supply, fabrication and erection for platforms, pipe racks & support structures with precision welding and quality control.',
       icon: Building2,
       image: 'https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?q=80&w=600&auto=format&fit=crop',
-      features: ['Heavy Fabrication', 'Precision Welding', 'Quality Control'],
-      color: 'from-blue-600 to-red-600'
+      features: ['Heavy Fabrication', 'Precision Welding', 'Quality Control']
     },
     {
       title: 'Equipment Fabrication',
       description: 'MS and SS equipment fabrication including tanks, chimneys, air receivers up to 900KL capacity with precision manufacturing.',
       icon: Cog,
       image: 'https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?q=80&w=600&auto=format&fit=crop',
-      features: ['Large Capacity', 'Material Excellence', 'Custom Solutions'],
-      color: 'from-red-500 to-blue-600'
+      features: ['Large Capacity', 'Material Excellence', 'Custom Solutions']
     },
     {
       title: 'Equipment Erection',
       description: 'Installation of process machinery, pumps, boilers, cooling towers from 1MT to 120MT with safety protocols and precision.',
       icon: Settings,
       image: 'https://images.unsplash.com/photo-1565514020179-026b92b84bb6?q=80&w=600&auto=format&fit=crop',
-      features: ['Heavy Machinery', 'Precision Installation', 'Safety Protocols'],
-      color: 'from-blue-500 to-red-500'
+      features: ['Heavy Machinery', 'Precision Installation', 'Safety Protocols']
     },
     {
       title: 'Balance of Boiler',
       description: 'Complete boiler services from procurement to commissioning following IBR regulations with expert commissioning.',
       icon: Zap,
       image: 'https://images.unsplash.com/photo-1613323593608-abc90fec84ff?q=80&w=600&auto=format&fit=crop',
-      features: ['IBR Compliance', 'Complete Solutions', 'Expert Commissioning'],
-      color: 'from-red-600 to-blue-500'
+      features: ['IBR Compliance', 'Complete Solutions', 'Expert Commissioning']
     }
   ];
 
   const stats = [
-    { number: '1000+', label: 'Successful Projects', icon: Target, color: 'text-blue-500' },
-    { number: '3000+', label: 'Skilled Workforce', icon: Users, color: 'text-red-500' },
-    { number: '100M+', label: 'Safe Man Hours Achieved', icon: Shield, color: 'text-blue-600' },
-    { number: '33+', label: 'Years of Experience', icon: Award, color: 'text-red-600' }
+    { number: '1000+', label: 'Successful Projects', icon: Target },
+    { number: '3000+', label: 'Skilled Workforce', icon: Users },
+    { number: '100M+', label: 'Safe Man Hours Achieved', icon: Shield },
+    { number: '33+', label: 'Years of Experience', icon: Award }
   ];
 
   const clients = [
@@ -409,7 +512,7 @@ const FluidlineWebsite = () => {
     }
   ];
 
-  // Logo component with blue and red theme
+  // Logo component with theme colors
   const FluidlineLogo = ({ className = '', size = 'md' }) => {
     const sizeClasses = {
       sm: 'w-8 h-8 text-xs',
@@ -418,9 +521,90 @@ const FluidlineWebsite = () => {
     };
 
     return (
-      <div className={`${sizeClasses[size]} ${className} bg-gradient-to-br from-blue-600 to-red-600 rounded-lg flex items-center justify-center shadow-lg`}>
+      <div className={`${sizeClasses[size]} ${className} bg-gradient-to-br from-${currentThemeConfig.primary} to-${currentThemeConfig.secondary} rounded-lg flex items-center justify-center shadow-lg`}>
         <span className="text-white font-bold">FL</span>
       </div>
+    );
+  };
+
+  // Generic Page Hero Section
+  const PageHeroSection = ({ pageKey, currentSlide = 0 }) => {
+    const slides = pageHeroSlides[pageKey] || [];
+    if (slides.length === 0) return null;
+
+    return (
+      <section className="relative h-96 md:h-[500px] overflow-hidden">
+        <div className="absolute inset-0 z-10 flex items-center">
+          <div className="container mx-auto px-6 lg:px-12">
+            <div className="max-w-4xl">
+              <div className="space-y-6 text-white">
+                <div className="space-y-2">
+                  <p className={`text-sm uppercase tracking-widest font-semibold text-${currentThemeConfig.primary}-300 opacity-90`}>
+                    Fluidline Engineers & Fabricators
+                  </p>
+                  <h1 className="text-4xl md:text-6xl font-bold leading-tight">
+                    {slides[currentSlide % slides.length].title}
+                  </h1>
+                  <h2 className="text-xl md:text-2xl font-light text-gray-200">
+                    {slides[currentSlide % slides.length].subtitle}
+                  </h2>
+                </div>
+                <p className="text-lg text-gray-300 max-w-2xl leading-relaxed">
+                  {slides[currentSlide % slides.length].description}
+                </p>
+                <div className="flex flex-wrap gap-4 pt-4">
+                  <button 
+                    onClick={() => setActiveSection('contact')}
+                    className={`bg-gradient-to-r ${currentThemeConfig.primaryGradient} hover:${currentThemeConfig.primaryHover} text-white px-6 py-3 rounded-full font-semibold transition-all duration-300 flex items-center space-x-2 shadow-xl hover:shadow-2xl transform hover:scale-105`}
+                  >
+                    <span>Contact Us</span>
+                    <ArrowRight size={18} />
+                  </button>
+                  <button className="border-2 border-white/30 text-white hover:bg-white/10 px-6 py-3 rounded-full font-semibold transition-all duration-300 flex items-center space-x-2 backdrop-blur-sm">
+                    <Download size={18} />
+                    <span>Download Brochure</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Background Images */}
+        <div className="absolute inset-0">
+          {slides.map((slide, index) => (
+            <div
+              key={index}
+              className={`absolute inset-0 transition-opacity duration-1000 ${
+                index === (currentSlide % slides.length) ? 'opacity-100' : 'opacity-0'
+              }`}
+            >
+              <img
+                src={slide.image}
+                alt={slide.title}
+                className="w-full h-full object-cover"
+              />
+              <div className={`absolute inset-0 bg-gradient-to-r ${slide.overlay}`} />
+            </div>
+          ))}
+        </div>
+
+        {/* Navigation Dots */}
+        {slides.length > 1 && (
+          <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 z-20">
+            <div className="flex space-x-2">
+              {slides.map((_, index) => (
+                <div
+                  key={index}
+                  className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                    index === (currentSlide % slides.length) ? 'bg-white scale-125' : 'bg-white/50'
+                  }`}
+                />
+              ))}
+            </div>
+          </div>
+        )}
+      </section>
     );
   };
 
@@ -432,7 +616,7 @@ const FluidlineWebsite = () => {
           <div className="max-w-4xl">
             <div className="space-y-6 text-white">
               <div className="space-y-2">
-                <p className="text-sm uppercase tracking-widest font-semibold text-blue-300 opacity-90">
+                <p className={`text-sm uppercase tracking-widest font-semibold text-${currentThemeConfig.primary}-300 opacity-90`}>
                   Welcome to Fluidline Group
                 </p>
                 <h1 className="text-5xl md:text-7xl font-bold leading-tight">
@@ -477,7 +661,7 @@ const FluidlineWebsite = () => {
               alt={slide.title}
               className="w-full h-full object-cover"
             />
-            <div className={`absolute inset-0 ${slide.overlay}`} />
+            <div className={`absolute inset-0 bg-gradient-to-r ${slide.overlay}`} />
           </div>
         ))}
       </div>
@@ -505,7 +689,7 @@ const FluidlineWebsite = () => {
       <div className="container mx-auto px-6">
         <div className="text-center max-w-6xl mx-auto">
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-8">
-            <span className="text-blue-600">Fluidline Engineers</span> & <span className="text-red-600">Fabricators</span> Private Limited
+            <span className={`text-${currentThemeConfig.primary}`}>Fluidline Engineers</span> & <span className={`text-${currentThemeConfig.secondary}`}>Fabricators</span> Private Limited
           </h2>
           <p className="text-xl text-gray-700 mb-6 leading-relaxed">
             is a multi-dimensional company committed to Quality and Customer Delight. We provide turnkey solutions 
@@ -517,12 +701,12 @@ const FluidlineWebsite = () => {
           </p>
           
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            <div className="bg-gradient-to-br from-blue-50 to-blue-100 p-8 rounded-2xl border-l-4 border-blue-500">
-              <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-blue-600 rounded-full flex items-center justify-center mx-auto mb-6">
+            <div className={`bg-gradient-to-br from-${currentThemeConfig.primaryLight} to-${currentThemeConfig.primaryLight} p-8 rounded-2xl border-l-4 border-${currentThemeConfig.primary}`}>
+              <div className={`w-16 h-16 bg-gradient-to-r from-${currentThemeConfig.primary} to-${currentThemeConfig.primary} rounded-full flex items-center justify-center mx-auto mb-6`}>
                 <Heart className="text-white" size={32} />
               </div>
-              <h3 className="text-2xl font-bold text-blue-700 mb-4">Inspired by our legacy</h3>
-              <h4 className="text-lg font-semibold text-red-600 mb-4">Driven by our young and dynamic leadership</h4>
+              <h3 className={`text-2xl font-bold text-${currentThemeConfig.primary} mb-4`}>Inspired by our legacy</h3>
+              <h4 className={`text-lg font-semibold text-${currentThemeConfig.secondary} mb-4`}>Driven by our young and dynamic leadership</h4>
               <p className="text-gray-700 leading-relaxed">
                 Established in 1988, we are still guided by the illustrious management of our founding members. 
                 Today we are led by a young and dynamic team and have grown to become one of the most reputed names 
@@ -530,12 +714,12 @@ const FluidlineWebsite = () => {
               </p>
             </div>
 
-            <div className="bg-gradient-to-br from-red-50 to-red-100 p-8 rounded-2xl border-l-4 border-red-500">
-              <div className="w-16 h-16 bg-gradient-to-r from-red-500 to-red-600 rounded-full flex items-center justify-center mx-auto mb-6">
+            <div className={`bg-gradient-to-br from-${currentThemeConfig.secondaryLight} to-${currentThemeConfig.secondaryLight} p-8 rounded-2xl border-l-4 border-${currentThemeConfig.secondary}`}>
+              <div className={`w-16 h-16 bg-gradient-to-r from-${currentThemeConfig.secondary} to-${currentThemeConfig.secondary} rounded-full flex items-center justify-center mx-auto mb-6`}>
                 <TrendingUp className="text-white" size={32} />
               </div>
-              <h3 className="text-2xl font-bold text-red-700 mb-4">Over 33 years of delivering best-in-class services</h3>
-              <h4 className="text-lg font-semibold text-blue-600 mb-4">And the journey continues!</h4>
+              <h3 className={`text-2xl font-bold text-${currentThemeConfig.secondary} mb-4`}>Over 33 years of delivering best-in-class services</h3>
+              <h4 className={`text-lg font-semibold text-${currentThemeConfig.primary} mb-4`}>And the journey continues!</h4>
               <p className="text-gray-700 leading-relaxed">
                 We have had an impeccable track record of serving our customers for the last 33 years across the 
                 length and breadth of the country. With every project we undertake, we raise the bar for ourselves 
@@ -544,7 +728,7 @@ const FluidlineWebsite = () => {
             </div>
 
             <div className="bg-gradient-to-br from-purple-50 to-purple-100 p-8 rounded-2xl border-l-4 border-purple-500">
-              <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-red-500 rounded-full flex items-center justify-center mx-auto mb-6">
+              <div className={`w-16 h-16 bg-gradient-to-r from-${currentThemeConfig.primary} to-${currentThemeConfig.secondary} rounded-full flex items-center justify-center mx-auto mb-6`}>
                 <Shield className="text-white" size={32} />
               </div>
               <h3 className="text-2xl font-bold text-purple-700 mb-4">Commitment to earning the trust of our clients</h3>
@@ -556,13 +740,13 @@ const FluidlineWebsite = () => {
             </div>
           </div>
 
-          <div className="bg-gradient-to-r from-blue-600 to-red-600 p-8 rounded-2xl text-white mt-12">
+          <div className={`bg-gradient-to-r ${currentThemeConfig.primaryGradient} p-8 rounded-2xl text-white mt-12`}>
             <h3 className="text-2xl font-bold mb-4">Strategically located to always stay connected</h3>
             <p className="text-lg">
               We operate from our Head Office in <span className="font-semibold">Kanpur</span> and branches in key cities like 
               <span className="font-semibold"> Mumbai, Noida</span> and <span className="font-semibold">Bengaluru</span>.
             </p>
-            <p className="mt-4 text-blue-100">
+            <p className={`mt-4 text-${currentThemeConfig.primary}-100`}>
               We are proud to have two fabrication workshops and two warehouses of our own, that are powered by 
               state-of-the-art machines and the latest software to support.
             </p>
@@ -574,7 +758,7 @@ const FluidlineWebsite = () => {
 
   // Stats Section
   const StatsSection = () => (
-    <section className="bg-gradient-to-r from-gray-900 to-gray-800 py-20">
+    <section className={`bg-gradient-to-r ${currentThemeConfig.statsGradient} py-20`}>
       <div className="container mx-auto px-6">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
           {stats.map((stat, index) => {
@@ -582,7 +766,7 @@ const FluidlineWebsite = () => {
             return (
               <div key={index} className="text-center group">
                 <div className="mx-auto w-20 h-20 rounded-full bg-white/10 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
-                  <IconComponent className={`${stat.color}`} size={36} />
+                  <IconComponent className={`text-${currentThemeConfig.primary}-300`} size={36} />
                 </div>
                 <div className="text-4xl font-bold text-white mb-2">{stat.number}</div>
                 <div className="text-gray-300 font-medium">{stat.label}</div>
@@ -596,11 +780,11 @@ const FluidlineWebsite = () => {
 
   // Services Section
   const ServicesSection = () => (
-    <section className="py-24 bg-gradient-to-b from-white to-gray-50">
+    <section className={`py-24 bg-gradient-to-b from-white to-${currentThemeConfig.cardGradient}`}>
       <div className="container mx-auto px-6">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-            Our <span className="text-blue-600">Engineering</span> Services
+            Our <span className={`text-${currentThemeConfig.primary}`}>Engineering</span> Services
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
             We have expertise in Design, Supply, Installation, testing and commissioning of comprehensive 
@@ -622,7 +806,7 @@ const FluidlineWebsite = () => {
                     alt={service.title}
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                   />
-                  <div className={`absolute inset-0 bg-gradient-to-t ${service.color} opacity-60`} />
+                  <div className={`absolute inset-0 bg-gradient-to-t ${currentThemeConfig.primaryGradient} opacity-60`} />
                   <div className="absolute top-4 left-4">
                     <div className="w-12 h-12 bg-white/90 rounded-full flex items-center justify-center backdrop-blur-sm">
                       <IconComponent className="text-gray-700" size={24} />
@@ -647,7 +831,7 @@ const FluidlineWebsite = () => {
                     ))}
                   </div>
 
-                  <button className={`w-full bg-gradient-to-r ${service.color} text-white py-3 rounded-lg font-semibold transition-all duration-300 transform group-hover:scale-105 flex items-center justify-center space-x-2`}>
+                  <button className={`w-full bg-gradient-to-r ${currentThemeConfig.primaryGradient} text-white py-3 rounded-lg font-semibold transition-all duration-300 transform group-hover:scale-105 flex items-center justify-center space-x-2`}>
                     <span>Learn More</span>
                     <ArrowRight size={16} />
                   </button>
@@ -662,11 +846,11 @@ const FluidlineWebsite = () => {
 
   // About Us Section
   const AboutUsSection = () => (
-    <section className="py-24 bg-gradient-to-br from-blue-50 to-red-50">
+    <section className={`py-24 bg-gradient-to-br ${currentThemeConfig.cardGradient}`}>
       <div className="container mx-auto px-6">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-            About <span className="text-blue-600">Fluidline</span> <span className="text-red-600">Group</span>
+            About <span className={`text-${currentThemeConfig.primary}`}>Fluidline</span> <span className={`text-${currentThemeConfig.secondary}`}>Group</span>
           </h2>
         </div>
 
@@ -677,14 +861,14 @@ const FluidlineWebsite = () => {
               alt="Engineering Excellence"
               className="rounded-2xl shadow-2xl"
             />
-            <div className="absolute -top-6 -right-6 w-full h-full bg-gradient-to-br from-blue-200/50 to-red-200/50 rounded-2xl -z-10" />
+            <div className={`absolute -top-6 -right-6 w-full h-full bg-gradient-to-br from-${currentThemeConfig.primaryLight} to-${currentThemeConfig.secondaryLight} rounded-2xl -z-10`} />
           </div>
 
           <div className="space-y-6">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-              <div className="bg-white p-6 rounded-xl shadow-lg border-l-4 border-blue-500">
-                <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
-                  <Eye className="text-blue-600" size={24} />
+              <div className={`bg-white p-6 rounded-xl shadow-lg border-l-4 border-${currentThemeConfig.primary}`}>
+                <div className={`w-12 h-12 bg-${currentThemeConfig.primaryLight} rounded-lg flex items-center justify-center mb-4`}>
+                  <Eye className={`text-${currentThemeConfig.primary}`} size={24} />
                 </div>
                 <h4 className="font-bold text-gray-900 mb-2">Our Vision</h4>
                 <p className="text-sm text-gray-600">
@@ -693,9 +877,9 @@ const FluidlineWebsite = () => {
                 </p>
               </div>
 
-              <div className="bg-white p-6 rounded-xl shadow-lg border-l-4 border-red-500">
-                <div className="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center mb-4">
-                  <Target className="text-red-600" size={24} />
+              <div className={`bg-white p-6 rounded-xl shadow-lg border-l-4 border-${currentThemeConfig.secondary}`}>
+                <div className={`w-12 h-12 bg-${currentThemeConfig.secondaryLight} rounded-lg flex items-center justify-center mb-4`}>
+                  <Target className={`text-${currentThemeConfig.secondary}`} size={24} />
                 </div>
                 <h4 className="font-bold text-gray-900 mb-2">Our Mission</h4>
                 <p className="text-sm text-gray-600">
@@ -726,7 +910,7 @@ const FluidlineWebsite = () => {
       <div className="container mx-auto px-6">
         <div className="text-center mb-16">
           <h2 className="text-4xl font-bold text-gray-900 mb-4">
-            <span className="text-blue-600">Our</span> <span className="text-red-600">Clients</span> & Consultants
+            <span className={`text-${currentThemeConfig.primary}`}>Our</span> <span className={`text-${currentThemeConfig.secondary}`}>Clients</span> & Consultants
           </h2>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
             Trusted by Fortune 500 companies and leading Indian corporations across various industries
@@ -737,9 +921,9 @@ const FluidlineWebsite = () => {
           {clients.map((client, index) => (
             <div
               key={index}
-              className="group bg-gray-50 hover:bg-white rounded-xl p-6 transition-all duration-300 text-center hover:shadow-lg border-2 border-transparent hover:border-blue-200"
+              className={`group bg-gray-50 hover:bg-white rounded-xl p-6 transition-all duration-300 text-center hover:shadow-lg border-2 border-transparent hover:border-${currentThemeConfig.primary}-200`}
             >
-              <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-r from-blue-500 to-red-500 rounded-lg flex items-center justify-center">
+              <div className={`w-16 h-16 mx-auto mb-4 bg-gradient-to-r from-${currentThemeConfig.primary} to-${currentThemeConfig.secondary} rounded-lg flex items-center justify-center`}>
                 <span className="text-white font-bold text-sm">{client.logo}</span>
               </div>
               <h4 className="font-semibold text-gray-900 mb-2">{client.name}</h4>
@@ -753,11 +937,11 @@ const FluidlineWebsite = () => {
 
   // Testimonials Section
   const TestimonialsSection = () => (
-    <section className="py-24 bg-gradient-to-r from-gray-900 to-gray-800">
+    <section className={`py-24 bg-gradient-to-r ${currentThemeConfig.statsGradient}`}>
       <div className="container mx-auto px-6">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
-            Client <span className="text-blue-400">Testimonials</span>
+            Client <span className={`text-${currentThemeConfig.primary}-300`}>Testimonials</span>
           </h2>
           <p className="text-xl text-gray-300 max-w-2xl mx-auto">
             Hear from industry leaders about their experience working with Fluidline
@@ -783,7 +967,7 @@ const FluidlineWebsite = () => {
               </p>
 
               <div className="flex items-center">
-                <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-red-500 rounded-full mr-4 flex items-center justify-center">
+                <div className={`w-12 h-12 bg-gradient-to-r from-${currentThemeConfig.primary} to-${currentThemeConfig.secondary} rounded-full mr-4 flex items-center justify-center`}>
                   <span className="text-white font-bold text-sm">{testimonial.logo}</span>
                 </div>
                 <div>
@@ -800,11 +984,11 @@ const FluidlineWebsite = () => {
 
   // Contact Section
   const ContactSection = () => (
-    <section className="py-24 bg-gradient-to-b from-white to-gray-50">
+    <section className={`py-24 bg-gradient-to-b from-white to-${currentThemeConfig.cardGradient}`}>
       <div className="container mx-auto px-6">
         <div className="text-center mb-16">
           <h2 className="text-4xl font-bold text-gray-900 mb-4">
-            <span className="text-blue-600">Contact</span> <span className="text-red-600">Us</span>
+            <span className={`text-${currentThemeConfig.primary}`}>Contact</span> <span className={`text-${currentThemeConfig.secondary}`}>Us</span>
           </h2>
           <p className="text-lg text-gray-600">Get in touch with our engineering experts</p>
         </div>
@@ -814,19 +998,19 @@ const FluidlineWebsite = () => {
             {offices.map((office, index) => (
               <div key={index} className="bg-white p-6 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300">
                 <h3 className="text-xl font-bold text-gray-900 mb-4 flex items-center">
-                  <MapPin className="text-blue-600 mr-2" size={20} />
+                  <MapPin className={`text-${currentThemeConfig.primary} mr-2`} size={20} />
                   {office.city}
                 </h3>
                 <div className="space-y-3">
                   <p className="text-gray-600">{office.address}</p>
                   {office.phone && (
                     <p className="flex items-center text-gray-600">
-                      <Phone className="mr-2 text-red-500" size={16} />
+                      <Phone className={`mr-2 text-${currentThemeConfig.secondary}`} size={16} />
                       {office.phone}
                     </p>
                   )}
                   <p className="flex items-center text-gray-600">
-                    <Mail className="mr-2 text-blue-500" size={16} />
+                    <Mail className={`mr-2 text-${currentThemeConfig.primary}`} size={16} />
                     {office.email}
                   </p>
                 </div>
@@ -841,23 +1025,23 @@ const FluidlineWebsite = () => {
                 <input 
                   type="text" 
                   placeholder="Your Name" 
-                  className="w-full p-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className={`w-full p-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-${currentThemeConfig.primary}`}
                 />
                 <input 
                   type="email" 
                   placeholder="Your Email" 
-                  className="w-full p-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className={`w-full p-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-${currentThemeConfig.primary}`}
                 />
               </div>
               <input 
                 type="text" 
                 placeholder="Subject" 
-                className="w-full p-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className={`w-full p-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-${currentThemeConfig.primary}`}
               />
               <textarea 
                 placeholder="Your Message" 
                 rows="6"
-                className="w-full p-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className={`w-full p-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-${currentThemeConfig.primary}`}
               ></textarea>
               <button 
                 onClick={() => alert('Message sent! We will get back to you soon.')}
@@ -874,20 +1058,20 @@ const FluidlineWebsite = () => {
 
   // CTA Section
   const CTASection = () => (
-    <section className="py-20 bg-gradient-to-r from-blue-600 to-red-600">
+    <section className={`py-20 bg-gradient-to-r ${currentThemeConfig.primaryGradient}`}>
       <div className="container mx-auto px-6 text-center">
         <div className="max-w-4xl mx-auto">
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
             Ready to Start Your Engineering Project?
           </h2>
-          <p className="text-xl text-blue-100 mb-8 leading-relaxed">
+          <p className={`text-xl text-${currentThemeConfig.primary}-100 mb-8 leading-relaxed`}>
             Partner with Fluidline for world-class engineering solutions. 
             Let's discuss how we can bring your industrial vision to life.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
               <button
                 onClick={() => setActiveSection('contact')}
-                className="bg-white text-blue-600 hover:bg-gray-100 px-8 py-4 rounded-full font-semibold transition-all duration-300 flex items-center space-x-2 shadow-lg hover:shadow-xl transform hover:scale-105"
+                className={`bg-white text-${currentThemeConfig.primary} hover:bg-gray-100 px-8 py-4 rounded-full font-semibold transition-all duration-300 flex items-center space-x-2 shadow-lg hover:shadow-xl transform hover:scale-105`}
               >
                 <span>Contact Our Experts</span>
                 <ArrowRight size={20} />
@@ -942,28 +1126,6 @@ const FluidlineWebsite = () => {
       )}
     </div>
   );
-    if (chatInput.trim()) {
-      setChatMessages(prev => [...prev, { type: 'user', message: chatInput }]);
-      
-      setTimeout(() => {
-        let botResponse = '';
-        if (chatInput.toLowerCase().includes('service')) {
-          botResponse = 'We offer comprehensive engineering solutions including Process Piping (ASME B 31.3), Fire Protection Systems (Class A licensed), Structural Fabrication, Equipment Erection, Balance of Boiler, and Equipment Fabrication. Which service interests you most?';
-        } else if (chatInput.toLowerCase().includes('contact') || chatInput.toLowerCase().includes('office')) {
-          botResponse = 'You can reach us at our Head Office in Kanpur (+91-512 2225138) or projects@fluidlinegroup.com. We also have offices in Mumbai, Noida, and Bengaluru. Which location would you like to contact?';
-        } else if (chatInput.toLowerCase().includes('experience') || chatInput.toLowerCase().includes('project')) {
-          botResponse = 'Fluidline has 33+ years of engineering excellence with 1000+ successful projects, 3000+ skilled workforce, and 100M+ safe man hours. We serve Fortune 500 companies across India. Would you like to know about specific projects?';
-        } else if (chatInput.toLowerCase().includes('certificate') || chatInput.toLowerCase().includes('license')) {
-          botResponse = 'We hold Class A Fire License in Maharashtra and follow ASME B 31.3 standards for process piping. We also comply with IBR regulations for boiler services. Would you like to see our certifications?';
-        } else {
-          botResponse = 'Thank you for your interest in Fluidline Engineers & Fabricators! Our engineering experts will get back to you shortly. For immediate assistance, call our Head Office at +91-512 2225138.';
-        }
-        setChatMessages(prev => [...prev, { type: 'bot', message: botResponse }]);
-      }, 1000);
-      
-      setChatInput('');
-    }
-  };
 
   const renderSection = () => {
     switch(activeSection) {
@@ -998,11 +1160,11 @@ const FluidlineWebsite = () => {
             <div className="pt-16">
               <div className="container mx-auto px-6">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
-                  <div className="bg-gradient-to-br from-blue-50 to-blue-100 p-12 rounded-2xl border-l-4 border-blue-500">
-                    <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-blue-600 rounded-full flex items-center justify-center mx-auto mb-6">
+                  <div className={`bg-gradient-to-br from-${currentThemeConfig.primaryLight} to-${currentThemeConfig.primaryLight} p-12 rounded-2xl border-l-4 border-${currentThemeConfig.primary}`}>
+                    <div className={`w-16 h-16 bg-gradient-to-r from-${currentThemeConfig.primary} to-${currentThemeConfig.primary} rounded-full flex items-center justify-center mx-auto mb-6`}>
                       <Eye className="text-white" size={32} />
                     </div>
-                    <h2 className="text-3xl font-bold text-blue-700 mb-6 text-center">Our Vision</h2>
+                    <h2 className={`text-3xl font-bold text-${currentThemeConfig.primary} mb-6 text-center`}>Our Vision</h2>
                     <p className="text-gray-700 leading-relaxed text-lg">
                       To explore new horizons and to venture into multi-dimensional aspects of our area of expertise, 
                       keeping a constant and cordial liaison with our partners and business associates, and to achieve 
@@ -1011,11 +1173,11 @@ const FluidlineWebsite = () => {
                     </p>
                   </div>
                   
-                  <div className="bg-gradient-to-br from-red-50 to-red-100 p-12 rounded-2xl border-l-4 border-red-500">
-                    <div className="w-16 h-16 bg-gradient-to-r from-red-500 to-red-600 rounded-full flex items-center justify-center mx-auto mb-6">
+                  <div className={`bg-gradient-to-br from-${currentThemeConfig.secondaryLight} to-${currentThemeConfig.secondaryLight} p-12 rounded-2xl border-l-4 border-${currentThemeConfig.secondary}`}>
+                    <div className={`w-16 h-16 bg-gradient-to-r from-${currentThemeConfig.secondary} to-${currentThemeConfig.secondary} rounded-full flex items-center justify-center mx-auto mb-6`}>
                       <Target className="text-white" size={32} />
                     </div>
-                    <h2 className="text-3xl font-bold text-red-700 mb-6 text-center">Our Mission</h2>
+                    <h2 className={`text-3xl font-bold text-${currentThemeConfig.secondary} mb-6 text-center`}>Our Mission</h2>
                     <p className="text-gray-700 leading-relaxed text-lg">
                       Guided by principles of integrity and commitment to the goal, we will constantly strive to 
                       implement newer initiatives to achieve our vision. In doing this, we will endeavor to uphold 
@@ -1047,7 +1209,7 @@ const FluidlineWebsite = () => {
               <div className="container mx-auto px-6">
                 <div className="text-center mb-16">
                   <h2 className="text-4xl font-bold text-gray-900 mb-6">
-                    Our <span className="text-blue-600">Certificates</span> & <span className="text-red-600">Policies</span>
+                    Our <span className={`text-${currentThemeConfig.primary}`}>Certificates</span> & <span className={`text-${currentThemeConfig.secondary}`}>Policies</span>
                   </h2>
                   <p className="text-lg text-gray-600 max-w-3xl mx-auto">
                     We maintain the highest standards of quality and safety compliance across all our operations.
@@ -1055,17 +1217,17 @@ const FluidlineWebsite = () => {
                 </div>
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                  <div className="bg-white p-8 rounded-2xl shadow-lg border-l-4 border-blue-500">
-                    <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                      <Flame className="text-blue-600" size={32} />
+                  <div className={`bg-white p-8 rounded-2xl shadow-lg border-l-4 border-${currentThemeConfig.primary}`}>
+                    <div className={`w-16 h-16 bg-${currentThemeConfig.primaryLight} rounded-full flex items-center justify-center mx-auto mb-6`}>
+                      <Flame className={`text-${currentThemeConfig.primary}`} size={32} />
                     </div>
                     <h3 className="text-xl font-bold text-center mb-4">Class A Fire License</h3>
                     <p className="text-gray-600 text-center">Maharashtra State Class A Fire Protection License</p>
                   </div>
                   
-                  <div className="bg-white p-8 rounded-2xl shadow-lg border-l-4 border-red-500">
-                    <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                      <Factory className="text-red-600" size={32} />
+                  <div className={`bg-white p-8 rounded-2xl shadow-lg border-l-4 border-${currentThemeConfig.secondary}`}>
+                    <div className={`w-16 h-16 bg-${currentThemeConfig.secondaryLight} rounded-full flex items-center justify-center mx-auto mb-6`}>
+                      <Factory className={`text-${currentThemeConfig.secondary}`} size={32} />
                     </div>
                     <h3 className="text-xl font-bold text-center mb-4">ASME B 31.3</h3>
                     <p className="text-gray-600 text-center">Process Piping Standards Compliance</p>
@@ -1103,7 +1265,7 @@ const FluidlineWebsite = () => {
               <div className="container mx-auto px-6">
                 <div className="text-center mb-16">
                   <h2 className="text-4xl font-bold text-gray-900 mb-6">
-                    <span className="text-blue-600">Career</span> <span className="text-red-600">Opportunities</span>
+                    <span className={`text-${currentThemeConfig.primary}`}>Career</span> <span className={`text-${currentThemeConfig.secondary}`}>Opportunities</span>
                   </h2>
                   <p className="text-lg text-gray-600 max-w-3xl mx-auto">
                     Join our team of 3000+ skilled professionals and be part of engineering excellence.
@@ -1112,7 +1274,7 @@ const FluidlineWebsite = () => {
                 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                   <div className="bg-white p-8 rounded-2xl shadow-lg text-center">
-                    <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-red-500 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <div className={`w-16 h-16 bg-gradient-to-r from-${currentThemeConfig.primary} to-${currentThemeConfig.secondary} rounded-full flex items-center justify-center mx-auto mb-6`}>
                       <Users className="text-white" size={32} />
                     </div>
                     <h3 className="text-xl font-bold mb-4">Growing Team</h3>
@@ -1120,7 +1282,7 @@ const FluidlineWebsite = () => {
                   </div>
                   
                   <div className="bg-white p-8 rounded-2xl shadow-lg text-center">
-                    <div className="w-16 h-16 bg-gradient-to-r from-red-500 to-blue-500 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <div className={`w-16 h-16 bg-gradient-to-r from-${currentThemeConfig.secondary} to-${currentThemeConfig.primary} rounded-full flex items-center justify-center mx-auto mb-6`}>
                       <Target className="text-white" size={32} />
                     </div>
                     <h3 className="text-xl font-bold mb-4">Career Growth</h3>
@@ -1128,7 +1290,7 @@ const FluidlineWebsite = () => {
                   </div>
                   
                   <div className="bg-white p-8 rounded-2xl shadow-lg text-center">
-                    <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-red-500 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <div className={`w-16 h-16 bg-gradient-to-r from-${currentThemeConfig.primary} to-${currentThemeConfig.secondary} rounded-full flex items-center justify-center mx-auto mb-6`}>
                       <Award className="text-white" size={32} />
                     </div>
                     <h3 className="text-xl font-bold mb-4">Excellence Culture</h3>
@@ -1164,7 +1326,7 @@ const FluidlineWebsite = () => {
                 </p>
                 <button
                   onClick={() => setActiveSection('home')}
-                  className="bg-gradient-to-r from-blue-600 to-red-600 hover:from-blue-700 hover:to-red-700 text-white px-8 py-3 rounded-full font-semibold transition-all duration-300"
+                  className={`bg-gradient-to-r ${currentThemeConfig.primaryGradient} hover:${currentThemeConfig.primaryHover} text-white px-8 py-3 rounded-full font-semibold transition-all duration-300`}
                 >
                   Return to Home
                 </button>
@@ -1212,8 +1374,8 @@ const FluidlineWebsite = () => {
                       activeSection === item.id
                         ? `bg-gradient-to-r ${currentThemeConfig.navActive} text-white shadow-lg transform scale-105`
                         : isScrolled
-                        ? 'text-gray-700 hover:text-blue-600 hover:bg-blue-50'
-                        : 'text-white hover:text-blue-300 hover:bg-white/10'
+                        ? `text-gray-700 hover:text-${currentThemeConfig.primary} hover:bg-${currentThemeConfig.primaryLight}`
+                        : `text-white hover:text-${currentThemeConfig.primary}-300 hover:bg-white/10`
                     }`}
                   >
                     <IconComponent size={14} />
@@ -1249,7 +1411,7 @@ const FluidlineWebsite = () => {
                       className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg font-medium transition-all duration-300 ${
                         activeSection === item.id
                           ? `bg-gradient-to-r ${currentThemeConfig.navActive} text-white`
-                          : 'text-gray-700 hover:bg-blue-50 hover:text-blue-600'
+                          : `text-gray-700 hover:bg-${currentThemeConfig.primaryLight} hover:text-${currentThemeConfig.primary}`
                       }`}
                     >
                       <IconComponent size={20} />
@@ -1269,7 +1431,7 @@ const FluidlineWebsite = () => {
       </main>
 
       {/* Footer */}
-      <footer className="bg-gradient-to-r from-gray-900 to-black text-white py-16">
+      <footer className={`bg-gradient-to-r ${currentThemeConfig.footerGradient} text-white py-16`}>
         <div className="container mx-auto px-6">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
             <div className="space-y-4">
@@ -1394,7 +1556,7 @@ const FluidlineWebsite = () => {
                   onChange={(e) => setChatInput(e.target.value)}
                   onKeyPress={(e) => e.key === 'Enter' && handleChatSubmit()}
                   placeholder="Ask about our engineering services..."
-                  className="flex-1 p-3 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className={`flex-1 p-3 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-${currentThemeConfig.primary}`}
                 />
                 <button
                   onClick={handleChatSubmit}
