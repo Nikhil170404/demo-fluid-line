@@ -726,6 +726,7 @@ const FluidlineWebsite = () => {
   );
 
   // Company Introduction Section
+// Company Introduction Section
   const IntroSection = () => (
     <section className="py-20 bg-white">
       <div className="container mx-auto px-6">
@@ -744,7 +745,7 @@ const FluidlineWebsite = () => {
           
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             <div className={`bg-gradient-to-br from-${currentThemeConfig.primaryLight} to-white p-8 rounded-2xl border-l-4 border-${currentThemeConfig.primary} shadow-xl hover:shadow-2xl transition-all duration-300 group`}>
-              <div className={`w-16 h-16 bg-gradient-to-r from-${currentThemeConfig.primary} to-${currentThemeConfig.primaryDark} rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg group-hover:scale-110 transition-transform duration-300`}>
+              <div className={`w-16 h-16 bg-gradient-to-r from-${currentThemeConfig.primary} to-${currentThemeConfig.secondaryDark} rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg group-hover:scale-110 transition-transform duration-300`}>
                 <Heart className="text-white" size={32} />
               </div>
               <h3 className={`text-2xl font-bold text-${currentThemeConfig.primary} mb-4`}>Inspired by our legacy</h3>
@@ -756,8 +757,8 @@ const FluidlineWebsite = () => {
               </p>
             </div>
 
-            <div className={`bg-gradient-to-br from-${currentThemeConfig.secondaryLight} to-white p-8 rounded-2xl border-l-4 border-${currentThemeConfig.secondary} shadow-xl hover:shadow-2xl transition-all duration-300 group`}>
-              <div className={`w-16 h-16 bg-gradient-to-r from-${currentThemeConfig.secondary} to-${currentThemeConfig.secondaryDark} rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg group-hover:scale-110 transition-transform duration-300`}>
+            <div className={`bg-gradient-to-br from-${currentThemeConfig.primaryLight} to-white p-8 rounded-2xl border-l-4 border-${currentThemeConfig.secondaryDark} shadow-xl hover:shadow-2xl transition-all duration-300 group`}>
+              <div className={`w-16 h-16 bg-gradient-to-r from-${currentThemeConfig.primary} to-${currentThemeConfig.secondaryDark} rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg group-hover:scale-110 transition-transform duration-300`}>
                 <TrendingUp className="text-white" size={32} />
               </div>
               <h3 className={`text-2xl font-bold text-${currentThemeConfig.secondary} mb-4`}>Over 33 years of delivering best-in-class services</h3>
@@ -769,11 +770,11 @@ const FluidlineWebsite = () => {
               </p>
             </div>
 
-            <div className="bg-gradient-to-br from-purple-100 to-white p-8 rounded-2xl border-l-4 border-purple-500 shadow-xl hover:shadow-2xl transition-all duration-300 group">
-              <div className={`w-16 h-16 bg-gradient-to-r from-purple-500 to-purple-700 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg group-hover:scale-110 transition-transform duration-300`}>
+            <div className={`bg-gradient-to-br from-${currentThemeConfig.primaryLight} via-${currentThemeConfig.secondaryLight} to-white p-8 rounded-2xl border-l-4 border-${currentThemeConfig.secondary} shadow-xl hover:shadow-2xl transition-all duration-300 group`}>
+              <div className={`w-16 h-16 bg-gradient-to-r ${currentThemeConfig.primaryGradient} rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg group-hover:scale-110 transition-transform duration-300`}>
                 <Shield className="text-white" size={32} />
               </div>
-              <h3 className="text-2xl font-bold text-purple-700 mb-4">Commitment to earning the trust of our clients</h3>
+              <h3 className={`text-2xl font-bold text-${currentThemeConfig.primary} mb-4`}>Commitment to earning the trust of our clients</h3>
               <p className="text-gray-700 leading-relaxed">
                 In our endeavour to become a long-term partner for our valued clients, we ensure that we adhere to all 
                 the Quality and Safety Guidelines. We take all measures required to meet the committed timelines. 
@@ -920,7 +921,7 @@ const FluidlineWebsite = () => {
               </div>
 
               <div className={`bg-gradient-to-br from-${currentThemeConfig.secondaryLight} to-white p-6 rounded-xl shadow-lg border-l-4 border-${currentThemeConfig.secondary} group hover:shadow-xl transition-all duration-300`}>
-                <div className={`w-12 h-12 bg-gradient-to-r from-${currentThemeConfig.secondary} to-${currentThemeConfig.secondaryDark} rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300 shadow-md`}>
+                <div className={`w-12 h-12 bg-gradient-to-r from-${currentThemeConfig.primary} to-${currentThemeConfig.secondaryDark} rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300 shadow-md`}>
                   <Target className={`text-white`} size={24} />
                 </div>
                 <h4 className="font-bold text-gray-900 mb-2">Our Mission</h4>
@@ -1216,7 +1217,7 @@ const FluidlineWebsite = () => {
                   </div>
                   
                   <div className={`bg-gradient-to-br from-${currentThemeConfig.secondaryLight} to-white p-12 rounded-2xl border-l-4 border-${currentThemeConfig.secondary} shadow-xl hover:shadow-2xl transition-all duration-300 group`}>
-                    <div className={`w-20 h-20 bg-gradient-to-r from-${currentThemeConfig.secondary} to-${currentThemeConfig.secondaryDark} rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg group-hover:scale-110 transition-transform duration-300`}>
+                    <div className={`w-20 h-20 bg-gradient-to-r from-${currentThemeConfig.primary} to-${currentThemeConfig.secondaryDark} rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg group-hover:scale-110 transition-transform duration-300`}>
                       <Target className="text-white" size={36} />
                     </div>
                     <h2 className={`text-3xl font-bold text-${currentThemeConfig.secondary} mb-6 text-center`}>Our Mission</h2>
@@ -1333,7 +1334,7 @@ const FluidlineWebsite = () => {
                     </div>
                     
                     <div className={`group bg-gradient-to-br from-${currentThemeConfig.secondaryLight} to-white p-10 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 text-center transform hover:-translate-y-2 border-l-4 border-${currentThemeConfig.secondary}`}>
-                      <div className={`w-20 h-20 bg-gradient-to-br from-${currentThemeConfig.secondary} to-${currentThemeConfig.secondaryDark} rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg group-hover:scale-110 transition-transform duration-300`}>
+                      <div className={`w-20 h-20 bg-gradient-to-br from-${currentThemeConfig.primary} to-${currentThemeConfig.secondaryDark} rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg group-hover:scale-110 transition-transform duration-300`}>
                         <TrendingUp className="text-white" size={36} />
                       </div>
                       <h3 className={`text-2xl font-bold text-${currentThemeConfig.secondary} mb-4`}>Career Growth</h3>
@@ -1378,7 +1379,7 @@ const FluidlineWebsite = () => {
                       </div>
                       
                       <div className="text-center group">
-                        <div className={`w-16 h-16 bg-gradient-to-r from-${currentThemeConfig.secondary} to-${currentThemeConfig.primary} rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300 shadow-md`}>
+                        <div className={`w-16 h-16 bg-gradient-to-r from-${currentThemeConfig.primary} to-${currentThemeConfig.primary} rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300 shadow-md`}>
                           <Heart className="text-white" size={24} />
                         </div>
                         <h4 className="font-bold text-gray-900 mb-2">Work-Life Balance</h4>
