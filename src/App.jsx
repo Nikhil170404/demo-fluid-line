@@ -521,12 +521,7 @@ const FluidlineWebsite = () => {
       logo: 'https://logo.clearbit.com/itcportal.com',
       fallback: 'IT'
     },
-    { 
-      name: 'Bajaj Group', 
-      sector: 'Automotive', 
-      logo: 'https://logo.clearbit.com/bajaj.com',
-      fallback: 'BJ'
-    },
+  
     { 
       name: 'JSW Steel', 
       sector: 'Steel Industry', 
