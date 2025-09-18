@@ -66,7 +66,6 @@ const FluidlineWebsite = () => {
       navActive: 'from-blue-600 to-red-600',
       chatGradient: 'from-blue-600 to-red-600',
       cardGradient: 'from-blue-50 to-red-50',
-      heroOverlay: 'from-blue-900/80 via-red-900/60 to-transparent',
       statsGradient: 'from-blue-900 to-red-800',
       footerGradient: 'from-blue-900 to-red-900',
       preview: 'bg-gradient-to-r from-blue-600 to-red-600'
@@ -84,7 +83,6 @@ const FluidlineWebsite = () => {
       navActive: 'from-blue-900 to-red-700',
       chatGradient: 'from-blue-900 to-red-700',
       cardGradient: 'from-blue-50 to-red-50',
-      heroOverlay: 'from-blue-950/80 via-red-900/60 to-transparent',
       statsGradient: 'from-blue-950 to-red-900',
       footerGradient: 'from-blue-950 to-red-950',
       preview: 'bg-gradient-to-r from-blue-900 to-red-700'
@@ -102,7 +100,6 @@ const FluidlineWebsite = () => {
       navActive: 'from-blue-700 to-red-500',
       chatGradient: 'from-blue-700 to-red-500',
       cardGradient: 'from-blue-50 to-red-50',
-      heroOverlay: 'from-blue-900/80 via-red-700/60 to-transparent',
       statsGradient: 'from-blue-900 to-red-700',
       footerGradient: 'from-blue-900 to-red-800',
       preview: 'bg-gradient-to-r from-blue-700 to-red-500'
@@ -120,7 +117,6 @@ const FluidlineWebsite = () => {
       navActive: 'from-blue-800 to-red-600',
       chatGradient: 'from-blue-800 to-red-600',
       cardGradient: 'from-blue-50 to-red-50',
-      heroOverlay: 'from-blue-950/80 via-red-800/60 to-transparent',
       statsGradient: 'from-blue-950 to-red-800',
       footerGradient: 'from-blue-950 to-red-900',
       preview: 'bg-gradient-to-r from-blue-800 to-red-600'
@@ -138,7 +134,6 @@ const FluidlineWebsite = () => {
       navActive: 'from-blue-500 to-red-700',
       chatGradient: 'from-blue-500 to-red-700',
       cardGradient: 'from-blue-50 to-red-50',
-      heroOverlay: 'from-blue-700/80 via-red-900/60 to-transparent',
       statsGradient: 'from-blue-700 to-red-900',
       footerGradient: 'from-blue-700 to-red-900',
       preview: 'bg-gradient-to-r from-blue-500 to-red-700'
@@ -156,7 +151,6 @@ const FluidlineWebsite = () => {
       navActive: 'from-blue-400 to-red-500',
       chatGradient: 'from-blue-400 to-red-500',
       cardGradient: 'from-blue-50 to-red-50',
-      heroOverlay: 'from-blue-600/80 via-red-700/60 to-transparent',
       statsGradient: 'from-blue-600 to-red-700',
       footerGradient: 'from-blue-600 to-red-700',
       preview: 'bg-gradient-to-r from-blue-400 to-red-500'
@@ -174,7 +168,6 @@ const FluidlineWebsite = () => {
       navActive: 'from-blue-600 to-red-800',
       chatGradient: 'from-blue-600 to-red-800',
       cardGradient: 'from-blue-50 to-red-50',
-      heroOverlay: 'from-blue-800/80 via-red-950/60 to-transparent',
       statsGradient: 'from-blue-800 to-red-950',
       footerGradient: 'from-blue-800 to-red-950',
       preview: 'bg-gradient-to-r from-blue-600 to-red-800'
@@ -192,7 +185,6 @@ const FluidlineWebsite = () => {
       navActive: 'from-blue-700 to-red-400',
       chatGradient: 'from-blue-700 to-red-400',
       cardGradient: 'from-blue-50 to-red-50',
-      heroOverlay: 'from-blue-900/80 via-red-600/60 to-transparent',
       statsGradient: 'from-blue-900 to-red-600',
       footerGradient: 'from-blue-900 to-red-700',
       preview: 'bg-gradient-to-r from-blue-700 to-red-400'
@@ -210,7 +202,6 @@ const FluidlineWebsite = () => {
       navActive: 'from-blue-300 to-red-600',
       chatGradient: 'from-blue-300 to-red-600',
       cardGradient: 'from-blue-50 to-red-50',
-      heroOverlay: 'from-blue-500/80 via-red-800/60 to-transparent',
       statsGradient: 'from-blue-500 to-red-800',
       footerGradient: 'from-blue-500 to-red-800',
       preview: 'bg-gradient-to-r from-blue-300 to-red-600'
@@ -228,7 +219,6 @@ const FluidlineWebsite = () => {
       navActive: 'from-blue-800 to-red-400',
       chatGradient: 'from-blue-800 to-red-400',
       cardGradient: 'from-blue-50 to-red-50',
-      heroOverlay: 'from-blue-950/80 via-red-600/60 to-transparent',
       statsGradient: 'from-blue-950 to-red-600',
       footerGradient: 'from-blue-950 to-red-700',
       preview: 'bg-gradient-to-r from-blue-800 to-red-400'
@@ -271,7 +261,7 @@ const FluidlineWebsite = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Hero slides with industrial engineering imagery
+  // Hero slides with industrial engineering imagery - using neutral overlays
   const heroSlides = [
     {
       image: 'https://images.unsplash.com/photo-1593583810872-ddee4d6bd55a?q=80&w=1170&auto=format&fit=crop',
@@ -279,7 +269,7 @@ const FluidlineWebsite = () => {
       subtitle: 'Leading Multi-Dimensional Engineering Solutions',
       description: 'Committed to Quality and Customer Delight for Fortune 500 Companies',
       cta: 'Explore Our Services',
-      overlay: currentThemeConfig.heroOverlay
+      overlay: 'from-gray-900/80 via-gray-800/60 to-transparent' // Neutral overlay
     },
     {
       image: 'https://images.unsplash.com/photo-1581092921461-eab62e97a780?q=80&w=2070&auto=format&fit=crop',
@@ -287,7 +277,7 @@ const FluidlineWebsite = () => {
       subtitle: 'Class-A Licensed Safety Solutions',
       description: 'Complete fire protection systems with Maharashtra Class A license',
       cta: 'Safety Solutions',
-      overlay: currentThemeConfig.heroOverlay
+      overlay: 'from-gray-900/80 via-gray-800/60 to-transparent' // Neutral overlay
     },
     {
       image: 'https://images.unsplash.com/photo-1513828583688-c52646db42da?q=80&w=2070&auto=format&fit=crop',
@@ -295,7 +285,7 @@ const FluidlineWebsite = () => {
       subtitle: 'ASME B 31.3 Compliant Solutions',
       description: 'State-of-the-art process piping for various industrial applications',
       cta: 'Piping Solutions',
-      overlay: currentThemeConfig.heroOverlay
+      overlay: 'from-gray-900/80 via-gray-800/60 to-transparent' // Neutral overlay
     },
     {
       image: 'https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?q=80&w=2070&auto=format&fit=crop',
@@ -303,7 +293,7 @@ const FluidlineWebsite = () => {
       subtitle: 'MS & SS Fabrication Excellence',
       description: 'Tanks, Silos, Structures up to 900KL capacity with precision',
       cta: 'Fabrication Services',
-      overlay: currentThemeConfig.heroOverlay
+      overlay: 'from-gray-900/80 via-gray-800/60 to-transparent' // Neutral overlay
     }
   ];
 
@@ -315,7 +305,7 @@ const FluidlineWebsite = () => {
     return () => clearInterval(timer);
   }, [heroSlides.length]);
 
-  // Page-specific hero slides
+  // Page-specific hero slides with neutral overlays
   const pageHeroSlides = {
     about: [
       {
@@ -323,14 +313,14 @@ const FluidlineWebsite = () => {
         title: 'About Fluidline',
         subtitle: '33+ Years of Engineering Excellence',
         description: 'Multi-dimensional company committed to Quality and Customer Delight',
-        overlay: currentThemeConfig.heroOverlay
+        overlay: 'from-gray-900/80 via-gray-800/60 to-transparent' // Neutral overlay
       },
       {
         image: 'https://images.unsplash.com/photo-1565514020179-026b92b84bb6?q=80&w=2070&auto=format&fit=crop',
         title: 'Our Legacy',
         subtitle: 'Established in 1988',
         description: 'Guided by founding members, driven by young dynamic leadership',
-        overlay: currentThemeConfig.heroOverlay
+        overlay: 'from-gray-900/80 via-gray-800/60 to-transparent' // Neutral overlay
       }
     ],
     'vision-mission': [
@@ -339,14 +329,14 @@ const FluidlineWebsite = () => {
         title: 'Our Vision',
         subtitle: 'Exploring New Horizons',
         description: 'Multi-dimensional expertise with constant client liaison',
-        overlay: currentThemeConfig.heroOverlay
+        overlay: 'from-gray-900/80 via-gray-800/60 to-transparent' // Neutral overlay
       },
       {
         image: 'https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?q=80&w=2070&auto=format&fit=crop',
         title: 'Our Mission',
         subtitle: 'Integrity & Commitment',
         description: 'Standards of perfection in every engineering solution',
-        overlay: currentThemeConfig.heroOverlay
+        overlay: 'from-gray-900/80 via-gray-800/60 to-transparent' // Neutral overlay
       }
     ],
     services: [
@@ -355,21 +345,21 @@ const FluidlineWebsite = () => {
         title: 'Process & Utility Piping',
         subtitle: 'ASME B 31.3 Compliant Solutions',
         description: 'State-of-the-art process piping for various industrial applications',
-        overlay: currentThemeConfig.heroOverlay
+        overlay: 'from-gray-900/80 via-gray-800/60 to-transparent' // Neutral overlay
       },
       {
         image: 'https://images.unsplash.com/photo-1529269421632-e9253d14d3a9?q=80&w=1170&auto=format&fit=crop',
         title: 'Fire Protection Systems',
         subtitle: 'Class A Licensed Safety',
         description: 'Complete fire protection and detection systems',
-        overlay: currentThemeConfig.heroOverlay
+        overlay: 'from-gray-900/80 via-gray-800/60 to-transparent' // Neutral overlay
       },
       {
         image: 'https://images.unsplash.com/photo-1714562601537-59d75f2e7d3d?q=80&w=1170&auto=format&fit=crop',
         title: 'Structural Fabrication',
         subtitle: 'Heavy Engineering Solutions',
         description: 'Platforms, pipe racks & support structures',
-        overlay: currentThemeConfig.heroOverlay
+        overlay: 'from-gray-900/80 via-gray-800/60 to-transparent' // Neutral overlay
       }
     ],
     certificates: [
@@ -378,7 +368,7 @@ const FluidlineWebsite = () => {
         title: 'Our Certifications',
         subtitle: 'Quality Assurance Standards',
         description: 'Class A Fire License and international compliance',
-        overlay: currentThemeConfig.heroOverlay
+        overlay: 'from-gray-900/80 via-gray-800/60 to-transparent' // Neutral overlay
       }
     ],
     clients: [
@@ -387,14 +377,14 @@ const FluidlineWebsite = () => {
         title: 'Our Clients & Consultants',
         subtitle: 'Fortune 500 Partnerships',
         description: 'Trusted by leading corporates and MNCs across India',
-        overlay: currentThemeConfig.heroOverlay
+        overlay: 'from-gray-900/80 via-gray-800/60 to-transparent' // Neutral overlay
       },
       {
         image: 'https://images.unsplash.com/photo-1565514020179-026b92b84bb6?q=80&w=2070&auto=format&fit=crop',
         title: 'Global Standards',
         subtitle: 'World-Class Solutions',
         description: '1000+ successful projects with zero compromise on quality',
-        overlay: currentThemeConfig.heroOverlay
+        overlay: 'from-gray-900/80 via-gray-800/60 to-transparent' // Neutral overlay
       }
     ],
     career: [
@@ -403,7 +393,7 @@ const FluidlineWebsite = () => {
         title: 'Join Our Team',
         subtitle: 'Career Opportunities',
         description: 'Be part of 3000+ skilled workforce delivering excellence',
-        overlay: currentThemeConfig.heroOverlay
+        overlay: 'from-gray-900/80 via-gray-800/60 to-transparent' // Neutral overlay
       }
     ],
     contact: [
@@ -412,7 +402,7 @@ const FluidlineWebsite = () => {
         title: 'Contact Us',
         subtitle: 'Get In Touch',
         description: 'Kanpur • Mumbai • Noida • Bengaluru',
-        overlay: currentThemeConfig.heroOverlay
+        overlay: 'from-gray-900/80 via-gray-800/60 to-transparent' // Neutral overlay
       }
     ]
   };
@@ -495,14 +485,102 @@ const FluidlineWebsite = () => {
   ];
 
   const clients = [
-    { name: 'L&T', sector: 'Infrastructure & Engineering', logo: 'LT' },
-    { name: 'Reliance Industries', sector: 'Oil & Gas', logo: 'RI' },
-    { name: 'TATA Group', sector: 'Steel & Power', logo: 'TT' },
-    { name: 'Godrej', sector: 'Chemical & Consumer', logo: 'GJ' },
-    { name: 'Hindustan Unilever', sector: 'FMCG Manufacturing', logo: 'HU' },
-    { name: 'ITC Limited', sector: 'Manufacturing', logo: 'IT' },
-    { name: 'Bajaj Group', sector: 'Automotive', logo: 'BJ' },
-    { name: 'JSW Steel', sector: 'Steel Industry', logo: 'JS' }
+    { 
+      name: 'L&T', 
+      sector: 'Infrastructure & Engineering', 
+      logo: 'https://logo.clearbit.com/larsentoubro.com',
+      fallback: 'LT'
+    },
+    { 
+      name: 'Reliance Industries', 
+      sector: 'Oil & Gas', 
+      logo: 'https://logo.clearbit.com/ril.com',
+      fallback: 'RI'
+    },
+    { 
+      name: 'TATA Group', 
+      sector: 'Steel & Power', 
+      logo: 'https://logo.clearbit.com/tata.com',
+      fallback: 'TT'
+    },
+    { 
+      name: 'Godrej', 
+      sector: 'Chemical & Consumer', 
+      logo: 'https://logo.clearbit.com/godrej.com',
+      fallback: 'GJ'
+    },
+    { 
+      name: 'Hindustan Unilever', 
+      sector: 'FMCG Manufacturing', 
+      logo: 'https://logo.clearbit.com/hul.co.in',
+      fallback: 'HU'
+    },
+    { 
+      name: 'ITC Limited', 
+      sector: 'Manufacturing', 
+      logo: 'https://logo.clearbit.com/itcportal.com',
+      fallback: 'IT'
+    },
+    { 
+      name: 'Bajaj Group', 
+      sector: 'Automotive', 
+      logo: 'https://logo.clearbit.com/bajaj.com',
+      fallback: 'BJ'
+    },
+    { 
+      name: 'JSW Steel', 
+      sector: 'Steel Industry', 
+      logo: 'https://logo.clearbit.com/jsw.in',
+      fallback: 'JS'
+    },
+    { 
+      name: 'Serum Institute', 
+      sector: 'Pharmaceuticals', 
+      logo: 'https://logo.clearbit.com/seruminstitute.com',
+      fallback: 'SI'
+    },
+    { 
+      name: 'Jubilant Life Sciences', 
+      sector: 'Life Sciences', 
+      logo: 'https://logo.clearbit.com/jubl.com',
+      fallback: 'JL'
+    },
+    { 
+      name: 'Cargill India', 
+      sector: 'Food & Agriculture', 
+      logo: 'https://logo.clearbit.com/cargill.com',
+      fallback: 'CI'
+    },
+    { 
+      name: 'Dr. Reddy\'s Labs', 
+      sector: 'Pharmaceuticals', 
+      logo: 'https://logo.clearbit.com/drreddys.com',
+      fallback: 'DR'
+    },
+    { 
+      name: 'Mahindra Group', 
+      sector: 'Automotive & Engineering', 
+      logo: 'https://logo.clearbit.com/mahindra.com',
+      fallback: 'MG'
+    },
+    { 
+      name: 'Adani Group', 
+      sector: 'Infrastructure & Energy', 
+      logo: 'https://logo.clearbit.com/adani.com',
+      fallback: 'AD'
+    },
+    { 
+      name: 'Bharti Airtel', 
+      sector: 'Telecommunications', 
+      logo: 'https://logo.clearbit.com/airtel.in',
+      fallback: 'BA'
+    },
+    { 
+      name: 'Vedanta Limited', 
+      sector: 'Mining & Metals', 
+      logo: 'https://logo.clearbit.com/vedantalimited.com',
+      fallback: 'VL'
+    }
   ];
 
   const testimonials = [
@@ -511,21 +589,24 @@ const FluidlineWebsite = () => {
       message: 'Fluidline was awarded the turnkey project for Supply, Inspection, Testing, Erection and Commissioning of complete OSBL and ISBL with exceptional quality and timely delivery.',
       rating: 5,
       author: 'Project Director',
-      logo: 'SI'
+      logo: 'https://logo.clearbit.com/seruminstitute.com',
+      fallback: 'SI'
     },
     {
       company: 'Jubilant Life Sciences',
       message: 'We are pleased to be associated with Fluidline as our strategic sourcing partner in our continuous journey on the path of progress and innovation.',
       rating: 5,
       author: 'VP Engineering',
-      logo: 'JL'
+      logo: 'https://logo.clearbit.com/jubl.com',
+      fallback: 'JL'
     },
     {
       company: 'Cargill India Ltd.',
       message: 'Fluidline was awarded turnkey projects for Supply, Fabrication & Erection of Structure, SS Pipeline, Equipment Erection, Fire Fighting with no safety incidents.',
       rating: 5,
       author: 'Plant Manager',
-      logo: 'CI'
+      logo: 'https://logo.clearbit.com/cargill.com',
+      fallback: 'CI'
     }
   ];
 
@@ -569,7 +650,7 @@ const FluidlineWebsite = () => {
     );
   };
 
-  // Generic Page Hero Section
+  // Generic Page Hero Section - Using neutral overlays
   const PageHeroSection = ({ pageKey, currentSlide = 0 }) => {
     const slides = pageHeroSlides[pageKey] || [];
     if (slides.length === 0) return null;
@@ -612,7 +693,7 @@ const FluidlineWebsite = () => {
           </div>
         </div>
 
-        {/* Background Images */}
+        {/* Background Images with neutral overlays */}
         <div className="absolute inset-0">
           {slides.map((slide, index) => (
             <div
@@ -650,7 +731,7 @@ const FluidlineWebsite = () => {
     );
   };
 
-  // Hero Section
+  // Hero Section with neutral overlays
   const HeroSection = () => (
     <section className="relative h-screen overflow-hidden">
       <div className="absolute inset-0 z-10 flex items-center">
@@ -689,7 +770,7 @@ const FluidlineWebsite = () => {
         </div>
       </div>
 
-      {/* Background Slider */}
+      {/* Background Slider with neutral overlays */}
       <div className="absolute inset-0">
         {heroSlides.map((slide, index) => (
           <div
@@ -726,7 +807,6 @@ const FluidlineWebsite = () => {
   );
 
   // Company Introduction Section
-// Company Introduction Section
   const IntroSection = () => (
     <section className="py-20 bg-white">
       <div className="container mx-auto px-6">
@@ -821,7 +901,7 @@ const FluidlineWebsite = () => {
     </section>
   );
 
-  // Services Section
+  // Services Section with neutral overlays
   const ServicesSection = () => (
     <section className={`py-24 bg-gradient-to-b from-white to-${currentThemeConfig.cardGradient}`}>
       <div className="container mx-auto px-6">
@@ -849,7 +929,8 @@ const FluidlineWebsite = () => {
                     alt={service.title}
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                   />
-                  <div className={`absolute inset-0 bg-gradient-to-t ${currentThemeConfig.primaryGradient} opacity-60`} />
+                  {/* Neutral overlay instead of theme-colored */}
+                  <div className={`absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-60`} />
                   <div className="absolute top-4 left-4">
                     <div className="w-12 h-12 bg-white/90 rounded-full flex items-center justify-center backdrop-blur-sm">
                       <IconComponent className="text-gray-700" size={24} />
@@ -887,7 +968,7 @@ const FluidlineWebsite = () => {
     </section>
   );
 
-  // About Us Section
+  // About Us Section with neutral image overlay
   const AboutUsSection = () => (
     <section className={`py-24 bg-gradient-to-br ${currentThemeConfig.cardGradient}`}>
       <div className="container mx-auto px-6">
@@ -947,7 +1028,7 @@ const FluidlineWebsite = () => {
     </section>
   );
 
-  // Clients Section
+  // Clients Section with actual logos
   const ClientsSection = () => (
     <section className="py-20 bg-white">
       <div className="container mx-auto px-6">
@@ -960,25 +1041,68 @@ const FluidlineWebsite = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-6 mb-12">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-6 mb-12">
           {clients.map((client, index) => (
             <div
               key={index}
-              className={`group bg-gray-50 hover:bg-white rounded-xl p-6 transition-all duration-300 text-center hover:shadow-lg border-2 border-transparent hover:border-${currentThemeConfig.primary}-200`}
+              className={`group bg-gray-50 hover:bg-white rounded-xl p-6 transition-all duration-300 text-center hover:shadow-lg border-2 border-transparent hover:border-${currentThemeConfig.primary}-200 transform hover:scale-105`}
             >
-              <div className={`w-16 h-16 mx-auto mb-4 bg-gradient-to-r from-${currentThemeConfig.primary} to-${currentThemeConfig.secondary} rounded-lg flex items-center justify-center`}>
-                <span className="text-white font-bold text-sm">{client.logo}</span>
+              <div className="w-20 h-20 mx-auto mb-4 bg-white rounded-lg flex items-center justify-center shadow-sm group-hover:shadow-md transition-all duration-300 overflow-hidden">
+                <img
+                  src={client.logo}
+                  alt={`${client.name} logo`}
+                  className="w-16 h-16 object-contain"
+                  onError={(e) => {
+                    // Fallback to text logo if image fails to load
+                    e.target.style.display = 'none';
+                    e.target.nextSibling.style.display = 'flex';
+                  }}
+                />
+                <div 
+                  className={`w-16 h-16 bg-gradient-to-r from-${currentThemeConfig.primary} to-${currentThemeConfig.secondary} rounded-lg hidden items-center justify-center`}
+                >
+                  <span className="text-white font-bold text-sm">{client.fallback}</span>
+                </div>
               </div>
-              <h4 className="font-semibold text-gray-900 mb-2">{client.name}</h4>
+              <h4 className="font-semibold text-gray-900 mb-2 text-sm leading-tight">{client.name}</h4>
               <p className="text-xs text-gray-500">{client.sector}</p>
             </div>
           ))}
+        </div>
+
+        {/* Additional Client Recognition Section */}
+        <div className={`bg-gradient-to-r ${currentThemeConfig.primaryGradient} rounded-2xl p-8 text-white text-center`}>
+          <h3 className="text-2xl font-bold mb-4">Trusted by Industry Leaders</h3>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+            <div>
+              <div className="text-3xl font-bold text-white mb-2">500+</div>
+              <p className="text-sm opacity-90">Fortune Companies</p>
+            </div>
+            <div>
+              <div className="text-3xl font-bold text-white mb-2">50+</div>
+              <p className="text-sm opacity-90">MNCs Served</p>
+            </div>
+            <div>
+              <div className="text-3xl font-bold text-white mb-2">30+</div>
+              <p className="text-sm opacity-90">Industry Sectors</p>
+            </div>
+            <div>
+              <div className="text-3xl font-bold text-white mb-2">100%</div>
+              <p className="text-sm opacity-90">Client Satisfaction</p>
+            </div>
+          </div>
+          <div className="mt-6 pt-6 border-t border-white/20">
+            <p className="text-sm opacity-90">
+              From Pharmaceuticals to Steel, Automotive to Telecommunications - 
+              our engineering excellence spans across diverse industries
+            </p>
+          </div>
         </div>
       </div>
     </section>
   );
 
-  // Testimonials Section
+  // Testimonials Section with actual logos
   const TestimonialsSection = () => (
     <section className={`py-24 bg-gradient-to-r ${currentThemeConfig.statsGradient}`}>
       <div className="container mx-auto px-6">
@@ -1010,8 +1134,22 @@ const FluidlineWebsite = () => {
               </p>
 
               <div className="flex items-center">
-                <div className={`w-12 h-12 bg-gradient-to-r from-${currentThemeConfig.primary} to-${currentThemeConfig.secondary} rounded-full mr-4 flex items-center justify-center`}>
-                  <span className="text-white font-bold text-sm">{testimonial.logo}</span>
+                <div className="w-12 h-12 bg-white rounded-full mr-4 flex items-center justify-center overflow-hidden">
+                  <img
+                    src={testimonial.logo}
+                    alt={`${testimonial.company} logo`}
+                    className="w-10 h-10 object-contain"
+                    onError={(e) => {
+                      // Fallback to text logo if image fails to load
+                      e.target.style.display = 'none';
+                      e.target.nextSibling.style.display = 'flex';
+                    }}
+                  />
+                  <div 
+                    className={`w-10 h-10 bg-gradient-to-r from-${currentThemeConfig.primary} to-${currentThemeConfig.secondary} rounded-full hidden items-center justify-center`}
+                  >
+                    <span className="text-white font-bold text-xs">{testimonial.fallback}</span>
+                  </div>
                 </div>
                 <div>
                   <h4 className="font-semibold text-white">{testimonial.company}</h4>
