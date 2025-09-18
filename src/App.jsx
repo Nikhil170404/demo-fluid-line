@@ -221,7 +221,7 @@ const FluidlineWebsite = () => {
   // Hero slides with industrial engineering imagery
   const heroSlides = [
     {
-      image: 'https://images.unsplash.com/photo-1565514020179-026b92b84bb6?q=80&w=2070&auto=format&fit=crop',
+      image: 'https://images.unsplash.com/photo-1593583810872-ddee4d6bd55a?q=80&w=1170&auto=format&fit=crop',
       title: 'Engineering Excellence Since 1988',
       subtitle: 'Leading Multi-Dimensional Engineering Solutions',
       description: 'Committed to Quality and Customer Delight for Fortune 500 Companies',
@@ -298,21 +298,21 @@ const FluidlineWebsite = () => {
     ],
     services: [
       {
-        image: 'https://images.unsplash.com/photo-1518709474137-4b906b9e922c?q=80&w=2070&auto=format&fit=crop',
+        image: 'https://images.unsplash.com/photo-1616427212135-36a7edd3e7e9?q=80&w=600&auto=format&fit=crop',
         title: 'Process & Utility Piping',
         subtitle: 'ASME B 31.3 Compliant Solutions',
         description: 'State-of-the-art process piping for various industrial applications',
         overlay: currentThemeConfig.heroOverlay
       },
       {
-        image: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?q=80&w=2070&auto=format&fit=crop',
+        image: 'https://images.unsplash.com/photo-1529269421632-e9253d14d3a9?q=80&w=1170&auto=format&fit=crop',
         title: 'Fire Protection Systems',
         subtitle: 'Class A Licensed Safety',
         description: 'Complete fire protection and detection systems',
         overlay: currentThemeConfig.heroOverlay
       },
       {
-        image: 'https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?q=80&w=2070&auto=format&fit=crop',
+        image: 'https://images.unsplash.com/photo-1714562601537-59d75f2e7d3d?q=80&w=1170&auto=format&fit=crop',
         title: 'Structural Fabrication',
         subtitle: 'Heavy Engineering Solutions',
         description: 'Platforms, pipe racks & support structures',
@@ -321,7 +321,7 @@ const FluidlineWebsite = () => {
     ],
     certificates: [
       {
-        image: 'https://images.unsplash.com/photo-1559308881-7a7d4b7f4c4a?q=80&w=2070&auto=format&fit=crop',
+        image: 'https://images.unsplash.com/photo-1753711298103-cd82f555c79d?q=80&w=1074&auto=format&fit=crop',
         title: 'Our Certifications',
         subtitle: 'Quality Assurance Standards',
         description: 'Class A Fire License and international compliance',
@@ -405,21 +405,21 @@ const FluidlineWebsite = () => {
       title: 'Process & Utility Piping',
       description: 'State-of-the-art Process Piping tailormade for various applications following ASME B 31.3 standards with precision engineering and quality assurance.',
       icon: Factory,
-      image: 'https://images.unsplash.com/photo-1518709474137-4b906b9e922c?q=80&w=600&auto=format&fit=crop',
+      image: 'https://images.unsplash.com/photo-1529269421632-e9253d14d3a9?q=80&w=1170&auto=format&fit=crop',
       features: ['ASME B 31.3 Compliance', 'Custom Design Solutions', 'Quality Testing']
     },
     {
       title: 'Fire Protection & Detection Systems',
       description: 'Complete fire protection solutions with Class A Fire License in Maharashtra. Design, supply, installation, testing and commissioning.',
       icon: Flame,
-      image: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?q=80&w=600&auto=format&fit=crop',
+      image: 'https://images.unsplash.com/photo-1673201159772-a3b7fa2ecc5d?q=80&w=1170&auto=format&fit=crop',
       features: ['Class A Licensed', 'Detection Systems', 'Emergency Response']
     },
     {
       title: 'Structural Work',
       description: 'Supply, fabrication and erection for platforms, pipe racks & support structures with precision welding and quality control.',
       icon: Building2,
-      image: 'https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?q=80&w=600&auto=format&fit=crop',
+      image: 'https://plus.unsplash.com/premium_photo-1663088627718-bec1336c6392?q=80&w=1170&auto=format&fit=crop',
       features: ['Heavy Fabrication', 'Precision Welding', 'Quality Control']
     },
     {
@@ -433,14 +433,14 @@ const FluidlineWebsite = () => {
       title: 'Equipment Erection',
       description: 'Installation of process machinery, pumps, boilers, cooling towers from 1MT to 120MT with safety protocols and precision.',
       icon: Settings,
-      image: 'https://images.unsplash.com/photo-1565514020179-026b92b84bb6?q=80&w=600&auto=format&fit=crop',
+      image: 'https://plus.unsplash.com/premium_photo-1682124451727-92ecf1e065ce?q=80&w=1170&auto=format&fit=crop',
       features: ['Heavy Machinery', 'Precision Installation', 'Safety Protocols']
     },
     {
       title: 'Balance of Boiler',
       description: 'Complete boiler services from procurement to commissioning following IBR regulations with expert commissioning.',
       icon: Zap,
-      image: 'https://images.unsplash.com/photo-1613323593608-abc90fec84ff?q=80&w=600&auto=format&fit=crop',
+      image: 'https://images.unsplash.com/photo-1564605504543-1833fef7c1c9?q=80&w=1170&auto=format&fit=crop',
       features: ['IBR Compliance', 'Complete Solutions', 'Expert Commissioning']
     }
   ];
