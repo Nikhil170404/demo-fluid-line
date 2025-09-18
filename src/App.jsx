@@ -11,14 +11,14 @@ import {
 
 const FluidlineWebsite = () => {
   const navigation = [
-    { id: 'home', name: 'Home', icon: Home },
-    { id: 'about', name: 'About Us', icon: Info },
-    { id: 'vision-mission', name: 'Vision & Mission', icon: Target },
-    { id: 'services', name: 'Services', icon: Wrench },
-    { id: 'certificates', name: 'Certificates', icon: Medal },
-    { id: 'clients', name: 'Clients & Consultants', icon: Building2 },
-    { id: 'career', name: 'Career', icon: Briefcase },
-    { id: 'contact', name: 'Contact Us', icon: Contact }
+    { id: "home", name: "Home", path: "/", icon: Home },
+    { id: "about", name: "About Us", path: "/about", icon: Info },
+    { id: "vision-mission", name: "Vision & Mission", path: "/vision-mission", icon: Target },
+    { id: "services", name: "Services", path: "/services", icon: Wrench },
+    { id: "certificates", name: "Certificates", path: "/certificates", icon: Medal },
+    { id: "clients", name: "Clients & Consultants", path: "/clients", icon: Building2 },
+    { id: "career", name: "Career", path: "/career", icon: Briefcase },
+    { id: "contact", name: "Contact Us", path: "/contact", icon: Contact },
   ];
 
   // Initialize activeSection from URL hash or localStorage or default to 'home'
@@ -249,7 +249,7 @@ const FluidlineWebsite = () => {
 
     window.addEventListener('popstate', handlePopState);
     return () => window.removeEventListener('popstate', handlePopState);
-  }, []);
+  }, [navigation]);
 
   // Handle scroll effect for header
   useEffect(() => {
@@ -260,6 +260,71 @@ const FluidlineWebsite = () => {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  // Animated Counter Hook - Fixed to prevent double execution
+  const useCounter = (end, duration = 2000, id = null) => {
+    const [count, setCount] = useState(0);
+    const [isVisible, setIsVisible] = useState(false);
+    const [hasAnimated, setHasAnimated] = useState(false);
+
+    useEffect(() => {
+      const observer = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting && !hasAnimated) {
+            setIsVisible(true);
+          }
+        },
+        { threshold: 0.3 }
+      );
+
+      const elementId = id || `counter-${end}`;
+      const element = document.getElementById(elementId);
+      if (element) {
+        observer.observe(element);
+      }
+
+      return () => observer.disconnect();
+    }, [end, hasAnimated, id]);
+
+    useEffect(() => {
+      if (!isVisible || hasAnimated) return;
+
+      setHasAnimated(true);
+      let startTime;
+      const endValue = parseInt(end.toString().replace(/\D/g, ''));
+
+      const animate = (currentTime) => {
+        if (!startTime) startTime = currentTime;
+        const progress = Math.min((currentTime - startTime) / duration, 1);
+        
+        const easeOutQuart = 1 - Math.pow(1 - progress, 4);
+        const currentCount = Math.floor(easeOutQuart * endValue);
+        
+        setCount(currentCount);
+        
+        if (progress < 1) {
+          requestAnimationFrame(animate);
+        } else {
+          setCount(endValue);
+        }
+      };
+
+      requestAnimationFrame(animate);
+    }, [isVisible, end, duration, hasAnimated]);
+
+    return count;
+  };
+
+  // Counter Component with unique IDs
+  const AnimatedCounter = ({ end, suffix = '', prefix = '', id }) => {
+    const count = useCounter(end, 2000, id);
+    
+    return (
+      <span id={id || `counter-${end}-${suffix}`} className="text-4xl font-bold text-white mb-2">
+        {prefix}{count.toLocaleString()}{suffix}
+      </span>
+    );
+  };
 
   // Hero slides with industrial engineering imagery - using neutral overlays
   const heroSlides = [
@@ -309,7 +374,7 @@ const FluidlineWebsite = () => {
   const pageHeroSlides = {
     about: [
       {
-        image: 'https://images.unsplash.com/photo-1581092921461-eab62e97a780?q=80&w=2070&auto=format&fit=crop',
+        image: 'https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?q=80&w=2070&auto=format&fit=crop',
         title: 'About Fluidline',
         subtitle: '33+ Years of Engineering Excellence',
         description: 'Multi-dimensional company committed to Quality and Customer Delight',
@@ -478,10 +543,10 @@ const FluidlineWebsite = () => {
   ];
 
   const stats = [
-    { number: '1000+', label: 'Successful Projects', icon: Target },
-    { number: '3000+', label: 'Skilled Workforce', icon: Users },
-    { number: '100M+', label: 'Safe Man Hours Achieved', icon: Shield },
-    { number: '33+', label: 'Years of Experience', icon: Award }
+    { number: '1000', label: 'Successful Projects', icon: Target },
+    { number: '3000', label: 'Skilled Workforce', icon: Users },
+    { number: '100', label: 'Safe Man Hours Achieved (M+)', icon: Shield },
+    { number: '33', label: 'Years of Experience', icon: Award }
   ];
 
   const clients = [
@@ -521,7 +586,6 @@ const FluidlineWebsite = () => {
       logo: 'https://logo.clearbit.com/itcportal.com',
       fallback: 'IT'
     },
-  
     { 
       name: 'JSW Steel', 
       sector: 'Steel Industry', 
@@ -645,21 +709,19 @@ const FluidlineWebsite = () => {
     );
   };
 
-  // Generic Page Hero Section - Using neutral overlays
+  // Generic Page Hero Section - Fixed for proper navbar spacing
   const PageHeroSection = ({ pageKey, currentSlide = 0 }) => {
     const slides = pageHeroSlides[pageKey] || [];
     if (slides.length === 0) return null;
 
     return (
       <section className="relative h-96 md:h-[500px] overflow-hidden">
-        <div className="absolute inset-0 z-10 flex items-center">
+        <div className="absolute inset-0 z-10 flex items-center pt-16 md:pt-0">
           <div className="container mx-auto px-6 lg:px-12">
             <div className="max-w-4xl">
               <div className="space-y-6 text-white">
                 <div className="space-y-2">
-                  <p className={`text-sm uppercase tracking-widest font-semibold text-${currentThemeConfig.primary}-300 opacity-90`}>
-                    Fluidline Engineers & Fabricators
-                  </p>
+                  
                   <h1 className="text-4xl md:text-6xl font-bold leading-tight">
                     {slides[currentSlide % slides.length].title}
                   </h1>
@@ -874,19 +936,28 @@ const FluidlineWebsite = () => {
     </section>
   );
 
-  // Stats Section
+  // Stats Section with unique counter IDs
   const StatsSection = () => (
     <section className={`bg-gradient-to-r ${currentThemeConfig.statsGradient} py-20`}>
       <div className="container mx-auto px-6">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
           {stats.map((stat, index) => {
             const IconComponent = stat.icon;
+            let suffix = '+';
+            if (stat.label.includes('M+')) suffix = 'M+';
+            
             return (
               <div key={index} className="text-center group">
                 <div className="mx-auto w-20 h-20 rounded-full bg-white/10 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
                   <IconComponent className={`text-${currentThemeConfig.primary}-300`} size={36} />
                 </div>
-                <div className="text-4xl font-bold text-white mb-2">{stat.number}</div>
+                <div className="mb-2">
+                  <AnimatedCounter 
+                    end={stat.number} 
+                    suffix={suffix}
+                    id={`stats-counter-${index}`}
+                  />
+                </div>
                 <div className="text-gray-300 font-medium">{stat.label}</div>
               </div>
             );
@@ -976,7 +1047,7 @@ const FluidlineWebsite = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center mb-16">
           <div className="relative">
             <img
-              src="https://images.unsplash.com/photo-1581092921461-eab62e97a780?q=80&w=800&auto=format&fit=crop"
+              src="https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?q=80&w=2070&auto=format&fit=crop"
               alt="Engineering Excellence"
               className="rounded-2xl shadow-2xl"
             />
@@ -1065,24 +1136,32 @@ const FluidlineWebsite = () => {
           ))}
         </div>
 
-        {/* Additional Client Recognition Section */}
+        {/* Additional Client Recognition Section with unique counter IDs */}
         <div className={`bg-gradient-to-r ${currentThemeConfig.primaryGradient} rounded-2xl p-8 text-white text-center`}>
           <h3 className="text-2xl font-bold mb-4">Trusted by Industry Leaders</h3>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
             <div>
-              <div className="text-3xl font-bold text-white mb-2">500+</div>
+              <div className="mb-2">
+                <AnimatedCounter end="500" suffix="+" id="clients-counter-fortune" />
+              </div>
               <p className="text-sm opacity-90">Fortune Companies</p>
             </div>
             <div>
-              <div className="text-3xl font-bold text-white mb-2">50+</div>
+              <div className="mb-2">
+                <AnimatedCounter end="50" suffix="+" id="clients-counter-mnc" />
+              </div>
               <p className="text-sm opacity-90">MNCs Served</p>
             </div>
             <div>
-              <div className="text-3xl font-bold text-white mb-2">30+</div>
+              <div className="mb-2">
+                <AnimatedCounter end="30" suffix="+" id="clients-counter-sectors" />
+              </div>
               <p className="text-sm opacity-90">Industry Sectors</p>
             </div>
             <div>
-              <div className="text-3xl font-bold text-white mb-2">100%</div>
+              <div className="mb-2">
+                <AnimatedCounter end="100" suffix="%" id="clients-counter-satisfaction" />
+              </div>
               <p className="text-sm opacity-90">Client Satisfaction</p>
             </div>
           </div>
@@ -1322,7 +1401,7 @@ const FluidlineWebsite = () => {
         return (
           <>
             <PageHeroSection pageKey="about" currentSlide={currentSlide} />
-            <div className="pt-16">
+            <div className="mt-16">
               <AboutUsSection />
               <IntroSection />
             </div>
@@ -1333,9 +1412,9 @@ const FluidlineWebsite = () => {
         return (
           <>
             <PageHeroSection pageKey="vision-mission" currentSlide={currentSlide} />
-            <div className="pt-16">
+            <div className="mt-16">
               <div className="container mx-auto px-6">
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16 py-16">
                   <div className={`bg-gradient-to-br from-${currentThemeConfig.primaryLight} to-white p-12 rounded-2xl border-l-4 border-${currentThemeConfig.primary} shadow-xl hover:shadow-2xl transition-all duration-300 group`}>
                     <div className={`w-20 h-20 bg-gradient-to-r from-${currentThemeConfig.primary} to-${currentThemeConfig.primaryDark} rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg group-hover:scale-110 transition-transform duration-300`}>
                       <Eye className="text-white" size={36} />
@@ -1371,7 +1450,7 @@ const FluidlineWebsite = () => {
         return (
           <>
             <PageHeroSection pageKey="services" currentSlide={currentSlide} />
-            <div className="pt-16">
+            <div className="mt-16">
               <ServicesSection />
             </div>
           </>
@@ -1381,8 +1460,8 @@ const FluidlineWebsite = () => {
         return (
           <>
             <PageHeroSection pageKey="certificates" currentSlide={currentSlide} />
-            <div className="pt-16">
-              <div className="container mx-auto px-6">
+            <div className="mt-16">
+              <div className="container mx-auto px-6 py-16">
                 <div className="text-center mb-16">
                   <h2 className="text-4xl font-bold text-gray-900 mb-6">
                     Our <span className={`text-${currentThemeConfig.primary}`}>Certificates</span> & <span className={`text-${currentThemeConfig.secondary}`}>Policies</span>
@@ -1426,7 +1505,7 @@ const FluidlineWebsite = () => {
         return (
           <>
             <PageHeroSection pageKey="clients" currentSlide={currentSlide} />
-            <div className="pt-16">
+            <div className="mt-16">
               <ClientsSection />
               <TestimonialsSection />
             </div>
@@ -1437,7 +1516,7 @@ const FluidlineWebsite = () => {
         return (
           <>
             <PageHeroSection pageKey="career" currentSlide={currentSlide} />
-            <div className="pt-16">
+            <div className="mt-16">
               <div className={`py-24 bg-gradient-to-br ${currentThemeConfig.cardGradient}`}>
                 <div className="container mx-auto px-6">
                   <div className="text-center mb-16">
@@ -1556,7 +1635,7 @@ const FluidlineWebsite = () => {
         return (
           <>
             <PageHeroSection pageKey="contact" currentSlide={currentSlide} />
-            <div className="pt-16">
+            <div className="mt-16">
               <ContactSection />
             </div>
           </>
@@ -1566,7 +1645,7 @@ const FluidlineWebsite = () => {
         return (
           <>
             <PageHeroSection pageKey="about" currentSlide={currentSlide} />
-            <div className="pt-24 py-16">
+            <div className="mt-16 py-16">
               <div className="container mx-auto px-6 text-center">
                 <h1 className="text-4xl font-bold text-gray-900 mb-8">
                   {navigation.find(item => item.id === activeSection)?.name || 'Page'}
@@ -1588,7 +1667,7 @@ const FluidlineWebsite = () => {
   };
 
   return (
-    <div className="min-h-screen bg-white">
+     <div className="min-h-screen bg-white">
       {/* Header */}
       <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isScrolled 
@@ -1638,7 +1717,7 @@ const FluidlineWebsite = () => {
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               className={`lg:hidden p-2 rounded-lg transition-colors duration-300 ${
-                isScrolled ? 'text-gray-900' : 'text-white'
+                !isScrolled ? 'text-white' : 'text-gray-900'
               }`}
             >
               {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
