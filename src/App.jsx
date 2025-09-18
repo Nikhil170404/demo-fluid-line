@@ -10,8 +10,34 @@ import {
 } from 'lucide-react';
 
 const FluidlineWebsite = () => {
+  const navigation = [
+    { id: 'home', name: 'Home', icon: Home },
+    { id: 'about', name: 'About Us', icon: Info },
+    { id: 'vision-mission', name: 'Vision & Mission', icon: Target },
+    { id: 'services', name: 'Services', icon: Wrench },
+    { id: 'certificates', name: 'Certificates', icon: Medal },
+    { id: 'clients', name: 'Clients & Consultants', icon: Building2 },
+    { id: 'career', name: 'Career', icon: Briefcase },
+    { id: 'contact', name: 'Contact Us', icon: Contact }
+  ];
+
+  // Initialize activeSection from URL hash or localStorage or default to 'home'
+  const getInitialSection = () => {
+    // Check URL hash first
+    const hash = window.location.hash.substring(1);
+    if (hash && navigation.some(nav => nav.id === hash)) {
+      return hash;
+    }
+    // Check localStorage
+    const saved = localStorage.getItem('fluidline_active_section');
+    if (saved && navigation.some(nav => nav.id === saved)) {
+      return saved;
+    }
+    return 'home';
+  };
+
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [activeSection, setActiveSection] = useState('home');
+  const [activeSection, setActiveSection] = useState(getInitialSection);
   const [showChatbot, setShowChatbot] = useState(false);
   const [currentSlide, setCurrentSlide] = useState(0);
   const [chatMessages, setChatMessages] = useState([
@@ -19,7 +45,10 @@ const FluidlineWebsite = () => {
   ]);
   const [chatInput, setChatInput] = useState('');
   const [isScrolled, setIsScrolled] = useState(false);
-  const [currentTheme, setCurrentTheme] = useState('classic');
+  const [currentTheme, setCurrentTheme] = useState(() => {
+    const saved = localStorage.getItem('fluidline_theme');
+    return saved || 'classic';
+  });
   const [showThemeSelector, setShowThemeSelector] = useState(false);
 
   // Comprehensive Theme configurations with 10 red and blue variations
@@ -208,6 +237,30 @@ const FluidlineWebsite = () => {
 
   const currentThemeConfig = themes[currentTheme];
 
+  // Persist activeSection to localStorage and URL hash
+  useEffect(() => {
+    localStorage.setItem('fluidline_active_section', activeSection);
+    window.history.replaceState(null, null, `#${activeSection}`);
+  }, [activeSection]);
+
+  // Persist theme selection
+  useEffect(() => {
+    localStorage.setItem('fluidline_theme', currentTheme);
+  }, [currentTheme]);
+
+  // Handle browser back/forward navigation
+  useEffect(() => {
+    const handlePopState = () => {
+      const hash = window.location.hash.substring(1);
+      if (hash && navigation.some(nav => nav.id === hash)) {
+        setActiveSection(hash);
+      }
+    };
+
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, []);
+
   // Handle scroll effect for header
   useEffect(() => {
     const handleScroll = () => {
@@ -388,17 +441,6 @@ const FluidlineWebsite = () => {
       setChatInput('');
     }
   };
-
-  const navigation = [
-    { id: 'home', name: 'Home', icon: Home },
-    { id: 'about', name: 'About Us', icon: Info },
-    { id: 'vision-mission', name: 'Vision & Mission', icon: Target },
-    { id: 'services', name: 'Services', icon: Wrench },
-    { id: 'certificates', name: 'Certificates', icon: Medal },
-    { id: 'clients', name: 'Clients & Consultants', icon: Building2 },
-    { id: 'career', name: 'Career', icon: Briefcase },
-    { id: 'contact', name: 'Contact Us', icon: Contact }
-  ];
 
   const services = [
     {
@@ -701,8 +743,8 @@ const FluidlineWebsite = () => {
           </p>
           
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            <div className={`bg-gradient-to-br from-${currentThemeConfig.primaryLight} to-${currentThemeConfig.primaryLight} p-8 rounded-2xl border-l-4 border-${currentThemeConfig.primary}`}>
-              <div className={`w-16 h-16 bg-gradient-to-r from-${currentThemeConfig.primary} to-${currentThemeConfig.primary} rounded-full flex items-center justify-center mx-auto mb-6`}>
+            <div className={`bg-gradient-to-br from-${currentThemeConfig.primaryLight} to-white p-8 rounded-2xl border-l-4 border-${currentThemeConfig.primary} shadow-xl hover:shadow-2xl transition-all duration-300 group`}>
+              <div className={`w-16 h-16 bg-gradient-to-r from-${currentThemeConfig.primary} to-${currentThemeConfig.primaryDark} rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg group-hover:scale-110 transition-transform duration-300`}>
                 <Heart className="text-white" size={32} />
               </div>
               <h3 className={`text-2xl font-bold text-${currentThemeConfig.primary} mb-4`}>Inspired by our legacy</h3>
@@ -714,8 +756,8 @@ const FluidlineWebsite = () => {
               </p>
             </div>
 
-            <div className={`bg-gradient-to-br from-${currentThemeConfig.secondaryLight} to-${currentThemeConfig.secondaryLight} p-8 rounded-2xl border-l-4 border-${currentThemeConfig.secondary}`}>
-              <div className={`w-16 h-16 bg-gradient-to-r from-${currentThemeConfig.secondary} to-${currentThemeConfig.secondary} rounded-full flex items-center justify-center mx-auto mb-6`}>
+            <div className={`bg-gradient-to-br from-${currentThemeConfig.secondaryLight} to-white p-8 rounded-2xl border-l-4 border-${currentThemeConfig.secondary} shadow-xl hover:shadow-2xl transition-all duration-300 group`}>
+              <div className={`w-16 h-16 bg-gradient-to-r from-${currentThemeConfig.secondary} to-${currentThemeConfig.secondaryDark} rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg group-hover:scale-110 transition-transform duration-300`}>
                 <TrendingUp className="text-white" size={32} />
               </div>
               <h3 className={`text-2xl font-bold text-${currentThemeConfig.secondary} mb-4`}>Over 33 years of delivering best-in-class services</h3>
@@ -727,8 +769,8 @@ const FluidlineWebsite = () => {
               </p>
             </div>
 
-            <div className="bg-gradient-to-br from-purple-50 to-purple-100 p-8 rounded-2xl border-l-4 border-purple-500">
-              <div className={`w-16 h-16 bg-gradient-to-r from-${currentThemeConfig.primary} to-${currentThemeConfig.secondary} rounded-full flex items-center justify-center mx-auto mb-6`}>
+            <div className="bg-gradient-to-br from-purple-100 to-white p-8 rounded-2xl border-l-4 border-purple-500 shadow-xl hover:shadow-2xl transition-all duration-300 group">
+              <div className={`w-16 h-16 bg-gradient-to-r from-purple-500 to-purple-700 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg group-hover:scale-110 transition-transform duration-300`}>
                 <Shield className="text-white" size={32} />
               </div>
               <h3 className="text-2xl font-bold text-purple-700 mb-4">Commitment to earning the trust of our clients</h3>
@@ -866,9 +908,9 @@ const FluidlineWebsite = () => {
 
           <div className="space-y-6">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-              <div className={`bg-white p-6 rounded-xl shadow-lg border-l-4 border-${currentThemeConfig.primary}`}>
-                <div className={`w-12 h-12 bg-${currentThemeConfig.primaryLight} rounded-lg flex items-center justify-center mb-4`}>
-                  <Eye className={`text-${currentThemeConfig.primary}`} size={24} />
+              <div className={`bg-gradient-to-br from-${currentThemeConfig.primaryLight} to-white p-6 rounded-xl shadow-lg border-l-4 border-${currentThemeConfig.primary} group hover:shadow-xl transition-all duration-300`}>
+                <div className={`w-12 h-12 bg-gradient-to-r from-${currentThemeConfig.primary} to-${currentThemeConfig.primaryDark} rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300 shadow-md`}>
+                  <Eye className={`text-white`} size={24} />
                 </div>
                 <h4 className="font-bold text-gray-900 mb-2">Our Vision</h4>
                 <p className="text-sm text-gray-600">
@@ -877,9 +919,9 @@ const FluidlineWebsite = () => {
                 </p>
               </div>
 
-              <div className={`bg-white p-6 rounded-xl shadow-lg border-l-4 border-${currentThemeConfig.secondary}`}>
-                <div className={`w-12 h-12 bg-${currentThemeConfig.secondaryLight} rounded-lg flex items-center justify-center mb-4`}>
-                  <Target className={`text-${currentThemeConfig.secondary}`} size={24} />
+              <div className={`bg-gradient-to-br from-${currentThemeConfig.secondaryLight} to-white p-6 rounded-xl shadow-lg border-l-4 border-${currentThemeConfig.secondary} group hover:shadow-xl transition-all duration-300`}>
+                <div className={`w-12 h-12 bg-gradient-to-r from-${currentThemeConfig.secondary} to-${currentThemeConfig.secondaryDark} rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300 shadow-md`}>
+                  <Target className={`text-white`} size={24} />
                 </div>
                 <h4 className="font-bold text-gray-900 mb-2">Our Mission</h4>
                 <p className="text-sm text-gray-600">
@@ -1160,9 +1202,9 @@ const FluidlineWebsite = () => {
             <div className="pt-16">
               <div className="container mx-auto px-6">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
-                  <div className={`bg-gradient-to-br from-${currentThemeConfig.primaryLight} to-${currentThemeConfig.primaryLight} p-12 rounded-2xl border-l-4 border-${currentThemeConfig.primary}`}>
-                    <div className={`w-16 h-16 bg-gradient-to-r from-${currentThemeConfig.primary} to-${currentThemeConfig.primary} rounded-full flex items-center justify-center mx-auto mb-6`}>
-                      <Eye className="text-white" size={32} />
+                  <div className={`bg-gradient-to-br from-${currentThemeConfig.primaryLight} to-white p-12 rounded-2xl border-l-4 border-${currentThemeConfig.primary} shadow-xl hover:shadow-2xl transition-all duration-300 group`}>
+                    <div className={`w-20 h-20 bg-gradient-to-r from-${currentThemeConfig.primary} to-${currentThemeConfig.primaryDark} rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg group-hover:scale-110 transition-transform duration-300`}>
+                      <Eye className="text-white" size={36} />
                     </div>
                     <h2 className={`text-3xl font-bold text-${currentThemeConfig.primary} mb-6 text-center`}>Our Vision</h2>
                     <p className="text-gray-700 leading-relaxed text-lg">
@@ -1173,9 +1215,9 @@ const FluidlineWebsite = () => {
                     </p>
                   </div>
                   
-                  <div className={`bg-gradient-to-br from-${currentThemeConfig.secondaryLight} to-${currentThemeConfig.secondaryLight} p-12 rounded-2xl border-l-4 border-${currentThemeConfig.secondary}`}>
-                    <div className={`w-16 h-16 bg-gradient-to-r from-${currentThemeConfig.secondary} to-${currentThemeConfig.secondary} rounded-full flex items-center justify-center mx-auto mb-6`}>
-                      <Target className="text-white" size={32} />
+                  <div className={`bg-gradient-to-br from-${currentThemeConfig.secondaryLight} to-white p-12 rounded-2xl border-l-4 border-${currentThemeConfig.secondary} shadow-xl hover:shadow-2xl transition-all duration-300 group`}>
+                    <div className={`w-20 h-20 bg-gradient-to-r from-${currentThemeConfig.secondary} to-${currentThemeConfig.secondaryDark} rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg group-hover:scale-110 transition-transform duration-300`}>
+                      <Target className="text-white" size={36} />
                     </div>
                     <h2 className={`text-3xl font-bold text-${currentThemeConfig.secondary} mb-6 text-center`}>Our Mission</h2>
                     <p className="text-gray-700 leading-relaxed text-lg">
@@ -1262,39 +1304,113 @@ const FluidlineWebsite = () => {
           <>
             <PageHeroSection pageKey="career" currentSlide={currentSlide} />
             <div className="pt-16">
-              <div className="container mx-auto px-6">
-                <div className="text-center mb-16">
-                  <h2 className="text-4xl font-bold text-gray-900 mb-6">
-                    <span className={`text-${currentThemeConfig.primary}`}>Career</span> <span className={`text-${currentThemeConfig.secondary}`}>Opportunities</span>
-                  </h2>
-                  <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-                    Join our team of 3000+ skilled professionals and be part of engineering excellence.
-                  </p>
-                </div>
-                
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                  <div className="bg-white p-8 rounded-2xl shadow-lg text-center">
-                    <div className={`w-16 h-16 bg-gradient-to-r from-${currentThemeConfig.primary} to-${currentThemeConfig.secondary} rounded-full flex items-center justify-center mx-auto mb-6`}>
-                      <Users className="text-white" size={32} />
-                    </div>
-                    <h3 className="text-xl font-bold mb-4">Growing Team</h3>
-                    <p className="text-gray-600">Join 3000+ skilled professionals in engineering excellence</p>
+              <div className={`py-24 bg-gradient-to-br ${currentThemeConfig.cardGradient}`}>
+                <div className="container mx-auto px-6">
+                  <div className="text-center mb-16">
+                    <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+                      <span className={`text-${currentThemeConfig.primary}`}>Career</span> <span className={`text-${currentThemeConfig.secondary}`}>Opportunities</span>
+                    </h2>
+                    <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+                      Join our team of 3000+ skilled professionals and be part of engineering excellence with opportunities for growth and development.
+                    </p>
                   </div>
                   
-                  <div className="bg-white p-8 rounded-2xl shadow-lg text-center">
-                    <div className={`w-16 h-16 bg-gradient-to-r from-${currentThemeConfig.secondary} to-${currentThemeConfig.primary} rounded-full flex items-center justify-center mx-auto mb-6`}>
-                      <Target className="text-white" size={32} />
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+                    <div className={`group bg-gradient-to-br from-${currentThemeConfig.primaryLight} to-white p-10 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 text-center transform hover:-translate-y-2 border-l-4 border-${currentThemeConfig.primary}`}>
+                      <div className={`w-20 h-20 bg-gradient-to-br from-${currentThemeConfig.primary} to-${currentThemeConfig.primaryDark} rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg group-hover:scale-110 transition-transform duration-300`}>
+                        <Users className="text-white" size={36} />
+                      </div>
+                      <h3 className={`text-2xl font-bold text-${currentThemeConfig.primary} mb-4`}>Growing Team</h3>
+                      <p className="text-gray-600 leading-relaxed text-lg">
+                        Join 3000+ skilled professionals in engineering excellence across multiple locations and diverse projects.
+                      </p>
+                      <div className="mt-6 pt-6 border-t border-gray-200">
+                        <div className="flex items-center justify-center space-x-2 text-sm text-gray-500">
+                          <Building2 size={16} />
+                          <span>Multiple Locations</span>
+                        </div>
+                      </div>
                     </div>
-                    <h3 className="text-xl font-bold mb-4">Career Growth</h3>
-                    <p className="text-gray-600">33+ years of experience in nurturing talent and leadership</p>
+                    
+                    <div className={`group bg-gradient-to-br from-${currentThemeConfig.secondaryLight} to-white p-10 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 text-center transform hover:-translate-y-2 border-l-4 border-${currentThemeConfig.secondary}`}>
+                      <div className={`w-20 h-20 bg-gradient-to-br from-${currentThemeConfig.secondary} to-${currentThemeConfig.secondaryDark} rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg group-hover:scale-110 transition-transform duration-300`}>
+                        <TrendingUp className="text-white" size={36} />
+                      </div>
+                      <h3 className={`text-2xl font-bold text-${currentThemeConfig.secondary} mb-4`}>Career Growth</h3>
+                      <p className="text-gray-600 leading-relaxed text-lg">
+                        33+ years of experience in nurturing talent and leadership with continuous learning opportunities.
+                      </p>
+                      <div className="mt-6 pt-6 border-t border-gray-200">
+                        <div className="flex items-center justify-center space-x-2 text-sm text-gray-500">
+                          <Clock size={16} />
+                          <span>Continuous Learning</span>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div className="group bg-gradient-to-br from-purple-100 to-white p-10 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 text-center transform hover:-translate-y-2 border-l-4 border-purple-500">
+                      <div className="w-20 h-20 bg-gradient-to-br from-purple-500 to-purple-700 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg group-hover:scale-110 transition-transform duration-300">
+                        <Award className="text-white" size={36} />
+                      </div>
+                      <h3 className="text-2xl font-bold text-purple-700 mb-4">Excellence Culture</h3>
+                      <p className="text-gray-600 leading-relaxed text-lg">
+                        Work on Fortune 500 projects with industry-leading standards and safety protocols.
+                      </p>
+                      <div className="mt-6 pt-6 border-t border-gray-200">
+                        <div className="flex items-center justify-center space-x-2 text-sm text-gray-500">
+                          <Shield size={16} />
+                          <span>Safety First</span>
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                  
-                  <div className="bg-white p-8 rounded-2xl shadow-lg text-center">
-                    <div className={`w-16 h-16 bg-gradient-to-r from-${currentThemeConfig.primary} to-${currentThemeConfig.secondary} rounded-full flex items-center justify-center mx-auto mb-6`}>
-                      <Award className="text-white" size={32} />
+
+                  {/* Additional Career Benefits Section */}
+                  <div className="bg-white rounded-3xl p-10 shadow-2xl">
+                    <h3 className="text-3xl font-bold text-center text-gray-900 mb-8">Why Choose Fluidline?</h3>
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                      <div className="text-center group">
+                        <div className={`w-16 h-16 bg-gradient-to-r from-${currentThemeConfig.primary} to-${currentThemeConfig.secondary} rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300 shadow-md`}>
+                          <Globe className="text-white" size={24} />
+                        </div>
+                        <h4 className="font-bold text-gray-900 mb-2">Global Projects</h4>
+                        <p className="text-sm text-gray-600">Work on international standards</p>
+                      </div>
+                      
+                      <div className="text-center group">
+                        <div className={`w-16 h-16 bg-gradient-to-r from-${currentThemeConfig.secondary} to-${currentThemeConfig.primary} rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300 shadow-md`}>
+                          <Heart className="text-white" size={24} />
+                        </div>
+                        <h4 className="font-bold text-gray-900 mb-2">Work-Life Balance</h4>
+                        <p className="text-sm text-gray-600">Employee wellbeing priority</p>
+                      </div>
+                      
+                      <div className="text-center group">
+                        <div className="w-16 h-16 bg-gradient-to-r from-green-500 to-green-600 rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300 shadow-md">
+                          <Zap className="text-white" size={24} />
+                        </div>
+                        <h4 className="font-bold text-gray-900 mb-2">Innovation</h4>
+                        <p className="text-sm text-gray-600">Latest technology & methods</p>
+                      </div>
+                      
+                      <div className="text-center group">
+                        <div className="w-16 h-16 bg-gradient-to-r from-orange-500 to-red-500 rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300 shadow-md">
+                          <Target className="text-white" size={24} />
+                        </div>
+                        <h4 className="font-bold text-gray-900 mb-2">Career Path</h4>
+                        <p className="text-sm text-gray-600">Clear progression opportunities</p>
+                      </div>
                     </div>
-                    <h3 className="text-xl font-bold mb-4">Excellence Culture</h3>
-                    <p className="text-gray-600">Work on Fortune 500 projects with industry-leading standards</p>
+                    
+                    <div className="text-center mt-10">
+                      <button 
+                        onClick={() => setActiveSection('contact')}
+                        className={`bg-gradient-to-r ${currentThemeConfig.primaryGradient} hover:${currentThemeConfig.primaryHover} text-white px-10 py-4 rounded-full font-semibold transition-all duration-300 transform hover:scale-105 shadow-xl flex items-center space-x-3 mx-auto`}
+                      >
+                        <span>Join Our Team</span>
+                        <ArrowRight size={20} />
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
