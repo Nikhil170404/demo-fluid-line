@@ -62,28 +62,7 @@ const AboutUsSection = ({ currentThemeConfig }) => {
               </p>
             </div>
 
-            {/* Key Values */}
-            <div className="bg-white p-6 rounded-xl shadow-lg border border-gray-100">
-              <h4 className="font-bold text-gray-900 mb-4 text-lg">Our Core Values</h4>
-              <div className="grid grid-cols-2 gap-4">
-                <div className="text-center">
-                  <div className={`w-3 h-3 bg-${currentThemeConfig.primary} rounded-full mx-auto mb-2`}></div>
-                  <p className="text-sm font-semibold text-gray-700">Quality Excellence</p>
-                </div>
-                <div className="text-center">
-                  <div className={`w-3 h-3 bg-${currentThemeConfig.secondary} rounded-full mx-auto mb-2`}></div>
-                  <p className="text-sm font-semibold text-gray-700">Safety First</p>
-                </div>
-                <div className="text-center">
-                  <div className={`w-3 h-3 bg-${currentThemeConfig.primary} rounded-full mx-auto mb-2`}></div>
-                  <p className="text-sm font-semibold text-gray-700">Customer Delight</p>
-                </div>
-                <div className="text-center">
-                  <div className={`w-3 h-3 bg-${currentThemeConfig.secondary} rounded-full mx-auto mb-2`}></div>
-                  <p className="text-sm font-semibold text-gray-700">Innovation</p>
-                </div>
-              </div>
-            </div>
+            
           </div>
         </div>
       </div>
