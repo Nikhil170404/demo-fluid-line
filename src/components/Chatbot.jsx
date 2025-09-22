@@ -1,8 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { MessageCircle, Send, Minimize2, X } from 'lucide-react';
 
-const Chatbot = ({ currentThemeConfig }) => {
-  const [isOpen, setIsOpen] = useState(false);
+const Chatbot = ({ currentThemeConfig, isOpen = false, onClose, isMobile = false }) => {
   const [messages, setMessages] = useState([
     { 
       type: 'bot', 
@@ -12,6 +11,7 @@ const Chatbot = ({ currentThemeConfig }) => {
   const [input, setInput] = useState('');
   const [isTyping, setIsTyping] = useState(false);
   const messagesEndRef = useRef(null);
+  const inputRef = useRef(null);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -20,6 +20,12 @@ const Chatbot = ({ currentThemeConfig }) => {
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
+
+  useEffect(() => {
+    if (isOpen && inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, [isOpen]);
 
   const getBotResponse = (userMessage) => {
     const message = userMessage.toLowerCase();
@@ -92,86 +98,115 @@ const Chatbot = ({ currentThemeConfig }) => {
   };
 
   if (!isOpen) {
-    return (
-      <button
-        onClick={() => setIsOpen(true)}
-        className={`fixed bottom-6 right-6 bg-gradient-to-r ${currentThemeConfig.chatGradient} hover:${currentThemeConfig.primaryHover} text-white p-4 rounded-full shadow-2xl transition-all duration-300 transform hover:scale-110 z-50`}
-        aria-label="Open chat"
-      >
-        <MessageCircle size={24} />
-      </button>
-    );
+    return null;
   }
 
   return (
-    <div className="fixed bottom-6 right-6 z-50">
-      <div className="bg-white rounded-2xl shadow-2xl w-80 h-96 flex flex-col border border-gray-200 overflow-hidden">
-        {/* Header */}
-        <div className={`bg-gradient-to-r ${currentThemeConfig.chatGradient} text-white p-4 flex justify-between items-center`}>
-          <div>
-            <h4 className="font-bold">Fluidline AI Assistant</h4>
-            <p className="text-sm opacity-90">Engineering Solutions Expert</p>
-          </div>
-          <div className="flex space-x-2">
+    <div className={`${
+      isMobile 
+        ? 'w-full h-full' 
+        : 'w-80 h-96'
+    } bg-white rounded-2xl shadow-2xl flex flex-col border border-gray-200 overflow-hidden`}>
+      
+      {/* Header */}
+      <div className={`bg-gradient-to-r ${currentThemeConfig.chatGradient} text-white p-3 sm:p-4 flex justify-between items-center`}>
+        <div>
+          <h4 className="font-bold text-sm sm:text-base">Fluidline AI Assistant</h4>
+          <p className="text-xs sm:text-sm opacity-90">Engineering Solutions Expert</p>
+        </div>
+        <div className="flex space-x-1 sm:space-x-2">
+          {!isMobile && (
             <button
-              onClick={() => setIsOpen(false)}
+              onClick={onClose}
               className="text-white/70 hover:text-white transition-colors duration-300 p-1 rounded-full hover:bg-white/10"
               aria-label="Minimize chat"
             >
-              <Minimize2 size={18} />
+              <Minimize2 size={16} className="sm:w-4 sm:h-4" />
+            </button>
+          )}
+          <button
+            onClick={onClose}
+            className="text-white/70 hover:text-white transition-colors duration-300 p-1 rounded-full hover:bg-white/10"
+            aria-label="Close chat"
+          >
+            <X size={16} className="sm:w-4 sm:h-4" />
+          </button>
+        </div>
+      </div>
+
+      {/* Messages */}
+      <div className="flex-1 overflow-y-auto p-3 sm:p-4 space-y-3 sm:space-y-4 bg-gray-50">
+        {messages.map((msg, index) => (
+          <div key={index} className={`flex ${msg.type === 'user' ? 'justify-end' : 'justify-start'}`}>
+            <div className={`max-w-[85%] sm:max-w-xs p-3 rounded-2xl ${
+              msg.type === 'user' 
+                ? `bg-gradient-to-r ${currentThemeConfig.chatGradient} text-white` 
+                : 'bg-white text-gray-800 shadow-sm border border-gray-200'
+            }`}>
+              <p className="text-sm leading-relaxed">{msg.message}</p>
+            </div>
+          </div>
+        ))}
+        
+        {isTyping && (
+          <div className="flex justify-start">
+            <div className="bg-white text-gray-800 shadow-sm border border-gray-200 p-3 rounded-2xl max-w-xs">
+              <div className="flex space-x-1">
+                <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"></div>
+                <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{animationDelay: '0.1s'}}></div>
+                <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{animationDelay: '0.2s'}}></div>
+              </div>
+            </div>
+          </div>
+        )}
+        <div ref={messagesEndRef} />
+      </div>
+
+      {/* Input */}
+      <div className="p-3 sm:p-4 border-t bg-white">
+        <form onSubmit={handleSubmit} className="flex space-x-2">
+          <input
+            ref={inputRef}
+            type="text"
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            onKeyPress={handleKeyPress}
+            placeholder="Ask about our engineering services..."
+            className={`flex-1 p-2 sm:p-3 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-${currentThemeConfig.primary} focus:border-transparent transition-colors duration-300 text-sm sm:text-base`}
+            disabled={isTyping}
+          />
+          <button
+            type="submit"
+            disabled={isTyping || !input.trim()}
+            className={`bg-gradient-to-r ${currentThemeConfig.chatGradient} hover:${currentThemeConfig.primaryHover} text-white p-2 sm:p-3 rounded-full transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex-shrink-0`}
+          >
+            <Send size={16} className="sm:w-4 sm:h-4" />
+          </button>
+        </form>
+        
+        {/* Quick Actions - Mobile Only */}
+        {isMobile && (
+          <div className="mt-3 flex flex-wrap gap-2">
+            <button
+              onClick={() => setInput('What services do you offer?')}
+              className="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-xs hover:bg-gray-200 transition-colors"
+            >
+              Services
+            </button>
+            <button
+              onClick={() => setInput('How can I contact you?')}
+              className="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-xs hover:bg-gray-200 transition-colors"
+            >
+              Contact
+            </button>
+            <button
+              onClick={() => setInput('Tell me about your experience')}
+              className="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-xs hover:bg-gray-200 transition-colors"
+            >
+              Experience
             </button>
           </div>
-        </div>
-
-        {/* Messages */}
-        <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-gray-50">
-          {messages.map((msg, index) => (
-            <div key={index} className={`flex ${msg.type === 'user' ? 'justify-end' : 'justify-start'}`}>
-              <div className={`max-w-xs p-3 rounded-2xl ${
-                msg.type === 'user' 
-                  ? `bg-gradient-to-r ${currentThemeConfig.chatGradient} text-white` 
-                  : 'bg-white text-gray-800 shadow-sm border border-gray-200'
-              }`}>
-                <p className="text-sm leading-relaxed">{msg.message}</p>
-              </div>
-            </div>
-          ))}
-          
-          {isTyping && (
-            <div className="flex justify-start">
-              <div className="bg-white text-gray-800 shadow-sm border border-gray-200 p-3 rounded-2xl max-w-xs">
-                <div className="flex space-x-1">
-                  <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"></div>
-                  <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{animationDelay: '0.1s'}}></div>
-                  <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{animationDelay: '0.2s'}}></div>
-                </div>
-              </div>
-            </div>
-          )}
-          <div ref={messagesEndRef} />
-        </div>
-
-        {/* Input */}
-        <div className="p-4 border-t bg-white">
-          <form onSubmit={handleSubmit} className="flex space-x-2">
-            <input
-              type="text"
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              onKeyPress={handleKeyPress}
-              placeholder="Ask about our engineering services..."
-              className={`flex-1 p-3 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-${currentThemeConfig.primary} focus:border-transparent transition-colors duration-300`}
-              disabled={isTyping}
-            />
-            <button
-              type="submit"
-              disabled={isTyping || !input.trim()}
-              className={`bg-gradient-to-r ${currentThemeConfig.chatGradient} hover:${currentThemeConfig.primaryHover} text-white p-3 rounded-full transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex-shrink-0`}
-            >
-              <Send size={18} />
-            </button>
-          </form>
-        </div>
+        )}
       </div>
     </div>
   );

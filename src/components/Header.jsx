@@ -40,6 +40,8 @@ const Header = ({ activeSection, setActiveSection, currentThemeConfig }) => {
   const handleNavClick = (sectionId) => {
     setActiveSection(sectionId);
     setIsMenuOpen(false);
+    // Scroll to top
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   return (
@@ -48,18 +50,18 @@ const Header = ({ activeSection, setActiveSection, currentThemeConfig }) => {
         ? 'bg-white/95 backdrop-blur-lg shadow-lg' 
         : 'bg-transparent'
     }`}>
-      <div className="container mx-auto px-6">
-        <div className="flex justify-between items-center py-4">
+      <div className="container mx-auto px-4 sm:px-6">
+        <div className="flex justify-between items-center py-3 sm:py-4">
           {/* Logo */}
-          <div className="flex items-center space-x-4">
+          <div className="flex items-center space-x-2 sm:space-x-4">
             <FluidlineLogo currentThemeConfig={currentThemeConfig} />
             <div>
-              <h1 className={`text-xl font-bold transition-colors duration-300 ${
+              <h1 className={`text-lg sm:text-xl font-bold transition-colors duration-300 ${
                 isScrolled ? 'text-gray-900' : 'text-white'
               }`}>
                 FLUIDLINE
               </h1>
-              <p className={`text-sm transition-colors duration-300 ${
+              <p className={`text-xs sm:text-sm transition-colors duration-300 ${
                 isScrolled ? 'text-gray-600' : 'text-gray-300'
               }`}>
                 Engineers & Fabricators
@@ -102,38 +104,71 @@ const Header = ({ activeSection, setActiveSection, currentThemeConfig }) => {
           </button>
         </div>
 
-        {/* Mobile Menu */}
+        {/* Mobile Menu - Full Screen Overlay */}
         {isMenuOpen && (
-          <>
-            {/* Backdrop */}
-            <div 
-              className="lg:hidden fixed inset-0 bg-black/50 backdrop-blur-sm"
-              onClick={() => setIsMenuOpen(false)}
-            />
-            
-            {/* Menu Panel */}
-            <div className="lg:hidden fixed top-20 left-6 right-6 bg-white/95 backdrop-blur-lg rounded-xl shadow-2xl p-4 z-50">
-              <nav className="space-y-2">
+          <div className="lg:hidden fixed inset-0 top-0 z-50 bg-white">
+            {/* Mobile Header */}
+            <div className="flex justify-between items-center p-4 border-b border-gray-200">
+              <div className="flex items-center space-x-3">
+                <FluidlineLogo currentThemeConfig={currentThemeConfig} size="sm" />
+                <div>
+                  <h1 className="text-lg font-bold text-gray-900">FLUIDLINE</h1>
+                  <p className="text-xs text-gray-600">Engineers & Fabricators</p>
+                </div>
+              </div>
+              <button
+                onClick={() => setIsMenuOpen(false)}
+                className="p-2 rounded-lg text-gray-900 hover:bg-gray-100 transition-colors duration-300"
+                aria-label="Close menu"
+              >
+                <X size={24} />
+              </button>
+            </div>
+
+            {/* Mobile Navigation */}
+            <nav className="flex-1 overflow-y-auto py-4 px-4">
+              <div className="space-y-2">
                 {navigation.map((item) => {
                   const IconComponent = item.icon;
                   return (
                     <button
                       key={item.id}
                       onClick={() => handleNavClick(item.id)}
-                      className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg font-medium transition-all duration-300 ${
+                      className={`w-full flex items-center space-x-4 px-4 py-4 rounded-xl font-medium transition-all duration-300 text-left ${
                         activeSection === item.id
-                          ? `bg-gradient-to-r ${currentThemeConfig.navActive} text-white`
+                          ? `bg-gradient-to-r ${currentThemeConfig.navActive} text-white shadow-lg`
                           : `text-gray-700 hover:bg-${currentThemeConfig.primaryLight} hover:text-${currentThemeConfig.primary}`
                       }`}
                     >
-                      <IconComponent size={20} />
-                      <span>{item.name}</span>
+                      <IconComponent size={22} />
+                      <span className="text-base">{item.name}</span>
                     </button>
                   );
                 })}
-              </nav>
+              </div>
+            </nav>
+
+            {/* Mobile Contact Info */}
+            <div className="border-t border-gray-200 p-4 bg-gray-50">
+              <div className="text-center space-y-2">
+                <p className="text-sm font-semibold text-gray-900">Need Help?</p>
+                <div className="flex flex-col sm:flex-row gap-2 sm:gap-4 justify-center items-center">
+                  <a 
+                    href="tel:+915122225138" 
+                    className={`text-sm text-${currentThemeConfig.primary} font-medium hover:underline`}
+                  >
+                    +91-512-2225138
+                  </a>
+                  <a 
+                    href="mailto:projects@fluidlinegroup.com" 
+                    className={`text-sm text-${currentThemeConfig.secondary} font-medium hover:underline`}
+                  >
+                    projects@fluidlinegroup.com
+                  </a>
+                </div>
+              </div>
             </div>
-          </>
+          </div>
         )}
       </div>
     </header>
