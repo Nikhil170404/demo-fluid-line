@@ -1,37 +1,16 @@
 {
-  "name": "fluidline-website-professional",
+  "name": "fluidline-website",
   "private": true,
-  "version": "1.0.0",
+  "version": "0.0.0",
   "type": "module",
-  "description": "Professional website for Fluidline Engineers & Fabricators - Leading multi-dimensional engineering company",
-  "keywords": [
-    "fluidline",
-    "engineers",
-    "fabricators",
-    "industrial-engineering",
-    "process-piping",
-    "fire-protection",
-    "structural-fabrication",
-    "equipment-erection",
-    "maharashtra",
-    "kanpur",
-    "mumbai",
-    "engineering-solutions"
-  ],
   "scripts": {
-    "dev": "vite --host",
+    "dev": "vite",
     "build": "vite build",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
-    "lint:fix": "eslint . --ext js,jsx --fix",
-    "preview": "vite preview --host",
-    "analyze": "npm run build && npx vite-bundle-analyzer dist/assets/*.js",
-    "type-check": "tsc --noEmit",
-    "clean": "rm -rf dist node_modules/.vite",
-    "format": "prettier --write \"src/**/*.{js,jsx,ts,tsx,json,css,md}\"",
-    "format:check": "prettier --check \"src/**/*.{js,jsx,ts,tsx,json,css,md}\""
+    "preview": "vite preview"
   },
   "dependencies": {
-    "lucide-react": "^0.344.0",
+    "lucide-react": "^0.544.0",
     "react": "^19.1.1",
     "react-dom": "^19.1.1"
   },
@@ -47,20 +26,7 @@
     "eslint-plugin-react-refresh": "^0.4.20",
     "globals": "^16.3.0",
     "postcss": "^8.5.6",
-    "prettier": "^3.2.5",
     "tailwindcss": "^3.4.0",
-    "typescript": "^5.7.2",
-    "vite": "^7.1.2",
-    "vite-plugin-pwa": "^0.20.5"
-  },
-  "engines": {
-    "node": ">=18.0.0",
-    "npm": ">=9.0.0"
-  },
-  "browserslist": [
-    "> 1%",
-    "last 2 versions",
-    "not dead",
-    "not ie <= 11"
-  ]
+    "vite": "^7.1.2"
+  }
 }
